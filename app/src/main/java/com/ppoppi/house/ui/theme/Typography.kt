@@ -12,7 +12,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ppoppi.house.R
 
-
 data class Typography(
     val headline1: TextStyle,
     val title1: TextStyle,
