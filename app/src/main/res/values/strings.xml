@@ -1,5 +1,55 @@
 <resources>
     <string name="app_name">PpoPpiHouse</string>
+
+    <string name="dropdown_hint">품종을 선택해 주세요</string>
+    <string name="dropdown_description">품종 드롭다운</string>
+
+    <string name="icon_dog">🐶</string>
+    <string name="icon_cat">🐱</string>
+
+    <string name="pet_item_information">%s · %d살 · %s</string>
+
+    <string name="diagnosis_select_top_bar">반려동물 선택</string>
+    <string name="diagnosis_select_top_bar_navigation_description">뒤로 가기 버튼</string>
+    <string name="diagnosis_select_hint">어떤 반려동물의 안구를 진단할지 선택해 주세요</string>
+    <string name="diagnosis_select_hint_highlight">어떤 반려동물</string>
+
+    <string name="diagnosis_camera_top_bar">안구 촬영</string>
+    <string name="diagnosis_camera_top_bar_navigation_description">뒤로 가기 버튼</string>
+    <string name="diagnosis_camera_hint">%s의 눈을 촬영해 주세요</string>
+    <string name="diagnosis_camera_hint_highlight">촬영</string>
+    <string name="diagnosis_camera_description">1. 밝은 곳으로 이동해 주세요\n2. 카메라를 눈에서 10~15cm 거리에 두세요\n3. 초록 박스 안에 눈이 들어오면 촬영 버튼을 누르세요</string>
+
+    <string name="diagnosis_check_bottom_bar_button">분석 시작</string>
+    <string name="diagnosis_check_top_bar">증상 체크</string>
+    <string name="diagnosis_check_top_bar_navigation_description">뒤로 가기 버튼</string>
+    <string name="diagnosis_check_hint">현재 증상을 모두 체크해 주세요</string>
+    <string name="diagnosis_check_hint_highlight">현재 증상</string>
+
+    <string name="pet_list_top_bar">내 반려동물</string>
+    <string name="pet_list_bottom_bar_button">시작하기</string>
+    <string name="pet_list_registered_pet">등록된 반려동물</string>
+    <string name="pet_list_add_pet_button">다른 반려동물 추가</string>
+    <string name="pet_list_add_pet_button_description">다른 반려동물 추가 버튼</string>
+
+    <string name="pet_register_top_bar">반려동물 등록</string>
+    <string name="pet_register_top_bar_navigation_description">뒤로 가기 버튼</string>
+    <string name="pet_register_bottom_bar_button">등록 완료</string>
+    <string name="pet_register_name_input_section">이름</string>
+    <string name="pet_register_name_input_hint">반려동물의 이름을 입력해 주세요</string>
+    <string name="pet_register_species_input_section">종류</string>
+    <string name="pet_register_species_input_dog">🐶 강아지</string>
+    <string name="pet_register_species_input_cat">🐱 고양이</string>
+    <string name="pet_register_breed_input_section">품종</string>
+    <string name="pet_register_sex_input_section">성별</string>
+    <string name="pet_register_sex_input_male">남</string>
+    <string name="pet_register_sex_input_female">여</string>
+    <string name="pet_register_age_input_section">나이</string>
+    <string name="pet_register_age_input">%d살</string>
+    <string name="pet_register_age_decrease_button_description">나이 감소 버튼</string>
+    <string name="pet_register_age_increase_button_description">나이 증가 버튼</string>
+    <string name="pet_register_color_input_section">색상</string>
+
     <string name="bottom_nav_home">홈</string>
     <string name="bottom_nav_diary">다이어리</string>
     <string name="bottom_nav_map">지도</string>
