@@ -26,6 +26,16 @@
     <string name="diagnosis_check_hint">현재 증상을 모두 체크해 주세요</string>
     <string name="diagnosis_check_hint_highlight">현재 증상</string>
 
+    <string name="diagnosis_result_top_bar">진단 결과</string>
+    <string name="diagnosis_result_top_bar_navigation_description">뒤로 가기 버튼</string>
+    <string name="diagnosis_result_skeleton_title">%s의 눈을 분석하고 있어요</string>
+    <string name="diagnosis_result_skeleton_description">AI 모델이 안구 이미지와\n증상을 함께 분석 중입니다</string>
+    <string name="diagnosis_result_diagnosis_title">%s | %s</string>
+    <string name="diagnosis_result_diagnosis_card_description">AI 선별 결과이며 확진이 아닙니다\n최종 판단은 수의사에게 있습니다</string>
+    <string name="diagnosis_result_bottom_bar_button_to_map">주변 동물 병원 찾아 보기</string>
+    <string name="diagnosis_result_bottom_bar_button_to_home">완료</string>
+    <string name="diagnosis_result_rediagnosis">다시 진단하기</string>
+
     <string name="pet_list_top_bar">내 반려동물</string>
     <string name="pet_list_bottom_bar_button">시작하기</string>
     <string name="pet_list_registered_pet">등록된 반려동물</string>
