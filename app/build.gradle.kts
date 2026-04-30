@@ -8,10 +8,11 @@ plugins {
     alias(libs.plugins.ktlint)
 }
 
-val localProperties = Properties().apply {
-    val file = rootProject.file("local.properties")
-    if (file.exists()) load(file.inputStream())
-}
+val localProperties =
+    Properties().apply {
+        val file = rootProject.file("local.properties")
+        if (file.exists()) load(file.inputStream())
+    }
 
 android {
     namespace = "com.ppoppi.house"

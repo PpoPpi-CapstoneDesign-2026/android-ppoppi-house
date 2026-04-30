@@ -130,7 +130,10 @@ private fun MapWithCurrentLocation(modifier: Modifier = Modifier) {
 
 @Suppress("ParamsComparedByRef")
 @Composable
-fun PetHospitalMap(userLocation: LatLng, modifier: Modifier = Modifier) {
+fun PetHospitalMap(
+    userLocation: LatLng,
+    modifier: Modifier = Modifier,
+) {
     val cameraPositionState =
         rememberCameraPositionState {
             position = CameraPosition.fromLatLngZoom(userLocation, 14f) // 줌 레벨 14 (동네 수준)
@@ -160,7 +163,10 @@ fun PetHospitalMap(userLocation: LatLng, modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun PermissionRationaleCard(modifier: Modifier = Modifier, onConfirm: () -> Unit) {
+private fun PermissionRationaleCard(
+    modifier: Modifier = Modifier,
+    onConfirm: () -> Unit,
+) {
     Column(
         modifier = modifier.fillMaxSize().padding(24.dp),
         verticalArrangement = Arrangement.Center,
