@@ -22,9 +22,14 @@ import com.ppoppi.house.ui.login.component.LoginButton
 import com.ppoppi.house.ui.theme.Black
 import com.ppoppi.house.ui.theme.PpoPpiTheme
 import com.ppoppi.house.ui.theme.White
+import com.ppoppi.house.ui.util.noRippleClickable
 
 @Composable
-fun LoginScreen(modifier: Modifier = Modifier) {
+fun LoginScreen(
+    toMain: () -> Unit,
+    toOnboarding: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Column(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -41,7 +46,8 @@ fun LoginScreen(modifier: Modifier = Modifier) {
                 Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 44.dp)
-                    .padding(bottom = 18.dp),
+                    .padding(bottom = 18.dp)
+                    .noRippleClickable(toMain),
             backgroundColor = Color(0xFFFEE500),
             imageResource = painterResource(R.drawable.ic_kakao_login),
             text = stringResource(R.string.login_with_kakao),
@@ -52,7 +58,8 @@ fun LoginScreen(modifier: Modifier = Modifier) {
                 Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 44.dp)
-                    .padding(bottom = 18.dp),
+                    .padding(bottom = 18.dp)
+                    .noRippleClickable(toOnboarding),
             backgroundColor = Black,
             imageResource = painterResource(R.drawable.ic_google_login),
             text = stringResource(R.string.login_with_google),
@@ -75,6 +82,9 @@ fun LoginScreen(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 private fun LoginScreenPreview() {
     PpoPpiTheme {
-        LoginScreen()
+        LoginScreen(
+            toMain = { },
+            toOnboarding = { },
+        )
     }
 }
