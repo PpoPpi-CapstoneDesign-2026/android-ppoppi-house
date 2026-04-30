@@ -38,7 +38,7 @@ fun PetButton(
             modifier
                 .size(60.dp, 66.dp)
                 .border(1.dp, borderColor, RoundedCornerShape(10.dp))
-                .background(backgroundColor)
+                .background(backgroundColor, RoundedCornerShape(10.dp))
                 .noRippleClickable(onClick),
     ) {
         Text(

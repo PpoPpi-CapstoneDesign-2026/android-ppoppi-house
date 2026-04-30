@@ -16,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -27,6 +28,7 @@ import com.ppoppi.house.domain.SPECIES
 import com.ppoppi.house.ui.main.home.component.DiagnosisCard
 import com.ppoppi.house.ui.main.home.component.PetAddButton
 import com.ppoppi.house.ui.main.home.component.PetButton
+import com.ppoppi.house.ui.main.setting.edit.PetInfoActivity
 import com.ppoppi.house.ui.theme.Black
 import com.ppoppi.house.ui.theme.PpoPpiTheme
 import com.ppoppi.house.ui.theme.Primary200
@@ -41,6 +43,7 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     date: LocalDate = LocalDate.now(),
 ) {
+    val context = LocalContext.current
     val pets =
         listOf(
             Pet(
@@ -108,7 +111,8 @@ fun HomeScreen(
             if (pets.size < 3) {
                 PetAddButton(
                     onClick = {
-                        // 추가 화면으로 이동
+                        val intent = PetInfoActivity.newIntent(context)
+                        context.startActivity(intent)
                     },
                 )
             }
