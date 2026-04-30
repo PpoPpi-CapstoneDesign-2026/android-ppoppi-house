@@ -1,5 +1,6 @@
 package com.ppoppi.house.ui.diagnosis.result.component
 
+import android.graphics.BlurMaskFilter
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,7 +10,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import android.graphics.BlurMaskFilter
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
@@ -36,38 +36,38 @@ fun ResultCard(
 ) {
     val textColor = diagnosis.triageKey.toColor()[1]
     Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .drawBehind {
-                drawIntoCanvas { canvas ->
-                    val paint = Paint().apply {
-                        asFrameworkPaint().apply {
-                            isAntiAlias = true
-                            color = Black.copy(alpha = 0.25f).toArgb()
-                            maskFilter = BlurMaskFilter(4.dp.toPx(), BlurMaskFilter.Blur.NORMAL)
-                        }
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .drawBehind {
+                    drawIntoCanvas { canvas ->
+                        val paint =
+                            Paint().apply {
+                                asFrameworkPaint().apply {
+                                    isAntiAlias = true
+                                    color = Black.copy(alpha = 0.25f).toArgb()
+                                    maskFilter = BlurMaskFilter(4.dp.toPx(), BlurMaskFilter.Blur.NORMAL)
+                                }
+                            }
+                        canvas.drawRoundRect(
+                            left = 0f,
+                            top = 4.dp.toPx(),
+                            right = size.width,
+                            bottom = size.height + 4.dp.toPx(),
+                            radiusX = 8.dp.toPx(),
+                            radiusY = 8.dp.toPx(),
+                            paint = paint,
+                        )
                     }
-                    canvas.drawRoundRect(
-                        left = 0f,
-                        top = 4.dp.toPx(),
-                        right = size.width,
-                        bottom = size.height + 4.dp.toPx(),
-                        radiusX = 8.dp.toPx(),
-                        radiusY = 8.dp.toPx(),
-                        paint = paint
+                }.clip(RoundedCornerShape(8.dp))
+                .background(White)
+                .drawBehind {
+                    drawRect(
+                        color = textColor,
+                        topLeft = Offset(0f, 0f),
+                        size = Size(4.dp.toPx(), size.height),
                     )
-                }
-            }
-            .clip(RoundedCornerShape(8.dp))
-            .background(White)
-            .drawBehind {
-                drawRect(
-                    color = textColor,
-                    topLeft = Offset(0f, 0f),
-                    size = Size(4.dp.toPx(), size.height)
-                )
-            }
-            .padding(20.dp),
+                }.padding(20.dp),
     ) {
         Text(
             text = diagnosis.guideMsg.getColoredText(textColor, diagnosis.guideTitle),
@@ -80,9 +80,10 @@ fun ResultCard(
             color = Gray400,
         )
         HorizontalDivider(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 12.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = 12.dp),
             thickness = 1.dp,
             color = Gray100,
         )
@@ -90,7 +91,7 @@ fun ResultCard(
             text = diagnosis.guideMsg.getColoredText(textColor, diagnosis.guideTitle),
             style = PpoPpiTheme.typography.title1,
             color = Black,
-            modifier = Modifier.padding(top = 12.dp)
+            modifier = Modifier.padding(top = 12.dp),
         )
         Text(
             text = diagnosis.guideMsg,
@@ -105,14 +106,15 @@ fun ResultCard(
 private fun ResultCardPreview() {
     PpoPpiTheme {
         ResultCard(
-            diagnosis = Diagnosis(
-                guideTitle = "결막염",
-                triageKey = Triage.URGENT,
-                triageConfidence = 70.0,
-                affectedArea = "각막",
-                guideMsg = "결막염이 의심 어쩌구",
-                guideAction = "액션 어쩌구"
-            )
+            diagnosis =
+                Diagnosis(
+                    guideTitle = "결막염",
+                    triageKey = Triage.URGENT,
+                    triageConfidence = 70.0,
+                    affectedArea = "각막",
+                    guideMsg = "결막염이 의심 어쩌구",
+                    guideAction = "액션 어쩌구",
+                ),
         )
     }
 }

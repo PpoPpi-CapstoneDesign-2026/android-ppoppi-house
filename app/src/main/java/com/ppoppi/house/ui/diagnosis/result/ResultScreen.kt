@@ -75,43 +75,48 @@ fun ResultScreen(
 
             TriageBadge(
                 triage = diagnosis.triageKey,
-                modifier = Modifier
-                    .padding(top = 14.dp)
+                modifier =
+                    Modifier
+                        .padding(top = 14.dp),
             )
 
             Text(
-                text = stringResource(
-                    R.string.diagnosis_result_diagnosis_title,
-                    diagnosis.guideTitle,
-                    diagnosis.affectedArea
-                ),
+                text =
+                    stringResource(
+                        R.string.diagnosis_result_diagnosis_title,
+                        diagnosis.guideTitle,
+                        diagnosis.affectedArea,
+                    ),
                 style = PpoPpiTheme.typography.title1,
                 color = Black,
-                modifier = Modifier.padding(top = 12.dp)
+                modifier = Modifier.padding(top = 12.dp),
             )
 
             ConfidenceScore(
                 confidenceScore = diagnosis.triageConfidence,
                 triageColor = diagnosis.triageKey.toColor()[1],
-                modifier = Modifier
-                    .padding(top = 12.dp)
-                    .padding(horizontal = 34.dp)
+                modifier =
+                    Modifier
+                        .padding(top = 12.dp)
+                        .padding(horizontal = 34.dp),
             )
 
             HorizontalDivider(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 24.dp)
-                    .padding(top = 8.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 24.dp)
+                        .padding(top = 8.dp),
                 thickness = 1.dp,
                 color = Gray100,
             )
 
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Gray10)
-                    .padding(horizontal = 30.dp)
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .background(Gray10)
+                        .padding(horizontal = 30.dp),
             ) {
                 ResultCard(
                     diagnosis = diagnosis,
@@ -122,16 +127,16 @@ fun ResultScreen(
                     text = stringResource(R.string.diagnosis_result_diagnosis_card_description),
                     style = PpoPpiTheme.typography.body5,
                     color = Gray200,
-                    modifier = Modifier.padding(top = 12.dp)
+                    modifier = Modifier.padding(top = 12.dp),
                 )
 
                 Button(
                     onClick = {
-                        if (diagnosis.triageKey == Triage.URGENT || diagnosis.triageKey == Triage.SOON)
+                        if (diagnosis.triageKey == Triage.URGENT || diagnosis.triageKey == Triage.SOON) {
                             navigateToMap()
-                        else
+                        } else {
                             navigateToHome()
-
+                        }
                     },
                     modifier =
                         Modifier
@@ -145,11 +150,16 @@ fun ResultScreen(
                     contentPadding = PaddingValues(vertical = 12.dp),
                 ) {
                     Text(
-                        text = if (diagnosis.triageKey == Triage.URGENT || diagnosis.triageKey == Triage.SOON) stringResource(
-                            R.string.diagnosis_result_bottom_bar_button_to_map
-                        ) else stringResource(
-                            R.string.diagnosis_result_bottom_bar_button_to_home
-                        ),
+                        text =
+                            if (diagnosis.triageKey == Triage.URGENT || diagnosis.triageKey == Triage.SOON) {
+                                stringResource(
+                                    R.string.diagnosis_result_bottom_bar_button_to_map,
+                                )
+                            } else {
+                                stringResource(
+                                    R.string.diagnosis_result_bottom_bar_button_to_home,
+                                )
+                            },
                         style = PpoPpiTheme.typography.title1,
                         color = White,
                     )
@@ -159,13 +169,13 @@ fun ResultScreen(
                     text = stringResource(R.string.diagnosis_result_rediagnosis),
                     style = PpoPpiTheme.typography.body5,
                     color = Gray300,
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .padding(top = 12.dp, bottom = 20.dp)
-                        .noRippleClickable(navigateToDiagnosis)
+                    modifier =
+                        Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .padding(top = 12.dp, bottom = 20.dp)
+                            .noRippleClickable(navigateToDiagnosis),
                 )
             }
         }
     }
 }
-

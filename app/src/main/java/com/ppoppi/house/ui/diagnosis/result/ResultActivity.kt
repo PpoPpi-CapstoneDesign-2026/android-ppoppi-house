@@ -43,23 +43,23 @@ class ResultActivity : ComponentActivity() {
                         startActivity(
                             MainActivity.newIntent(this@ResultActivity).apply {
                                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                            }
+                            },
                         )
                     },
                     navigateToMap = {
                         startActivity(
                             MainActivity.newIntent(this@ResultActivity, MAP).apply {
                                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                            }
+                            },
                         )
                     },
                     navigateToDiagnosis = {
                         startActivity(SelectActivity.newIntent(this@ResultActivity))
                         finish()
                     },
-                    imageUri = imageUri, diagnosis = diagnosis,
-
-                    )
+                    imageUri = imageUri,
+                    diagnosis = diagnosis,
+                )
             }
         }
     }

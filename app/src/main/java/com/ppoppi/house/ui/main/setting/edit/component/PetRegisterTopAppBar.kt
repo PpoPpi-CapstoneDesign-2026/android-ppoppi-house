@@ -1,6 +1,5 @@
-package com.ppoppi.house.ui.onboarding.register.component
+package com.ppoppi.house.ui.main.setting.edit.component
 
-import android.R.attr.text
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,15 +28,12 @@ import com.ppoppi.house.ui.util.noRippleClickable
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PetRegisterTopAppBar(
-    title: String,
-    onBackClick: () -> Unit,
-) {
+fun PetRegisterTopAppBar(onBackClick: () -> Unit) {
     Column {
         CenterAlignedTopAppBar(
             title = {
                 Text(
-                    text = title,
+                    text = stringResource(R.string.pet_register_top_bar),
                     style = PpoPpiTheme.typography.title1,
                 )
             },
@@ -75,9 +71,6 @@ fun PetRegisterTopAppBar(
 @Preview(showBackground = true)
 private fun PetRegisterTopAppBarPreview() {
     PpoPpiTheme {
-        PetRegisterTopAppBar(
-            title = "asdf",
-            onBackClick = {},
-        )
+        PetRegisterTopAppBar(onBackClick = {})
     }
 }

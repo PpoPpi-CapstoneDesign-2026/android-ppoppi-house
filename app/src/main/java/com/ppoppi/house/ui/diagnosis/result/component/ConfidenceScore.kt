@@ -27,15 +27,16 @@ import com.ppoppi.house.ui.theme.PpoPpiTheme
 fun ConfidenceScore(
     confidenceScore: Double,
     triageColor: Color,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-    val progress = (confidenceScore / 100.0)
-        .coerceIn(0.0, 1.0)
-        .toFloat()
+    val progress =
+        (confidenceScore / 100.0)
+            .coerceIn(0.0, 1.0)
+            .toFloat()
 
     Row(
         modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             text = "신뢰도",
@@ -53,7 +54,6 @@ fun ConfidenceScore(
                     .clip(RoundedCornerShape(100.dp)),
         ) {
             Canvas(modifier = Modifier.matchParentSize()) {
-
                 val filledWidth = size.width * progress
                 val cornerRadiusPx = minOf(100.dp.toPx(), size.height / 2f)
 
@@ -61,10 +61,11 @@ fun ConfidenceScore(
                     drawRoundRect(
                         color = triageColor,
                         size = Size(filledWidth, size.height),
-                        cornerRadius = CornerRadius(
-                            cornerRadiusPx,
-                            cornerRadiusPx
-                        ),
+                        cornerRadius =
+                            CornerRadius(
+                                cornerRadiusPx,
+                                cornerRadiusPx,
+                            ),
                     )
                 }
             }

@@ -1,4 +1,4 @@
-package com.ppoppi.house.ui.onboarding.register
+package com.ppoppi.house.ui.main.setting.edit
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -37,7 +37,7 @@ import com.ppoppi.house.ui.theme.White
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PetRegisterScreen(
+fun PetInfoScreen(
     onComplete: (pet: Pet) -> Unit,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -140,8 +140,20 @@ fun PetRegisterScreen(
 
 @Composable
 @Preview(showBackground = true)
-fun PetRegisterScreenPreview() {
+fun PetInfoScreenPreview() {
     PpoPpiTheme {
-        PetRegisterScreen(onComplete = {}, onBackClick = {})
+        PetInfoScreen(
+            onComplete = {},
+            onBackClick = {},
+            pet =
+                Pet(
+                    name = "뽀삐",
+                    species = SPECIES.DOG,
+                    breed = "뽀삐",
+                    age = 1,
+                    sex = SEX.MALE,
+                    color = COLOR.PRIMARY50,
+                ),
+        )
     }
 }
