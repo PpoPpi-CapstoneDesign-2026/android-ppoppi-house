@@ -46,7 +46,8 @@ fun ResultCard(
                                 asFrameworkPaint().apply {
                                     isAntiAlias = true
                                     color = Black.copy(alpha = 0.25f).toArgb()
-                                    maskFilter = BlurMaskFilter(4.dp.toPx(), BlurMaskFilter.Blur.NORMAL)
+                                    maskFilter =
+                                        BlurMaskFilter(4.dp.toPx(), BlurMaskFilter.Blur.NORMAL)
                                 }
                             }
                         canvas.drawRoundRect(
@@ -59,7 +60,8 @@ fun ResultCard(
                             paint = paint,
                         )
                     }
-                }.clip(RoundedCornerShape(8.dp))
+                }
+                .clip(RoundedCornerShape(8.dp))
                 .background(White)
                 .drawBehind {
                     drawRect(
@@ -67,7 +69,8 @@ fun ResultCard(
                         topLeft = Offset(0f, 0f),
                         size = Size(4.dp.toPx(), size.height),
                     )
-                }.padding(20.dp),
+                }
+                .padding(20.dp),
     ) {
         Text(
             text = diagnosis.guideMsg.getColoredText(textColor, diagnosis.guideTitle),
@@ -114,6 +117,7 @@ private fun ResultCardPreview() {
                     affectedArea = "각막",
                     guideMsg = "결막염이 의심 어쩌구",
                     guideAction = "액션 어쩌구",
+                    imageUrl = null,
                 ),
         )
     }

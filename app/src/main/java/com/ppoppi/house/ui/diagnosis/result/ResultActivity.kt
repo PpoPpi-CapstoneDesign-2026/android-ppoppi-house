@@ -24,6 +24,7 @@ class ResultActivity : ComponentActivity() {
             affectedArea = "각막",
             guideMsg = "결막염이 의심 어쩌",
             guideAction = "일주일 내 내원 권장",
+            imageUrl = null,
         )
 
     override fun onCreate(savedInstanceState: Bundle?) {
