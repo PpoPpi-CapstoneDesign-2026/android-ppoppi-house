@@ -14,11 +14,13 @@ import com.ppoppi.house.ui.main.setting.SettingScreen
 @Composable
 fun NavigationGraph(
     navController: NavHostController,
+    navigateToDiagnosis: () -> Unit,
+    startRoute: String = HOME,
     modifier: Modifier = Modifier,
 ) {
-    NavHost(navController = navController, startDestination = BottomNavItem.Home.screenRoute) {
+    NavHost(navController = navController, startDestination = startRoute) {
         composable(BottomNavItem.Home.screenRoute) {
-            HomeScreen(modifier)
+            HomeScreen(navigateToDiagnosis, modifier)
         }
         composable(BottomNavItem.Diary.screenRoute) {
             DiaryScreen(modifier)
