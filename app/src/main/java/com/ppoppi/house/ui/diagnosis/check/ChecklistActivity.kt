@@ -36,8 +36,8 @@ class ChecklistActivity : ComponentActivity() {
     }
 
     companion object {
-        const val EXTRA_IMAGE_URI = "EXTRA_IMAGE_URI"
-        const val EXTRA_PET = "EXTRA_PET"
+        private const val EXTRA_IMAGE_URI: String = "EXTRA_IMAGE_URI"
+        private const val EXTRA_PET: String = "EXTRA_PET"
 
         fun newIntent(
             context: Context,

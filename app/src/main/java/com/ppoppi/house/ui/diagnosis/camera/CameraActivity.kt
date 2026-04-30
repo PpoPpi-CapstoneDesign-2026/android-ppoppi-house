@@ -32,7 +32,7 @@ class CameraActivity : ComponentActivity() {
     }
 
     companion object {
-        const val EXTRA_PET = "EXTRA_PET"
+        private const val EXTRA_PET: String = "EXTRA_PET"
 
         fun newIntent(
             context: Context,

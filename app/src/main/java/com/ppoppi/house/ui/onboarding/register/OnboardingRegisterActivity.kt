@@ -30,7 +30,7 @@ class OnboardingRegisterActivity : ComponentActivity() {
     }
 
     companion object {
-        private const val EXTRA_PET = "EXTRA_PET"
+        private const val EXTRA_PET: String = "EXTRA_PET"
 
         fun newIntent(context: Context): Intent = Intent(context, OnboardingRegisterActivity::class.java)
 

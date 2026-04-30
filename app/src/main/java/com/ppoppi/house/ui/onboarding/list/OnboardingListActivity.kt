@@ -1,5 +1,7 @@
 package com.ppoppi.house.ui.onboarding.list
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -54,5 +56,9 @@ class OnboardingListActivity : ComponentActivity() {
                 )
             }
         }
+    }
+
+    companion object {
+        fun newIntent(context: Context): Intent = Intent(context, OnboardingListActivity::class.java)
     }
 }
