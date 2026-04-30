@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -82,8 +81,7 @@ fun DiaryItem(
                             paint = paint,
                         )
                     }
-                }
-                .clip(RoundedCornerShape(8.dp))
+                }.clip(RoundedCornerShape(8.dp))
                 .background(White)
                 .drawBehind {
                     drawRect(
@@ -91,8 +89,7 @@ fun DiaryItem(
                         topLeft = Offset(0f, 0f),
                         size = Size(4.dp.toPx(), size.height),
                     )
-                }
-                .padding(16.dp),
+                }.padding(16.dp),
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -108,7 +105,7 @@ fun DiaryItem(
                 text = pet.name,
                 style = PpoPpiTheme.typography.title2,
                 color = petColor,
-                modifier = Modifier.padding(start = 6.dp)
+                modifier = Modifier.padding(start = 6.dp),
             )
         }
 
@@ -125,24 +122,26 @@ fun DiaryItem(
                 text = "🔍진단 결과",
                 style = PpoPpiTheme.typography.title3,
                 color = Primary800,
-                modifier = Modifier.padding(top = 10.dp)
+                modifier = Modifier.padding(top = 10.dp),
             )
 
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 14.dp)
-                    .padding(vertical = 4.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = 14.dp)
+                        .padding(vertical = 4.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 val imageUrl = diagnosis.imageUrl ?: return@Column
                 AsyncImage(
                     model = imageUrl,
                     contentDescription = null,
-                    modifier = Modifier
-                        .size(80.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(Black, RoundedCornerShape(8.dp)),
+                    modifier =
+                        Modifier
+                            .size(80.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(Black, RoundedCornerShape(8.dp)),
                 )
 
                 Column(
@@ -151,7 +150,7 @@ fun DiaryItem(
                     Row(
                         modifier = Modifier,
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(14.dp)
+                        horizontalArrangement = Arrangement.spacedBy(14.dp),
                     ) {
                         Text(
                             text = diagnosis.guideTitle,
@@ -189,7 +188,7 @@ fun DiaryItem(
                         checklist = description,
                         backgroundColor = backgroundColor,
                         textColor = textColor,
-                        borderColor = borderColor
+                        borderColor = borderColor,
                     )
                 }
             }
@@ -209,14 +208,14 @@ fun DiaryItem(
                 text = "📝메모",
                 style = PpoPpiTheme.typography.title3,
                 color = Primary800,
-                modifier = Modifier.padding(top = 10.dp)
+                modifier = Modifier.padding(top = 10.dp),
             )
 
             Text(
                 text = memo,
                 style = PpoPpiTheme.typography.body5,
                 color = Black,
-                modifier = Modifier.padding(top = 10.dp)
+                modifier = Modifier.padding(top = 10.dp),
             )
 
             if (healthChecklist.isNotEmpty()) {
@@ -236,7 +235,7 @@ fun DiaryItem(
         ) {
             healthChecklist.forEach {
                 ChecklistItem(
-                    checklist = it
+                    checklist = it,
                 )
             }
         }

@@ -7,5 +7,5 @@ data class Diagnosis(
     val affectedArea: String,
     val guideMsg: String,
     val guideAction: String,
-    val imageUrl: String?
+    val imageUrl: String?,
 )

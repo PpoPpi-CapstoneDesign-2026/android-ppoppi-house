@@ -60,8 +60,7 @@ fun ResultCard(
                             paint = paint,
                         )
                     }
-                }
-                .clip(RoundedCornerShape(8.dp))
+                }.clip(RoundedCornerShape(8.dp))
                 .background(White)
                 .drawBehind {
                     drawRect(
@@ -69,8 +68,7 @@ fun ResultCard(
                         topLeft = Offset(0f, 0f),
                         size = Size(4.dp.toPx(), size.height),
                     )
-                }
-                .padding(20.dp),
+                }.padding(20.dp),
     ) {
         Text(
             text = diagnosis.guideMsg.getColoredText(textColor, diagnosis.guideTitle),

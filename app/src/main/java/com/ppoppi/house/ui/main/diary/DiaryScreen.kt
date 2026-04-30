@@ -67,81 +67,89 @@ fun DiaryScreen(
     var headerScrollOffset by remember { mutableStateOf(0f) }
     val collapseThreshold = with(density) { 150.dp.toPx() } // 접히기 전까지 소비할 스크롤 양
 
-    val nestedScrollConnection = remember {
-        object : NestedScrollConnection {
-            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-                val delta = available.y
+    val nestedScrollConnection =
+        remember {
+            object : NestedScrollConnection {
+                override fun onPreScroll(
+                    available: Offset,
+                    source: NestedScrollSource,
+                ): Offset {
+                    val delta = available.y
 
-                return if (delta < 0) { // 위로 스크롤 (올리기)
-                    if (headerScrollOffset > -collapseThreshold) {
-                        val consumed = delta.coerceAtLeast(-collapseThreshold - headerScrollOffset)
-                        headerScrollOffset += consumed
-                        Offset(0f, consumed)
-                    } else {
-                        Offset.Zero
-                    }
-                } else { // 아래로 스크롤 (내리기)
-                    if (listState.firstVisibleItemIndex == 0 && listState.firstVisibleItemScrollOffset == 0) {
-                        if (headerScrollOffset < 0) {
-                            val consumed = delta.coerceAtMost(-headerScrollOffset)
+                    return if (delta < 0) { // 위로 스크롤 (올리기)
+                        if (headerScrollOffset > -collapseThreshold) {
+                            val consumed = delta.coerceAtLeast(-collapseThreshold - headerScrollOffset)
                             headerScrollOffset += consumed
                             Offset(0f, consumed)
                         } else {
                             Offset.Zero
                         }
-                    } else {
-                        Offset.Zero
+                    } else { // 아래로 스크롤 (내리기)
+                        if (listState.firstVisibleItemIndex == 0 && listState.firstVisibleItemScrollOffset == 0) {
+                            if (headerScrollOffset < 0) {
+                                val consumed = delta.coerceAtMost(-headerScrollOffset)
+                                headerScrollOffset += consumed
+                                Offset(0f, consumed)
+                            } else {
+                                Offset.Zero
+                            }
+                        } else {
+                            Offset.Zero
+                        }
                     }
                 }
             }
         }
-    }
 
     val isCollapsed by remember {
         derivedStateOf { headerScrollOffset < -20f }
     }
 
     // 예시 데이터 리스트
-    val diaryItems = remember {
-        listOf(
-            DiaryData(
-                pet = Pet("뽀삐", SPECIES.CAT, "몰라", 1, SEX.MALE, COLOR.PRIMARY600),
-                diagnosis = Diagnosis(
-                    "결막염",
-                    Triage.SOON,
-                    80.0,
-                    "각막",
-                    "ㅁㄴㅇㄹ",
-                    "ㅁㄴㅇㄹ",
-                    "https://picsum.photos/400/400"
+    val diaryItems =
+        remember {
+            listOf(
+                DiaryData(
+                    pet = Pet("뽀삐", SPECIES.CAT, "몰라", 1, SEX.MALE, COLOR.PRIMARY600),
+                    diagnosis =
+                        Diagnosis(
+                            "결막염",
+                            Triage.SOON,
+                            80.0,
+                            "각막",
+                            "ㅁㄴㅇㄹ",
+                            "ㅁㄴㅇㄹ",
+                            "https://picsum.photos/400/400",
+                        ),
+                    checklist = listOf("눈물", "눈곱"),
+                    memo = "",
+                    healthChecklist = emptyList(),
                 ),
-                checklist = listOf("눈물", "눈곱"),
-                memo = "",
-                healthChecklist = emptyList()
-            ),
-            DiaryData(
-                pet = Pet("나비", SPECIES.CAT, "몰라", 2, SEX.FEMALE, COLOR.PRIMARY600),
-                diagnosis = Diagnosis(
-                    "피부염",
-                    Triage.MONITOR,
-                    75.0,
-                    "등",
-                    "ㅁㄴㅇㄹ",
-                    "ㅁㄴㅇㄹ",
-                    "https://picsum.photos/400/400"
+                DiaryData(
+                    pet = Pet("나비", SPECIES.CAT, "몰라", 2, SEX.FEMALE, COLOR.PRIMARY600),
+                    diagnosis =
+                        Diagnosis(
+                            "피부염",
+                            Triage.MONITOR,
+                            75.0,
+                            "등",
+                            "ㅁㄴㅇㄹ",
+                            "ㅁㄴㅇㄹ",
+                            "https://picsum.photos/400/400",
+                        ),
+                    checklist = listOf("가려움"),
+                    memo = "오늘은 나비가 어쩌구 저쩌구 메모메모",
+                    healthChecklist = listOf("활동량 적음", "식욕 없음"),
                 ),
-                checklist = listOf("가려움"),
-                memo = "오늘은 나비가 어쩌구 저쩌구 메모메모",
-                healthChecklist = listOf("활동량 적음", "식욕 없음")
             )
-        )
-    }
+        }
 
     Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(Primary50)
-            .nestedScroll(nestedScrollConnection)
+        modifier =
+            modifier
+                .fillMaxSize()
+                .background(Primary50)
+                .nestedScroll(nestedScrollConnection),
     ) {
         LazyColumn(
             state = listState,
@@ -173,9 +181,10 @@ fun DiaryScreen(
                     })",
                     style = PpoPpiTheme.typography.title1,
                     color = Primary800,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 12.dp)
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 12.dp),
                 )
             }
 
@@ -199,21 +208,23 @@ fun DiaryScreen(
 
         // 플로팅 버튼
         Box(
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(16.dp)
-                .size(50.dp)
-                .clip(RoundedCornerShape(100.dp))
-                .background(Primary400, RoundedCornerShape(100.dp)),
+            modifier =
+                Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(16.dp)
+                    .size(50.dp)
+                    .clip(RoundedCornerShape(100.dp))
+                    .background(Primary400, RoundedCornerShape(100.dp)),
         ) {
             Icon(
                 imageVector = Icons.Default.Add,
                 tint = White,
                 contentDescription = null,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(10.dp)
-                    .align(Alignment.Center),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(10.dp)
+                        .align(Alignment.Center),
             )
         }
     }
@@ -224,7 +235,7 @@ data class DiaryData(
     val diagnosis: Diagnosis,
     val checklist: List<String>,
     val memo: String,
-    val healthChecklist: List<String>
+    val healthChecklist: List<String>,
 )
 
 @Composable
