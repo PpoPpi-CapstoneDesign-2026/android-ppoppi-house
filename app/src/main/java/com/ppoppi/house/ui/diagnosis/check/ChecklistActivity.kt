@@ -1,0 +1,52 @@
+package com.ppoppi.house.ui.diagnosis.check
+
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.core.content.IntentCompat
+import com.ppoppi.house.domain.Pet
+import com.ppoppi.house.ui.diagnosis.result.ResultActivity
+import com.ppoppi.house.ui.theme.PpoPpiTheme
+
+class ChecklistActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+
+        val pet =
+            intent.getParcelableExtra<Pet>(EXTRA_PET) ?: return finish()
+        val imageUri =
+            IntentCompat.getParcelableExtra(intent, EXTRA_IMAGE_URI, Uri::class.java)
+                ?: return finish()
+
+        setContent {
+            PpoPpiTheme {
+                ChecklistScreen(
+                    onBackClick = { finish() },
+                    onComplete = { symptoms ->
+                        startActivity(ResultActivity.newIntent(this, pet, imageUri, symptoms))
+                    },
+                )
+            }
+        }
+    }
+
+    companion object {
+        const val EXTRA_IMAGE_URI = "EXTRA_IMAGE_URI"
+        const val EXTRA_PET = "EXTRA_PET"
+
+        fun newIntent(
+            context: Context,
+            pet: Pet,
+            imageUri: Uri,
+        ): Intent =
+            Intent(context, ChecklistActivity::class.java).apply {
+                putExtra(EXTRA_IMAGE_URI, imageUri)
+                putExtra(EXTRA_PET, pet)
+            }
+    }
+}
