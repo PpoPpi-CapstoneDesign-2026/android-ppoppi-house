@@ -6,6 +6,8 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.hilt.android)
+    alias(libs.plugins.ksp)
 }
 
 val localProperties =
@@ -32,8 +34,16 @@ android {
             localProperties.getProperty("MAPS_API_KEY") ?: ""
         manifestPlaceholders["KAKAO_API_KEY"] =
             localProperties.getProperty("KAKAO_API_KEY") ?: ""
-        buildConfigField("String", "BASE_URL", "\"${localProperties.getProperty("BASE_URL") ?: ""}\"")
-        buildConfigField("String", "KAKAO_API_KEY", "\"${localProperties.getProperty("KAKAO_API_KEY") ?: ""}\"")
+        buildConfigField(
+            "String",
+            "BASE_URL",
+            "\"${localProperties.getProperty("BASE_URL") ?: ""}\""
+        )
+        buildConfigField(
+            "String",
+            "KAKAO_API_KEY",
+            "\"${localProperties.getProperty("KAKAO_API_KEY") ?: ""}\""
+        )
     }
 
     buildTypes {
@@ -46,11 +56,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "21"
     }
     buildFeatures {
         compose = true
@@ -105,5 +115,7 @@ dependencies {
     implementation(libs.maps.compose)
     implementation(libs.play.services.maps)
     implementation(libs.play.services.location)
-    implementation(libs.accompanist.permissions.v0340)
+
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
 }
