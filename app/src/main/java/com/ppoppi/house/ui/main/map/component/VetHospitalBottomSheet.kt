@@ -20,8 +20,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.android.gms.maps.model.LatLng
-import com.ppoppi.house.domain.BusinessStatus
-import com.ppoppi.house.domain.VetHospital
+import com.ppoppi.house.domain.model.BusinessStatus
+import com.ppoppi.house.domain.model.VetHospital
 import com.ppoppi.house.ui.theme.Black
 import com.ppoppi.house.ui.theme.Gray200
 import com.ppoppi.house.ui.theme.Gray300

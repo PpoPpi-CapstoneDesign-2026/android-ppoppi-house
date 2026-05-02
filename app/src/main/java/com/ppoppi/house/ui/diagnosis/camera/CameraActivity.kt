@@ -7,7 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.core.content.IntentCompat
-import com.ppoppi.house.domain.Pet
+import com.ppoppi.house.domain.model.Pet
 import com.ppoppi.house.ui.diagnosis.check.ChecklistActivity
 import com.ppoppi.house.ui.theme.PpoPpiTheme
 

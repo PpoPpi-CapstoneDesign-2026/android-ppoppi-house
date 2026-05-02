@@ -31,10 +31,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.ppoppi.house.domain.COLOR
-import com.ppoppi.house.domain.Pet
-import com.ppoppi.house.domain.SEX
-import com.ppoppi.house.domain.SPECIES
+import com.ppoppi.house.domain.model.COLOR
+import com.ppoppi.house.domain.model.Pet
+import com.ppoppi.house.domain.model.SEX
+import com.ppoppi.house.domain.model.SPECIES
 import com.ppoppi.house.ui.component.PetItem
 import com.ppoppi.house.ui.main.setting.component.DeleteAccountDialog
 import com.ppoppi.house.ui.main.setting.component.LogoutDialog

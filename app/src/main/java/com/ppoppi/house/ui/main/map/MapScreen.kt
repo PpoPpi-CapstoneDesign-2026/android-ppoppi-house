@@ -46,8 +46,8 @@ import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
-import com.ppoppi.house.domain.BusinessStatus
-import com.ppoppi.house.domain.VetHospital
+import com.ppoppi.house.domain.model.BusinessStatus
+import com.ppoppi.house.domain.model.VetHospital
 import com.ppoppi.house.ui.main.map.component.VetHospitalBottomSheet
 import kotlinx.coroutines.launch
 

@@ -6,10 +6,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.ppoppi.house.domain.COLOR
-import com.ppoppi.house.domain.Pet
-import com.ppoppi.house.domain.SEX
-import com.ppoppi.house.domain.SPECIES
+import com.ppoppi.house.domain.model.COLOR
+import com.ppoppi.house.domain.model.Pet
+import com.ppoppi.house.domain.model.SEX
+import com.ppoppi.house.domain.model.SPECIES
 import com.ppoppi.house.ui.diagnosis.camera.CameraActivity
 import com.ppoppi.house.ui.theme.PpoPpiTheme
 

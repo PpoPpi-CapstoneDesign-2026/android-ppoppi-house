@@ -25,9 +25,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.ppoppi.house.R
-import com.ppoppi.house.domain.Diagnosis
-import com.ppoppi.house.domain.Triage
-import com.ppoppi.house.domain.Triage.Companion.toColor
+import com.ppoppi.house.domain.model.Diagnosis
+import com.ppoppi.house.domain.model.Triage
+import com.ppoppi.house.domain.model.Triage.Companion.toColor
 import com.ppoppi.house.ui.diagnosis.result.component.ConfidenceScore
 import com.ppoppi.house.ui.diagnosis.result.component.ResultCard
 import com.ppoppi.house.ui.diagnosis.result.component.TriageBadge

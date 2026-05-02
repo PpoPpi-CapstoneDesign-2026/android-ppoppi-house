@@ -7,9 +7,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.ppoppi.house.domain.Diagnosis
-import com.ppoppi.house.domain.Pet
-import com.ppoppi.house.domain.Triage
+import com.ppoppi.house.domain.model.Diagnosis
+import com.ppoppi.house.domain.model.Pet
+import com.ppoppi.house.domain.model.Triage
 import com.ppoppi.house.ui.diagnosis.select.SelectActivity
 import com.ppoppi.house.ui.main.MainActivity
 import com.ppoppi.house.ui.main.navigation.MAP

@@ -21,10 +21,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ppoppi.house.R
-import com.ppoppi.house.domain.COLOR
-import com.ppoppi.house.domain.Pet
-import com.ppoppi.house.domain.SEX
-import com.ppoppi.house.domain.SPECIES
+import com.ppoppi.house.domain.model.COLOR
+import com.ppoppi.house.domain.model.Pet
+import com.ppoppi.house.domain.model.SEX
+import com.ppoppi.house.domain.model.SPECIES
 import com.ppoppi.house.ui.main.home.component.DiagnosisCard
 import com.ppoppi.house.ui.main.home.component.PetAddButton
 import com.ppoppi.house.ui.main.home.component.PetButton

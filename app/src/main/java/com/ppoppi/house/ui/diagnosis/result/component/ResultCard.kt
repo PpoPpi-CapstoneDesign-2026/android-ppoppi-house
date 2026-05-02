@@ -19,9 +19,9 @@ import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.ppoppi.house.domain.Diagnosis
-import com.ppoppi.house.domain.Triage
-import com.ppoppi.house.domain.Triage.Companion.toColor
+import com.ppoppi.house.domain.model.Diagnosis
+import com.ppoppi.house.domain.model.Triage
+import com.ppoppi.house.domain.model.Triage.Companion.toColor
 import com.ppoppi.house.ui.theme.Black
 import com.ppoppi.house.ui.theme.Gray100
 import com.ppoppi.house.ui.theme.Gray400

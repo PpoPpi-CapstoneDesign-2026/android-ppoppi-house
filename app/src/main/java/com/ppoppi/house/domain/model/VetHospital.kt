@@ -1,4 +1,4 @@
-package com.ppoppi.house.domain
+package com.ppoppi.house.domain.model
 
 import androidx.compose.ui.graphics.Color
 import com.google.android.gms.maps.model.LatLng

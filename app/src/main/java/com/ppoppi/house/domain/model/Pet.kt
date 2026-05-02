@@ -1,4 +1,4 @@
-package com.ppoppi.house.domain
+package com.ppoppi.house.domain.model
 
 import android.os.Parcelable
 import androidx.compose.ui.graphics.Color

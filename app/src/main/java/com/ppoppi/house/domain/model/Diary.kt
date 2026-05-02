@@ -1,4 +1,4 @@
-package com.ppoppi.house.domain
+package com.ppoppi.house.domain.model
 
 data class Diary(
     val id: Long,
