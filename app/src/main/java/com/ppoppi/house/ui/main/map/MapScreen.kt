@@ -208,7 +208,7 @@ fun PetHospitalMap(
     val hospitals = remember(userLocation) { dummyHospitals(userLocation) }
 
     var selectedHospital by remember { mutableStateOf<VetHospital?>(null) }
-    val sheetState = rememberModalBottomSheetState()
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val scope = rememberCoroutineScope()
 
     GoogleMap(

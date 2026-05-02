@@ -38,20 +38,20 @@ fun ColorInputSection(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             RoundedColorRadioButton(
+                isSelected = color == 0,
+                onClick = { onValueChanged(0) },
+                background = Primary50,
+                modifier = Modifier,
+            )
+            RoundedColorRadioButton(
                 isSelected = color == 1,
                 onClick = { onValueChanged(1) },
-                background = Primary50,
+                background = Primary200,
                 modifier = Modifier,
             )
             RoundedColorRadioButton(
                 isSelected = color == 2,
                 onClick = { onValueChanged(2) },
-                background = Primary200,
-                modifier = Modifier,
-            )
-            RoundedColorRadioButton(
-                isSelected = color == 3,
-                onClick = { onValueChanged(3) },
                 background = Primary600,
                 modifier = Modifier,
             )
