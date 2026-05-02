@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.ppoppi.house.R
 import com.ppoppi.house.ui.theme.Gray100
 import com.ppoppi.house.ui.theme.Gray400
 import com.ppoppi.house.ui.theme.PpoPpiTheme
@@ -32,7 +33,6 @@ import com.ppoppi.house.ui.theme.Primary400
 import com.ppoppi.house.ui.theme.Red400
 import com.ppoppi.house.ui.theme.White
 import com.ppoppi.house.ui.util.noRippleClickable
-import com.ppoppi.house.R
 
 @Composable
 fun LogoutDialog(
@@ -107,7 +107,7 @@ fun LogoutDialog(
                             ),
                     ) {
                         Text(
-                            text = stringResource(R.string. setting_logout_dialog_cancel),
+                            text = stringResource(R.string.setting_logout_dialog_cancel),
                             style = PpoPpiTheme.typography.body4,
                             color = Gray400,
                         )
