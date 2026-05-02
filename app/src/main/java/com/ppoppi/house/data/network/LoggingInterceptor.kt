@@ -1,4 +1,4 @@
-package com.ppoppi.house.data.remote
+package com.ppoppi.house.data.network
 
 import android.util.Log
 import okhttp3.Interceptor
