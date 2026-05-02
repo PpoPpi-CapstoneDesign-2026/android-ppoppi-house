@@ -28,6 +28,7 @@ import com.ppoppi.house.ui.util.noRippleClickable
 fun LoginScreen(
     toMain: () -> Unit,
     toOnboarding: () -> Unit,
+    onKakaoLogin: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -47,7 +48,7 @@ fun LoginScreen(
                     .fillMaxWidth()
                     .padding(horizontal = 44.dp)
                     .padding(bottom = 18.dp)
-                    .noRippleClickable(toMain),
+                    .noRippleClickable(onKakaoLogin),
             backgroundColor = Color(0xFFFEE500),
             imageResource = painterResource(R.drawable.ic_kakao_login),
             text = stringResource(R.string.login_with_kakao),
@@ -69,7 +70,8 @@ fun LoginScreen(
             modifier =
                 Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 44.dp),
+                    .padding(horizontal = 44.dp)
+                    .noRippleClickable(toMain),
             backgroundColor = Color(0xFF03A94D),
             imageResource = painterResource(R.drawable.ic_naver_login),
             text = stringResource(R.string.login_with_naver),
@@ -85,6 +87,7 @@ private fun LoginScreenPreview() {
         LoginScreen(
             toMain = { },
             toOnboarding = { },
+            onKakaoLogin = { },
         )
     }
 }
