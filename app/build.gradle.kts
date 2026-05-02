@@ -30,6 +30,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         manifestPlaceholders["MAPS_API_KEY"] =
             localProperties.getProperty("MAPS_API_KEY") ?: ""
+        buildConfigField("String", "KAKAO_API_KEY", "\"${localProperties.getProperty("KAKAO_API_KEY") ?: ""}\"")
     }
 
     buildTypes {
@@ -50,6 +51,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -88,6 +90,9 @@ dependencies {
     implementation(libs.androidx.compose.material.icons.extended)
 
     // 업로드
+    // kakao
+    implementation(libs.kakao.user)
+
     implementation(libs.okhttp)
 
     // google - map
