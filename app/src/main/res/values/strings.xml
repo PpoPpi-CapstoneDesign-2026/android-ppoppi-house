@@ -74,4 +74,12 @@
     <string name="setting_authority_setting">권한 설정</string>
     <string name="setting_authority_location">위치 권한 설정하러 가기</string>
     <string name="setting_authority_camera">카메라 권한 설정하러 가기</string>
+
+    <string name="setting_logout_dialog_description">로그아웃 하시겠습니까?</string>
+    <string name="setting_logout_dialog_logout">로그아웃</string>
+    <string name="setting_logout_dialog_cancel">취소</string>
+
+    <string name="setting_delete_account_dialog_description">회원 탈퇴 하시겠습니까?</string>
+    <string name="setting_delete_account_dialog_logout">회원 탈퇴</string>
+    <string name="setting_delete_account_dialog_cancel">취소</string>
 </resources>

@@ -21,6 +21,11 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,6 +37,8 @@ import com.ppoppi.house.domain.Pet
 import com.ppoppi.house.domain.SEX
 import com.ppoppi.house.domain.SPECIES
 import com.ppoppi.house.ui.component.PetItem
+import com.ppoppi.house.ui.main.setting.component.DeleteAccountDialog
+import com.ppoppi.house.ui.main.setting.component.LogoutDialog
 import com.ppoppi.house.ui.main.setting.edit.PetInfoActivity
 import com.ppoppi.house.ui.onboarding.list.component.AddPetButton
 import com.ppoppi.house.ui.theme.Black
@@ -43,6 +50,8 @@ import com.ppoppi.house.ui.util.noRippleClickable
 @Composable
 fun SettingScreen(modifier: Modifier = Modifier) {
     val context = LocalContext.current
+    var showLogoutDialog by remember { mutableStateOf(false) }
+    var showAccountDeleteDialog by remember { mutableStateOf(false) }
     val pets =
         listOf(
             Pet(
@@ -166,7 +175,7 @@ fun SettingScreen(modifier: Modifier = Modifier) {
                     Modifier
                         .fillMaxWidth()
                         .padding(vertical = 20.dp, horizontal = 18.dp)
-                        .noRippleClickable(onClick = {}),
+                        .noRippleClickable(onClick = { showLogoutDialog = true }),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
@@ -192,7 +201,7 @@ fun SettingScreen(modifier: Modifier = Modifier) {
                     Modifier
                         .fillMaxWidth()
                         .padding(vertical = 20.dp, horizontal = 18.dp)
-                        .noRippleClickable(onClick = {}),
+                        .noRippleClickable(onClick = { showAccountDeleteDialog = true }),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
@@ -249,6 +258,24 @@ fun SettingScreen(modifier: Modifier = Modifier) {
                 modifier = Modifier.padding(top = 10.dp, bottom = 24.dp),
             )
         }
+    }
+
+    if (showLogoutDialog) {
+        LogoutDialog(
+            onConfirm = {
+                //TODO: 로그아웃 로직 추가
+            },
+            onDismiss = { showLogoutDialog = false },
+        )
+    }
+
+    if (showAccountDeleteDialog) {
+        DeleteAccountDialog(
+            onConfirm = {
+                //TODO: 회원 탈퇴 로직 추가
+            },
+            onDismiss = { showAccountDeleteDialog = false }
+        )
     }
 }
 
