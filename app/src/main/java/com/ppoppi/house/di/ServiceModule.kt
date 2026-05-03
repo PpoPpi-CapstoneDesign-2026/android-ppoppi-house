@@ -1,6 +1,6 @@
 package com.ppoppi.house.di
 
-import com.ppoppi.house.data.service.LoginApiService
+import com.ppoppi.house.data.service.AuthService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,6 +13,6 @@ import javax.inject.Singleton
 object ServiceModule {
     @Provides
     @Singleton
-    fun provideLoginApiService(retrofit: Retrofit): LoginApiService =
-        retrofit.create(LoginApiService::class.java)
+    fun provideLoginApiService(retrofit: Retrofit): AuthService =
+        retrofit.create(AuthService::class.java)
 }
