@@ -22,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,6 +34,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.android.gms.location.LocationServices
@@ -46,8 +48,7 @@ import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
-import com.ppoppi.house.domain.model.BusinessStatus
-import com.ppoppi.house.domain.model.VetHospital
+import com.ppoppi.house.domain.model.HospitalItem
 import com.ppoppi.house.ui.main.map.component.VetHospitalBottomSheet
 import kotlinx.coroutines.launch
 
@@ -71,12 +72,10 @@ fun MapScreen(modifier: Modifier = Modifier) {
 
     when {
         locationPermissions.allPermissionsGranted -> {
-            // ✅ 권한 있음 → 지도 표시 (다음 단계)
             MapWithCurrentLocation(modifier = modifier)
         }
 
         locationPermissions.shouldShowRationale -> {
-            // ⚠️ 한 번 거절한 상태 → 왜 필요한지 설명
             PermissionRationaleCard(
                 modifier = modifier,
                 onConfirm = { locationPermissions.launchMultiplePermissionRequest() },
@@ -84,7 +83,6 @@ fun MapScreen(modifier: Modifier = Modifier) {
         }
 
         else -> {
-            // 🚫 영구 거절 → 설정으로 유도
             PermissionDeniedCard(modifier = modifier)
         }
     }
@@ -127,87 +125,25 @@ private fun MapWithCurrentLocation(modifier: Modifier = Modifier) {
     }
 }
 
-private fun dummyHospitals(center: LatLng): List<VetHospital> =
-    listOf(
-        VetHospital(
-            name = "24시 광진 동물병원",
-            businessStatus = BusinessStatus.OPEN,
-            businessTime = "24시간 운영",
-            location = LatLng(center.latitude + 0.005, center.longitude + 0.003),
-            phone = "02-456-7890",
-            distance = 615,
-            address = "서울특별시 광진구 자양동 234-5",
-        ),
-        VetHospital(
-            name = "성수 동물의료센터",
-            businessStatus = BusinessStatus.OPEN,
-            businessTime = "평일 09:00 - 20:00 / 토 09:00 - 15:00",
-            location = LatLng(center.latitude - 0.003, center.longitude + 0.006),
-            phone = "02-498-2211",
-            distance = 624,
-            address = "서울특별시 성동구 성수동1가 656-281",
-        ),
-        VetHospital(
-            name = "한강 동물병원",
-            businessStatus = BusinessStatus.OPEN,
-            businessTime = "평일 10:00 - 19:00 / 토 10:00 - 17:00",
-            location = LatLng(center.latitude + 0.007, center.longitude - 0.004),
-            phone = "02-512-3344",
-            distance = 853,
-            address = "서울특별시 광진구 구의동 48-12",
-        ),
-        VetHospital(
-            name = "굿프랜드 동물병원",
-            businessStatus = BusinessStatus.CLOSED,
-            businessTime = "평일 09:30 - 18:30 / 토 09:30 - 14:00",
-            location = LatLng(center.latitude - 0.006, center.longitude - 0.002),
-            phone = "02-467-5500",
-            distance = 689,
-            address = "서울특별시 성동구 행당동 312-7",
-        ),
-        VetHospital(
-            name = "아이러브 동물병원",
-            businessStatus = BusinessStatus.CLOSED,
-            businessTime = "평일 10:00 - 19:30 / 토 10:00 - 16:00",
-            location = LatLng(center.latitude + 0.002, center.longitude + 0.008),
-            phone = "02-523-8899",
-            distance = 738,
-            address = "서울특별시 광진구 중곡동 175-3",
-        ),
-        VetHospital(
-            name = "뚝섬 VIP 동물병원",
-            businessStatus = BusinessStatus.OPEN,
-            businessTime = "평일 09:00 - 21:00 / 토·일 10:00 - 18:00",
-            location = LatLng(center.latitude - 0.004, center.longitude + 0.005),
-            phone = "02-481-6677",
-            distance = 625,
-            address = "서울특별시 성동구 뚝섬로 425",
-        ),
-        VetHospital(
-            name = "건대 동물메디컬센터",
-            businessStatus = BusinessStatus.CLOSED,
-            businessTime = "평일 09:00 - 18:00 / 토 09:00 - 13:00",
-            location = LatLng(center.latitude + 0.009, center.longitude + 0.001),
-            phone = "02-534-1234",
-            distance = 1003,
-            address = "서울특별시 광진구 화양동 49-2",
-        ),
-    )
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Suppress("ParamsComparedByRef")
 @Composable
 fun PetHospitalMap(
     userLocation: LatLng,
     modifier: Modifier = Modifier,
+    viewModel: MapViewModel = hiltViewModel(),
 ) {
     val cameraPositionState =
         rememberCameraPositionState {
             position = CameraPosition.fromLatLngZoom(userLocation, 14f)
         }
-    val hospitals = remember(userLocation) { dummyHospitals(userLocation) }
+    val hospitals by viewModel.hospitals.collectAsState()
 
-    var selectedHospital by remember { mutableStateOf<VetHospital?>(null) }
+    LaunchedEffect(userLocation) {
+        viewModel.loadHospitals(userLocation.latitude, userLocation.longitude)
+    }
+
+    var selectedHospital by remember { mutableStateOf<HospitalItem?>(null) }
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val scope = rememberCoroutineScope()
 
@@ -233,9 +169,9 @@ fun PetHospitalMap(
 
         hospitals.forEach { hospital ->
             Marker(
-                state = MarkerState(position = hospital.location),
+                state = MarkerState(position = LatLng(hospital.latitude, hospital.longitude)),
                 title = hospital.name,
-                snippet = hospital.phone,
+                snippet = "${hospital.distanceMeter}m",
                 icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE),
                 onClick = {
                     selectedHospital = hospital

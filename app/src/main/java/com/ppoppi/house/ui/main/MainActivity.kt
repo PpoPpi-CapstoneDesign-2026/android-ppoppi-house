@@ -17,7 +17,9 @@ import com.ppoppi.house.ui.main.navigation.MainBottomNavigationBar
 import com.ppoppi.house.ui.main.navigation.NavigationGraph
 import com.ppoppi.house.ui.theme.PpoPpiTheme
 import com.ppoppi.house.ui.theme.White
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

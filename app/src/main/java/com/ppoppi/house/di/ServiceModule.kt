@@ -1,6 +1,7 @@
 package com.ppoppi.house.di
 
 import com.ppoppi.house.data.service.AuthService
+import com.ppoppi.house.data.service.HospitalService
 import com.ppoppi.house.data.service.SymptomService
 import dagger.Module
 import dagger.Provides
@@ -14,11 +15,16 @@ import javax.inject.Singleton
 object ServiceModule {
     @Provides
     @Singleton
-    fun provideAuthApiService(retrofit: Retrofit): AuthService =
+    fun provideAuthService(retrofit: Retrofit): AuthService =
         retrofit.create(AuthService::class.java)
 
     @Provides
     @Singleton
-    fun provideSymptomApiService(retrofit: Retrofit): SymptomService =
+    fun provideSymptomService(retrofit: Retrofit): SymptomService =
         retrofit.create(SymptomService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideHospitalService(retrofit: Retrofit): HospitalService =
+        retrofit.create(HospitalService::class.java)
 }

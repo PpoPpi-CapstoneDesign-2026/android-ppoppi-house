@@ -7,7 +7,7 @@ import retrofit2.http.POST
 
 interface HospitalService {
     @POST("/hospitals/search")
-    fun postHospitalsSearch(
+    suspend fun postHospitalsSearch(
         @Body request: HospitalListRequest
     ): HospitalListResponse
 }
