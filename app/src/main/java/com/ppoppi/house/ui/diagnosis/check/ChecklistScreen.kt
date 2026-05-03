@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.ppoppi.house.R
 import com.ppoppi.house.domain.model.Symptom
 import com.ppoppi.house.ui.component.BottomBarButton
+import com.ppoppi.house.ui.diagnosis.check.model.SymptomItem
 import com.ppoppi.house.ui.theme.Black
 import com.ppoppi.house.ui.theme.Gray100
 import com.ppoppi.house.ui.theme.PpoPpiTheme
@@ -30,17 +31,18 @@ import com.ppoppi.house.ui.theme.Primary400
 import com.ppoppi.house.ui.theme.White
 import com.ppoppi.house.ui.util.getStyledText
 import com.ppoppi.house.ui.util.noRippleClickable
+import kotlin.collections.filter
 import kotlin.collections.toMutableList
 
-val symptoms: List<Symptom> =
+val symptoms: List<SymptomItem> =
     listOf(
-        Symptom("redness", "충혈", false),
-        Symptom("discharge", "분비물/눈곱", false),
-        Symptom("tearing", "눈물", false),
-        Symptom("squinting", "눈 찡그림", false),
-        Symptom("rubbing", "눈 비비기", false),
-        Symptom("cloudiness", "혼탁", false),
-        Symptom("pain_suspected", "통증 의심", false),
+        SymptomItem(1L, "충혈", false),
+        SymptomItem(1L, "분비물/눈곱", false),
+        SymptomItem(1L, "눈물", false),
+        SymptomItem(1L, "눈 찡그림", false),
+        SymptomItem(1L, "눈 비비기", false),
+        SymptomItem(1L, "혼탁", false),
+        SymptomItem(1L, "통증 의심", false),
     )
 
 @Composable
@@ -48,7 +50,7 @@ fun ChecklistScreen(
     onBackClick: () -> Unit,
     onComplete: (List<String>) -> Unit,
 ) {
-    var selectedSymptoms: List<Symptom> by remember { mutableStateOf(symptoms) }
+    var selectedSymptoms: List<SymptomItem> by remember { mutableStateOf(symptoms) }
 
     Scaffold(
         topBar = { ChecklistTopAppBar(onBackClick) },
@@ -120,10 +122,12 @@ fun ChecklistItem(
                     width = 1.dp,
                     color = borderColor,
                     shape = RoundedCornerShape(12.dp),
-                ).background(
+                )
+                .background(
                     color = backgroundColor,
                     shape = RoundedCornerShape(12.dp),
-                ).padding(vertical = 20.dp),
+                )
+                .padding(vertical = 20.dp),
     ) {
         Text(
             text = description,
