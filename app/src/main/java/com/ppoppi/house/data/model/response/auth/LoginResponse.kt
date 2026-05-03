@@ -7,8 +7,8 @@ data class LoginResponse(
     val memberId: Long,
     @SerializedName("isOnboarding")
     val isOnboarding: Boolean,
-    @SerializedName("access_token")
+    @SerializedName("accessToken")
     val accessToken: String,
-    @SerializedName("refresh_token")
+    @SerializedName("refreshToken")
     val refreshToken: String,
 )
