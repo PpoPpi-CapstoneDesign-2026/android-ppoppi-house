@@ -33,12 +33,14 @@ class AuthorizationInterceptor
 
             val response = chain.proceed(initialRequest)
 
-            // 2. 401 처리
-            if (response.code != HttpURLConnection.HTTP_UNAUTHORIZED ||
-                !hasAccessTokenExpiredError(response)
-            ) {
-                return response
+            // 2. 401/403 처리
+            val shouldReissue = when (response.code) {
+                HttpURLConnection.HTTP_UNAUTHORIZED -> hasAccessTokenExpiredError(response)
+                HttpURLConnection.HTTP_FORBIDDEN -> true
+                else -> false
             }
+
+            if (!shouldReissue) return response
 
             response.close()
 
@@ -65,8 +67,9 @@ class AuthorizationInterceptor
             val refreshToken = tokenDataSource.getRefreshToken() ?: return null
 
             val requestBody =
-                JSONObject
-                    .quote(refreshToken)
+                JSONObject()
+                    .put("refreshToken", refreshToken)
+                    .toString()
                     .toRequestBody("application/json; charset=utf-8".toMediaType())
 
             val request =

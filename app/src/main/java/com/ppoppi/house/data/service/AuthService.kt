@@ -1,6 +1,7 @@
 package com.ppoppi.house.data.service
 
 import com.ppoppi.house.data.model.request.LoginRequest
+import com.ppoppi.house.data.model.request.ReissueRequest
 import com.ppoppi.house.data.model.response.auth.LoginResponse
 import com.ppoppi.house.data.model.response.auth.TokenResponse
 import retrofit2.http.Body
@@ -14,6 +15,6 @@ interface AuthService {
 
     @POST("/api/auth/reissue")
     suspend fun postAuthReissue(
-        @Body refreshToken: String,
+        @Body request: ReissueRequest,
     ): TokenResponse
 }
