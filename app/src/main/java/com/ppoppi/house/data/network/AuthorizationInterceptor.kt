@@ -34,11 +34,12 @@ class AuthorizationInterceptor
             val response = chain.proceed(initialRequest)
 
             // 2. 401/403 처리
-            val shouldReissue = when (response.code) {
-                HttpURLConnection.HTTP_UNAUTHORIZED -> hasAccessTokenExpiredError(response)
-                HttpURLConnection.HTTP_FORBIDDEN -> true
-                else -> false
-            }
+            val shouldReissue =
+                when (response.code) {
+                    HttpURLConnection.HTTP_UNAUTHORIZED -> hasAccessTokenExpiredError(response)
+                    HttpURLConnection.HTTP_FORBIDDEN -> true
+                    else -> false
+                }
 
             if (!shouldReissue) return response
 

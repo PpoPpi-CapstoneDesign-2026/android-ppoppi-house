@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import com.ppoppi.house.ui.theme.Gray400
 import com.ppoppi.house.ui.theme.PpoPpiTheme
 import com.ppoppi.house.ui.theme.Primary200
-import com.ppoppi.house.ui.theme.Primary400
 import com.ppoppi.house.ui.theme.White
 
 @Composable

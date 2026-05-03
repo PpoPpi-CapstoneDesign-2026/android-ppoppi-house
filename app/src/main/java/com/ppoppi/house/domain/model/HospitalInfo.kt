@@ -8,5 +8,5 @@ data class HospitalInfo(
     val businessHours: String,
     val operationLabel: String,
     val distanceMeter: Long,
-    val is24Hour: Boolean
+    val is24Hour: Boolean,
 )

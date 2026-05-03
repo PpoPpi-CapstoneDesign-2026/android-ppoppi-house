@@ -1,6 +1,5 @@
 package com.ppoppi.house.data.model.response.hospital
 
-
 import com.ppoppi.house.domain.model.HospitalInfo
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -22,7 +21,7 @@ data class HospitalInfoResponse(
     @SerialName("distanceMeter")
     val distanceMeter: Long,
     @SerialName("is24hr")
-    val is24hr: Boolean
+    val is24hr: Boolean,
 )
 
 fun HospitalInfoResponse.toDomain(): HospitalInfo =
@@ -34,5 +33,5 @@ fun HospitalInfoResponse.toDomain(): HospitalInfo =
         businessHours = businessHours,
         operationLabel = operationLabel,
         distanceMeter = distanceMeter,
-        is24Hour = is24hr
+        is24Hour = is24hr,
     )

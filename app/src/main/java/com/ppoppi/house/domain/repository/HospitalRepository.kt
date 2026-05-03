@@ -10,6 +10,6 @@ interface HospitalRepository {
     suspend fun getHospitalsInfo(
         hospitalId: Long,
         centerLat: Double,
-        centerLng: Double
+        centerLng: Double,
     ): HospitalInfo
 }

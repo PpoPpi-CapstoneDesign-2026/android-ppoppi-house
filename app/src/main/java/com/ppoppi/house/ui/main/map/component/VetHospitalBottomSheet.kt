@@ -167,7 +167,7 @@ private fun VetHospitalBottomSheetPreview() {
                 businessHours = "test",
                 operationLabel = "test",
                 distanceMeter = 1,
-                is24Hour = true
+                is24Hour = true,
             ),
         )
     }
