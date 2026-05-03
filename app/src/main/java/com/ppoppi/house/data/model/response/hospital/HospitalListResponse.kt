@@ -1,6 +1,5 @@
-package com.ppoppi.house.data.model.response
+package com.ppoppi.house.data.model.response.hospital
 
-import android.R.attr.name
 import com.ppoppi.house.domain.model.HospitalItem
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

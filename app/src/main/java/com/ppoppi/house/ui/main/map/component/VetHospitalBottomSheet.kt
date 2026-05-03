@@ -1,7 +1,6 @@
 package com.ppoppi.house.ui.main.map.component
 
 import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -19,9 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.android.gms.maps.model.LatLng
-import com.ppoppi.house.domain.model.BusinessStatus
-import com.ppoppi.house.domain.model.VetHospital
+import androidx.core.net.toUri
+import com.ppoppi.house.domain.model.HospitalInfo
 import com.ppoppi.house.ui.theme.Black
 import com.ppoppi.house.ui.theme.Gray200
 import com.ppoppi.house.ui.theme.Gray300
@@ -31,7 +29,7 @@ import com.ppoppi.house.ui.theme.Primary400
 import com.ppoppi.house.ui.theme.White
 
 @Composable
-fun VetHospitalBottomSheet(hospital: VetHospital) {
+fun VetHospitalBottomSheet(hospital: HospitalInfo) {
     val context = LocalContext.current
 
     Column(
@@ -53,11 +51,11 @@ fun VetHospitalBottomSheet(hospital: VetHospital) {
             horizontalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             BusinessStatusLabel(
-                businessStatus = hospital.businessStatus,
+                businessStatus = hospital.operationLabel,
             )
 
             Text(
-                text = "${hospital.distance}m",
+                text = "${hospital.distanceMeter}m",
                 style = PpoPpiTheme.typography.label1,
                 color = Gray300,
             )
@@ -104,7 +102,7 @@ fun VetHospitalBottomSheet(hospital: VetHospital) {
             )
 
             Text(
-                text = hospital.phone,
+                text = hospital.callNumber,
                 style = PpoPpiTheme.typography.body1,
                 color = Black,
             )
@@ -124,7 +122,7 @@ fun VetHospitalBottomSheet(hospital: VetHospital) {
             )
 
             Text(
-                text = hospital.businessTime,
+                text = hospital.businessHours,
                 style = PpoPpiTheme.typography.body1,
                 color = Black,
             )
@@ -132,7 +130,7 @@ fun VetHospitalBottomSheet(hospital: VetHospital) {
 
         Button(
             onClick = {
-                val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:${hospital.phone}"))
+                val intent = Intent(Intent.ACTION_DIAL, "tel:${hospital.callNumber}".toUri())
                 context.startActivity(intent)
             },
             modifier =
@@ -161,14 +159,15 @@ fun VetHospitalBottomSheet(hospital: VetHospital) {
 private fun VetHospitalBottomSheetPreview() {
     PpoPpiTheme {
         VetHospitalBottomSheet(
-            VetHospital(
-                name = "행복 동물병원",
-                location = LatLng(37.55075076074825, 127.0754535962874),
-                phone = "010-1234-1234",
-                businessStatus = BusinessStatus.OPEN,
-                distance = 222,
-                address = "서울특별시 어쩌구 저쩌구 주소",
-                businessTime = "평일 9:00 - 16:00",
+            HospitalInfo(
+                id = 1,
+                name = "test",
+                address = "test",
+                callNumber = "test",
+                businessHours = "test",
+                operationLabel = "test",
+                distanceMeter = 1,
+                is24Hour = true
             ),
         )
     }

@@ -11,26 +11,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.ppoppi.house.domain.model.BusinessStatus
-import com.ppoppi.house.domain.model.BusinessStatus.Companion.toColor
+import com.ppoppi.house.ui.theme.Gray400
 import com.ppoppi.house.ui.theme.PpoPpiTheme
+import com.ppoppi.house.ui.theme.Primary200
+import com.ppoppi.house.ui.theme.Primary400
 import com.ppoppi.house.ui.theme.White
 
 @Composable
 fun BusinessStatusLabel(
-    businessStatus: BusinessStatus,
+    businessStatus: String,
     modifier: Modifier = Modifier,
 ) {
+    val color = if (businessStatus == "영업중") Primary200 else Gray400
+
     Row(
         modifier =
             modifier
                 .clip(RoundedCornerShape(100.dp))
-                .background(businessStatus.toColor())
+                .background(color)
                 .padding(vertical = 4.dp, horizontal = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = businessStatus.label,
+            text = businessStatus,
             style = PpoPpiTheme.typography.label1,
             color = White,
         )
@@ -42,7 +45,7 @@ fun BusinessStatusLabel(
 private fun BusinessStatusLabelPreview() {
     PpoPpiTheme {
         BusinessStatusLabel(
-            businessStatus = BusinessStatus.OPEN,
+            businessStatus = "영업중",
         )
     }
 }

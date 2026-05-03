@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -48,7 +49,6 @@ import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
-import com.ppoppi.house.domain.model.HospitalItem
 import com.ppoppi.house.ui.main.map.component.VetHospitalBottomSheet
 import kotlinx.coroutines.launch
 
@@ -138,12 +138,13 @@ fun PetHospitalMap(
             position = CameraPosition.fromLatLngZoom(userLocation, 14f)
         }
     val hospitals by viewModel.hospitals.collectAsState()
+    val selectedHospitalInfo by viewModel.selectedHospitalInfo.collectAsState()
 
     LaunchedEffect(userLocation) {
         viewModel.loadHospitals(userLocation.latitude, userLocation.longitude)
     }
 
-    var selectedHospital by remember { mutableStateOf<HospitalItem?>(null) }
+    var showBottomSheet by remember { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val scope = rememberCoroutineScope()
 
@@ -174,7 +175,12 @@ fun PetHospitalMap(
                 snippet = "${hospital.distanceMeter}m",
                 icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE),
                 onClick = {
-                    selectedHospital = hospital
+                    showBottomSheet = true
+                    viewModel.loadHospitalInfo(
+                        hospitalId = hospital.hospitalId.toLong(),
+                        centerLat = userLocation.latitude,
+                        centerLng = userLocation.longitude,
+                    )
                     scope.launch { sheetState.show() }
                     true
                 },
@@ -182,12 +188,24 @@ fun PetHospitalMap(
         }
     }
 
-    selectedHospital?.let { hospital ->
+    if (showBottomSheet) {
         ModalBottomSheet(
-            onDismissRequest = { selectedHospital = null },
+            onDismissRequest = {
+                showBottomSheet = false
+                viewModel.clearSelectedHospitalInfo()
+            },
             sheetState = sheetState,
         ) {
-            VetHospitalBottomSheet(hospital = hospital)
+            if (selectedHospitalInfo != null) {
+                VetHospitalBottomSheet(hospital = selectedHospitalInfo!!)
+            } else {
+                Box(
+                    modifier = Modifier.fillMaxWidth().height(200.dp),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    CircularProgressIndicator()
+                }
+            }
         }
     }
 }
