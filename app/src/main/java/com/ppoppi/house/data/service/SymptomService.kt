@@ -6,5 +6,4 @@ import retrofit2.http.GET
 interface SymptomService {
     @GET("/symptoms")
     suspend fun getSymptoms(): SymptomResponse
-
 }

@@ -15,16 +15,13 @@ import javax.inject.Singleton
 object ServiceModule {
     @Provides
     @Singleton
-    fun provideAuthService(retrofit: Retrofit): AuthService =
-        retrofit.create(AuthService::class.java)
+    fun provideAuthService(retrofit: Retrofit): AuthService = retrofit.create(AuthService::class.java)
 
     @Provides
     @Singleton
-    fun provideSymptomService(retrofit: Retrofit): SymptomService =
-        retrofit.create(SymptomService::class.java)
+    fun provideSymptomService(retrofit: Retrofit): SymptomService = retrofit.create(SymptomService::class.java)
 
     @Provides
     @Singleton
-    fun provideHospitalService(retrofit: Retrofit): HospitalService =
-        retrofit.create(HospitalService::class.java)
+    fun provideHospitalService(retrofit: Retrofit): HospitalService = retrofit.create(HospitalService::class.java)
 }

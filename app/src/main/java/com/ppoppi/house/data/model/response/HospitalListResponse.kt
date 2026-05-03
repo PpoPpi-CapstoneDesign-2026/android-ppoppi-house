@@ -1,12 +1,11 @@
 package com.ppoppi.house.data.model.response
 
-
 import android.R.attr.name
 import com.ppoppi.house.domain.model.HospitalItem
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-class HospitalListResponse : ArrayList<HospitalListResponse.HospitalListResponseItem>(){
+class HospitalListResponse : ArrayList<HospitalListResponse.HospitalListResponseItem>() {
     @Serializable
     data class HospitalListResponseItem(
         @SerialName("hospitalId")
@@ -20,7 +19,7 @@ class HospitalListResponse : ArrayList<HospitalListResponse.HospitalListResponse
         @SerialName("distanceMeter")
         val distanceMeter: Int,
         @SerialName("is24hr")
-        val is24hr: Boolean
+        val is24hr: Boolean,
     )
 }
 

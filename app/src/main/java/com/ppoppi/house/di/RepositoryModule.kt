@@ -1,9 +1,9 @@
 package com.ppoppi.house.di
 
-import com.ppoppi.house.domain.repository.AuthRepository
 import com.ppoppi.house.data.repository.AuthRepositoryImpl
 import com.ppoppi.house.data.repository.HospitalRepositoryImpl
 import com.ppoppi.house.data.repository.SymptomRepositoryImpl
+import com.ppoppi.house.domain.repository.AuthRepository
 import com.ppoppi.house.domain.repository.HospitalRepository
 import com.ppoppi.house.domain.repository.SymptomRepository
 import dagger.Binds

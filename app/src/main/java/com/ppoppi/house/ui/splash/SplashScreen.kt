@@ -18,9 +18,10 @@ import com.ppoppi.house.ui.theme.White
 @Composable
 fun SplashScreen(modifier: Modifier = Modifier) {
     Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(White),
+        modifier =
+            modifier
+                .fillMaxSize()
+                .background(White),
         contentAlignment = Alignment.Center,
     ) {
         Image(

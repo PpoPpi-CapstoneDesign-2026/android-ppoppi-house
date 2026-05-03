@@ -21,7 +21,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ppoppi.house.R
-import com.ppoppi.house.domain.model.Symptom
 import com.ppoppi.house.ui.component.BottomBarButton
 import com.ppoppi.house.ui.diagnosis.check.model.SymptomItem
 import com.ppoppi.house.ui.theme.Black
@@ -122,12 +121,10 @@ fun ChecklistItem(
                     width = 1.dp,
                     color = borderColor,
                     shape = RoundedCornerShape(12.dp),
-                )
-                .background(
+                ).background(
                     color = backgroundColor,
                     shape = RoundedCornerShape(12.dp),
-                )
-                .padding(vertical = 20.dp),
+                ).padding(vertical = 20.dp),
     ) {
         Text(
             text = description,

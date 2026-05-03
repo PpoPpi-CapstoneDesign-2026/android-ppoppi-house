@@ -5,21 +5,20 @@ data class MapView(
     val zoom: Int,
     val center: Center,
     val emergencyOnly: Boolean = false,
-    val limit: Int
+    val limit: Int,
 ) {
-
     data class Bounds(
         val northeast: LatLng,
-        val southwest: LatLng
+        val southwest: LatLng,
     )
 
     data class Center(
         val lat: Double,
-        val lng: Double
+        val lng: Double,
     )
 
     data class LatLng(
         val lat: Double,
-        val lng: Double
+        val lng: Double,
     )
 }

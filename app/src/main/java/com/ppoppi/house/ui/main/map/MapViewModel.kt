@@ -12,26 +12,33 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MapViewModel @Inject constructor(
-    private val hospitalRepository: HospitalRepository,
-) : ViewModel() {
-    private val _hospitals = MutableStateFlow<List<HospitalItem>>(emptyList())
-    val hospitals: StateFlow<List<HospitalItem>> = _hospitals
+class MapViewModel
+    @Inject
+    constructor(
+        private val hospitalRepository: HospitalRepository,
+    ) : ViewModel() {
+        private val _hospitals = MutableStateFlow<List<HospitalItem>>(emptyList())
+        val hospitals: StateFlow<List<HospitalItem>> = _hospitals
 
-    fun loadHospitals(lat: Double, lng: Double) {
-        viewModelScope.launch {
-            val delta = 0.009
-            val mapView = MapView(
-                bounds = MapView.Bounds(
-                    northeast = MapView.LatLng(lat + delta, lng + delta),
-                    southwest = MapView.LatLng(lat - delta, lng - delta),
-                ),
-                zoom = 14,
-                center = MapView.Center(lat, lng),
-                limit = 20,
-            )
-            runCatching { hospitalRepository.postHospitalsSearch(mapView) }
-                .onSuccess { _hospitals.value = it }
+        fun loadHospitals(
+            lat: Double,
+            lng: Double,
+        ) {
+            viewModelScope.launch {
+                val delta = 0.009
+                val mapView =
+                    MapView(
+                        bounds =
+                            MapView.Bounds(
+                                northeast = MapView.LatLng(lat + delta, lng + delta),
+                                southwest = MapView.LatLng(lat - delta, lng - delta),
+                            ),
+                        zoom = 14,
+                        center = MapView.Center(lat, lng),
+                        limit = 20,
+                    )
+                runCatching { hospitalRepository.postHospitalsSearch(mapView) }
+                    .onSuccess { _hospitals.value = it }
+            }
         }
     }
-}

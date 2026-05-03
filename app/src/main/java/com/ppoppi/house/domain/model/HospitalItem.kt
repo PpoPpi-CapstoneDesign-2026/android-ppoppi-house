@@ -6,5 +6,5 @@ data class HospitalItem(
     val latitude: Double,
     val longitude: Double,
     val distanceMeter: Int,
-    val is24hr: Boolean
+    val is24hr: Boolean,
 )

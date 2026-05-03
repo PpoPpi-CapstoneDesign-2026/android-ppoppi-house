@@ -37,12 +37,12 @@ android {
         buildConfigField(
             "String",
             "BASE_URL",
-            "\"${localProperties.getProperty("BASE_URL") ?: ""}\""
+            "\"${localProperties.getProperty("BASE_URL") ?: ""}\"",
         )
         buildConfigField(
             "String",
             "KAKAO_API_KEY",
-            "\"${localProperties.getProperty("KAKAO_API_KEY") ?: ""}\""
+            "\"${localProperties.getProperty("KAKAO_API_KEY") ?: ""}\"",
         )
     }
 
