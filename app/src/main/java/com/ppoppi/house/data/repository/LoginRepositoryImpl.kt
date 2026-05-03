@@ -1,8 +1,8 @@
 package com.ppoppi.house.data.repository
 
-import com.ppoppi.house.data.model.LoginRequest
-import com.ppoppi.house.data.model.LoginResponse
-import com.ppoppi.house.data.model.TokenResponse
+import com.ppoppi.house.data.model.request.LoginRequest
+import com.ppoppi.house.data.model.response.auth.LoginResponse
+import com.ppoppi.house.data.model.response.auth.TokenResponse
 import com.ppoppi.house.data.service.AuthService
 import com.ppoppi.house.domain.repository.LoginRepository
 import javax.inject.Inject

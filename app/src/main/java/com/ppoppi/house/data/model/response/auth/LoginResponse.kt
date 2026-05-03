@@ -1,4 +1,4 @@
-package com.ppoppi.house.data.model
+package com.ppoppi.house.data.model.response.auth
 
 import com.google.gson.annotations.SerializedName
 
