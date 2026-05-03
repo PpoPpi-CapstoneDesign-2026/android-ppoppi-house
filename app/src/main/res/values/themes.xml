@@ -2,4 +2,14 @@
 <resources>
 
     <style name="Theme.PpoPpiHouse" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Theme.PpoPpiHouse.NoSystemSplash" parent="Theme.PpoPpiHouse">
+        <!-- Android 12+ 시스템 스플래시 아이콘 숨기기 -->
+        <item name="android:windowSplashScreenAnimatedIcon">@android:color/transparent</item>
+        <item name="android:windowSplashScreenBackground">@android:color/transparent</item>
+        
+        <!-- 액티비티 투명화 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
 </resources>
