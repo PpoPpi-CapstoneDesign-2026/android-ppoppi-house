@@ -4,12 +4,12 @@ import com.ppoppi.house.data.model.request.LoginRequest
 import com.ppoppi.house.data.model.response.auth.LoginResponse
 import com.ppoppi.house.data.model.response.auth.TokenResponse
 import com.ppoppi.house.data.service.AuthService
-import com.ppoppi.house.domain.repository.LoginRepository
+import com.ppoppi.house.domain.repository.AuthRepository
 import javax.inject.Inject
 
-class LoginRepositoryImpl @Inject constructor(
+class AuthRepositoryImpl @Inject constructor(
     private val loginApiService: AuthService,
-) : LoginRepository {
+) : AuthRepository {
     override suspend fun loginWithKakao(kakaoToken: String): LoginResponse =
         loginApiService.postAuthKakao(LoginRequest(kakaoToken))
 

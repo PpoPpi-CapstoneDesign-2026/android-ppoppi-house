@@ -1,7 +1,7 @@
 package com.ppoppi.house.di
 
-import com.ppoppi.house.domain.repository.LoginRepository
-import com.ppoppi.house.data.repository.LoginRepositoryImpl
+import com.ppoppi.house.domain.repository.AuthRepository
+import com.ppoppi.house.data.repository.AuthRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -13,5 +13,5 @@ import javax.inject.Singleton
 abstract class RepositoryModule {
     @Binds
     @Singleton
-    abstract fun bindLoginRepository(impl: LoginRepositoryImpl): LoginRepository
+    abstract fun bindLoginRepository(impl: AuthRepositoryImpl): AuthRepository
 }
