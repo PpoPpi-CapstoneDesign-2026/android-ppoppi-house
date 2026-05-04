@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.ppoppi.house.ui.diagnosis.result.component.FailedContent
 import com.ppoppi.house.ui.diagnosis.result.component.LoadingContent
 import com.ppoppi.house.ui.diagnosis.result.component.ResultContent
 import com.ppoppi.house.ui.theme.White
@@ -27,12 +28,16 @@ fun ResultScreen(
     ) { innerPadding ->
         val modifier = Modifier.padding(innerPadding)
         when (uiState) {
-            ResultUiState.Loading ->
+            is ResultUiState.Loading ->
                 LoadingContent(
                     name = petName,
                     modifier = modifier,
                 )
-            ResultUiState.Error -> Unit
+            is ResultUiState.Error ->
+                FailedContent(
+                    navigateToDiagnosis = navigateToDiagnosis,
+                    modifier = modifier,
+                )
             is ResultUiState.Success ->
                 ResultContent(
                     diagnosis = uiState.diagnosis,

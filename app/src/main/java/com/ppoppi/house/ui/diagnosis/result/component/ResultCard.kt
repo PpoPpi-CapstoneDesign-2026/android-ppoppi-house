@@ -72,11 +72,25 @@ fun ResultCard(
                 }
                 .padding(20.dp),
     ) {
+        val highlightColor = diagnosis.triage.toColor()[2]
+        val title = if (diagnosis.triage == Triage.NORMAL) "정상 안구입니다".getColoredText(
+            highlightColor,
+            "정상 안구"
+        ) else "${diagnosis.diseaseName}이 의심됩니다.".getColoredText(
+            highlightColor,
+            diagnosis.diseaseName
+        )
+        val action =
+            if (diagnosis.triage == Triage.URGENT || diagnosis.triage == Triage.SOON) "${diagnosis.guideAction} 내원 권장".getColoredText(
+                highlightColor,
+                diagnosis.guideAction
+            ) else diagnosis.guideAction.getColoredText(
+                highlightColor,
+                diagnosis.guideAction
+            )
+
         Text(
-            text = "${diagnosis.diseaseName}이 의심됩니다.".getColoredText(
-                diagnosis.triage.toColor()[2],
-                diagnosis.diseaseName
-            ),
+            text = title,
             style = PpoPpiTheme.typography.title1,
             color = Black,
         )
@@ -85,28 +99,28 @@ fun ResultCard(
             style = PpoPpiTheme.typography.body1,
             color = Gray400,
         )
-        HorizontalDivider(
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(top = 12.dp),
-            thickness = 1.dp,
-            color = Gray100,
-        )
-        Text(
-            text = "${diagnosis.guideAction} 내원 권장".getColoredText(
-                diagnosis.triage.toColor()[2],
-                diagnosis.guideAction
-            ),
-            style = PpoPpiTheme.typography.title1,
-            color = Black,
-            modifier = Modifier.padding(top = 12.dp),
-        )
-        Text(
-            text = diagnosis.guideWarning,
-            style = PpoPpiTheme.typography.body1,
-            color = Gray400,
-        )
+
+        if (diagnosis.triage != Triage.NORMAL) {
+            HorizontalDivider(
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = 12.dp),
+                thickness = 1.dp,
+                color = Gray100,
+            )
+            Text(
+                text = action,
+                style = PpoPpiTheme.typography.title1,
+                color = Black,
+                modifier = Modifier.padding(top = 12.dp),
+            )
+            Text(
+                text = diagnosis.guideWarning,
+                style = PpoPpiTheme.typography.body1,
+                color = Gray400,
+            )
+        }
     }
 }
 
