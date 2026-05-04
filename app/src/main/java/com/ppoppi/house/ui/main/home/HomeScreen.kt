@@ -69,9 +69,14 @@ fun HomeScreen(
 ) {
     val context = LocalContext.current
     var keyword by remember { mutableStateOf("") }
+    var isInitialized by remember { mutableStateOf(false) }
     val diseases by viewModel.diseases.collectAsState()
 
     LaunchedEffect(keyword) {
+        if (!isInitialized) {
+            isInitialized = true
+            return@LaunchedEffect
+        }
         viewModel.loadDiseases(keyword)
     }
     val pets =
@@ -214,6 +219,9 @@ private fun DiseaseSection(
         }
         else -> {
             val pagerState = rememberPagerState(pageCount = { diseases.size })
+            LaunchedEffect(diseases) {
+                pagerState.scrollToPage(0)
+            }
             Column(modifier = modifier) {
                 HorizontalPager(state = pagerState) { page ->
                     DiseaseCard(disease = diseases[page])

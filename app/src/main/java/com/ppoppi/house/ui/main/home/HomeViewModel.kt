@@ -35,10 +35,13 @@ class HomeViewModel
             searchJob =
                 viewModelScope.launch {
                     delay(SEARCH_DEBOUNCE_MS)
-                    runCatching { diseaseRepository.getGeneticDiseaseSearch(keyword) }
-                        .onSuccess {
-                            _diseases.value = it.take(MAX_DISEASE_COUNT)
-                        }
+                    if (keyword.isEmpty()) {
+                        runCatching { diseaseRepository.getGeneticDiseaseRandom() }
+                            .onSuccess { _diseases.value = it.take(MAX_DISEASE_COUNT) }
+                    } else {
+                        runCatching { diseaseRepository.getGeneticDiseaseSearch(keyword) }
+                            .onSuccess { _diseases.value = it.take(MAX_DISEASE_COUNT) }
+                    }
                 }
         }
 
