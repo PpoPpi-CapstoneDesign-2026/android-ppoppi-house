@@ -43,6 +43,7 @@ import com.ppoppi.house.domain.model.Pet
 import com.ppoppi.house.domain.model.SEX
 import com.ppoppi.house.domain.model.SPECIES
 import com.ppoppi.house.ui.component.PpoPpiTextField
+import com.ppoppi.house.ui.main.home.component.DiagnosisCard
 import com.ppoppi.house.ui.main.home.component.DiseaseCard
 import com.ppoppi.house.ui.main.home.component.PetAddButton
 import com.ppoppi.house.ui.main.home.component.PetButton
@@ -71,6 +72,7 @@ fun HomeScreen(
     var keyword by remember { mutableStateOf("") }
     var isInitialized by remember { mutableStateOf(false) }
     val diseases by viewModel.diseases.collectAsState()
+    val todayDiagnosis by viewModel.todayDiagnosis.collectAsState()
 
     LaunchedEffect(keyword) {
         if (!isInitialized) {
@@ -99,7 +101,6 @@ fun HomeScreen(
             ),
         )
     var selectedPet by remember { mutableStateOf(pets.first()) }
-    val diagnosisResult: Int? by remember { mutableStateOf(null) }
 
     Box(
         modifier =
@@ -162,7 +163,12 @@ fun HomeScreen(
             modifier = Modifier.padding(top = 12.dp),
         )
 
-        if (diagnosisResult == null) {
+        if (todayDiagnosis != null) {
+            DiagnosisCard(
+                diagnosis = todayDiagnosis!!,
+                modifier = Modifier.padding(top = 18.dp),
+            )
+        } else {
             ToDiagnosisCard(
                 onClick = (navigateToDiagnosis),
                 name = selectedPet.name,

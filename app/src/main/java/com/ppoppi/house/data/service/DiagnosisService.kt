@@ -5,7 +5,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface DiagnosisService {
-    @GET("/diagnosis/today")
+    @GET("/diagnoses/today")
     suspend fun getTodayDiagnosis(
         @Query("petId") petId: Long,
         @Query("date") date: String,
