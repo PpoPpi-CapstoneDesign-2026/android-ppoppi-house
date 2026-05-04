@@ -1,6 +1,7 @@
 package com.ppoppi.house.di
 
 import com.ppoppi.house.data.service.AuthService
+import com.ppoppi.house.data.service.DiagnosisService
 import com.ppoppi.house.data.service.HospitalService
 import com.ppoppi.house.data.service.PetService
 import com.ppoppi.house.data.service.SymptomService
@@ -29,4 +30,8 @@ object ServiceModule {
     @Provides
     @Singleton
     fun providePetService(retrofit: Retrofit): PetService = retrofit.create(PetService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideDiagnosisService(retrofit: Retrofit): DiagnosisService = retrofit.create(DiagnosisService::class.java)
 }
