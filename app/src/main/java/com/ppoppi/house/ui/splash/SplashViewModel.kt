@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ppoppi.house.domain.repository.SymptomRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -26,7 +28,8 @@ class SplashViewModel
 
         private fun checkAuthStatus() {
             viewModelScope.launch {
-                _uiState.value =
+                val minDelay = async { delay(MINIMUM_SPLASH_DURATION_MS) }
+                val authResult = async {
                     runCatching {
                         symptomRepository.getSymptoms()
                         SplashUiState.Authenticated
@@ -37,7 +40,14 @@ class SplashViewModel
                             SplashUiState.Unauthenticated
                         }
                     }
+                }
+                minDelay.await()
+                _uiState.value = authResult.await()
             }
+        }
+
+        companion object {
+            private const val MINIMUM_SPLASH_DURATION_MS = 1500L
         }
     }
 
