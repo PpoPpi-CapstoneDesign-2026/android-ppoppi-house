@@ -60,7 +60,8 @@ fun ResultCard(
                             paint = paint,
                         )
                     }
-                }.clip(RoundedCornerShape(8.dp))
+                }
+                .clip(RoundedCornerShape(8.dp))
                 .background(White)
                 .drawBehind {
                     drawRect(
@@ -68,10 +69,14 @@ fun ResultCard(
                         topLeft = Offset(0f, 0f),
                         size = Size(4.dp.toPx(), size.height),
                     )
-                }.padding(20.dp),
+                }
+                .padding(20.dp),
     ) {
         Text(
-            text = diagnosis.guideMessage.getColoredText(textColor, diagnosis.guideWarning),
+            text = "${diagnosis.diseaseName}이 의심됩니다.".getColoredText(
+                diagnosis.triage.toColor()[2],
+                diagnosis.diseaseName
+            ),
             style = PpoPpiTheme.typography.title1,
             color = Black,
         )
@@ -89,13 +94,16 @@ fun ResultCard(
             color = Gray100,
         )
         Text(
-            text = diagnosis.guideMessage.getColoredText(textColor, diagnosis.guideWarning),
+            text = "${diagnosis.guideAction} 내원 권장".getColoredText(
+                diagnosis.triage.toColor()[2],
+                diagnosis.guideAction
+            ),
             style = PpoPpiTheme.typography.title1,
             color = Black,
             modifier = Modifier.padding(top = 12.dp),
         )
         Text(
-            text = diagnosis.guideMessage,
+            text = diagnosis.guideWarning,
             style = PpoPpiTheme.typography.body1,
             color = Gray400,
         )

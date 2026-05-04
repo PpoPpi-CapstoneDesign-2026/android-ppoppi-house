@@ -1,7 +1,7 @@
 package com.ppoppi.house.domain.model
 
 data class Diagnosis(
-    val hasDiagnosis: Boolean,
+    val hasDiagnosis: Boolean = false,
     val imageUrl: String?,
     val triage: Triage,
     val diseaseName: String,

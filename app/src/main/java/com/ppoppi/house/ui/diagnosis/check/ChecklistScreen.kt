@@ -38,7 +38,7 @@ import kotlin.collections.toMutableList
 @Composable
 fun ChecklistScreen(
     onBackClick: () -> Unit,
-    onComplete: (List<String>) -> Unit,
+    onComplete: (List<Int>) -> Unit,
     viewModel: ChecklistViewModel = hiltViewModel(),
 ) {
     val symptoms by viewModel.symptoms.collectAsState()
@@ -50,7 +50,7 @@ fun ChecklistScreen(
         bottomBar = {
             BottomBarButton(
                 onClick = {
-                    onComplete(selectedSymptoms.filter { it.isChecked }.map { it.description })
+                    onComplete(selectedSymptoms.filter { it.isChecked }.map { it.id })
                 },
                 text = stringResource(R.string.diagnosis_check_bottom_bar_button),
             )

@@ -7,28 +7,19 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.ppoppi.house.domain.model.Diagnosis
+import androidx.activity.viewModels
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import com.ppoppi.house.domain.model.Pet
-import com.ppoppi.house.domain.model.Triage
 import com.ppoppi.house.ui.diagnosis.select.SelectActivity
 import com.ppoppi.house.ui.main.MainActivity
 import com.ppoppi.house.ui.main.navigation.MAP
 import com.ppoppi.house.ui.theme.PpoPpiTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ResultActivity : ComponentActivity() {
-    val diagnosis =
-        Diagnosis(
-            hasDiagnosis = true,
-            imageUrl = "",
-            triage = Triage.URGENT,
-            diseaseName = "결막염",
-            affectedArea = "각막",
-            triageConfidence = 80,
-            guideAction = "asdfasdf",
-            guideMessage = "일주일 내",
-            guideWarning = "sdf",
-            symptoms = emptyList(),
-        )
+    private val viewModel: ResultViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,13 +27,18 @@ class ResultActivity : ComponentActivity() {
 
         val pet = intent.getParcelableExtra<Pet>(EXTRA_PET) ?: return
         val imageUri = intent.getParcelableExtra<Uri>(EXTRA_IMAGE_URI) ?: return
-        val symptoms = intent.getStringArrayListExtra(EXTRA_SYMPTOMS) ?: emptyList<String>()
+        val symptoms = intent.getIntegerArrayListExtra(EXTRA_SYMPTOMS) ?: emptyList<Int>()
+        val petId = pet.id ?: return
 
-        // 여기서 증상 진단 API 요청
+        viewModel.diagnose(petId, symptoms, imageUri)
 
         setContent {
+            val uiState by viewModel.uiState.collectAsState()
             PpoPpiTheme {
                 ResultScreen(
+                    petName = pet.name,
+                    uiState = uiState,
+                    imageUri = imageUri,
                     navigateToHome = {
                         startActivity(
                             MainActivity.newIntent(this@ResultActivity).apply {
@@ -61,8 +57,6 @@ class ResultActivity : ComponentActivity() {
                         startActivity(SelectActivity.newIntent(this@ResultActivity))
                         finish()
                     },
-                    imageUri = imageUri,
-                    diagnosis = diagnosis,
                 )
             }
         }
@@ -77,12 +71,12 @@ class ResultActivity : ComponentActivity() {
             context: Context,
             pet: Pet,
             imageUri: Uri,
-            symptoms: List<String>,
+            symptoms: List<Int>,
         ): Intent =
             Intent(context, ResultActivity::class.java).apply {
                 putExtra(EXTRA_PET, pet)
                 putExtra(EXTRA_IMAGE_URI, imageUri)
-                putStringArrayListExtra(EXTRA_SYMPTOMS, ArrayList(symptoms))
+                putIntegerArrayListExtra(EXTRA_SYMPTOMS, ArrayList(symptoms))
             }
     }
 }

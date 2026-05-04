@@ -1,17 +1,14 @@
 package com.ppoppi.house.data.model.response.diagnosis
 
-import com.ppoppi.house.data.model.response.diagnosis.DiagnosisTodayResponse.SymptomResponse
+
 import com.ppoppi.house.domain.model.Diagnosis
-import com.ppoppi.house.domain.model.Symptom
 import com.ppoppi.house.domain.model.Triage
 import com.ppoppi.house.domain.model.Triage.Companion.from
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class DiagnosisTodayResponse(
-    @SerialName("hasDiagnosis")
-    val hasDiagnosis: Boolean,
+data class DiagnosisResponse(
     @SerialName("imageUrl")
     val imageUrl: String,
     @SerialName("triage")
@@ -27,28 +24,12 @@ data class DiagnosisTodayResponse(
     @SerialName("guidanceMessage")
     val guidanceMessage: String,
     @SerialName("guidanceWarning")
-    val guidanceWarning: String,
-    @SerialName("symptoms")
-    val symptoms: List<SymptomResponse>,
-) {
-    @Serializable
-    data class SymptomResponse(
-        @SerialName("symptomId")
-        val symptomId: Int,
-        @SerialName("description")
-        val description: String,
-    )
-}
+    val guidanceWarning: String
+)
 
-fun SymptomResponse.toDomain(): Symptom =
-    Symptom(
-        id = this.symptomId,
-        description = this.description,
-    )
-
-fun DiagnosisTodayResponse.toDomain(): Diagnosis =
+fun DiagnosisResponse.toDomain(): Diagnosis =
     Diagnosis(
-        hasDiagnosis = this.hasDiagnosis,
+        hasDiagnosis = true,
         imageUrl = this.imageUrl,
         triage = Triage.from(this.triage),
         diseaseName = this.diseaseName,
@@ -57,5 +38,5 @@ fun DiagnosisTodayResponse.toDomain(): Diagnosis =
         guideAction = this.guidanceAction,
         guideMessage = this.guidanceMessage,
         guideWarning = this.guidanceWarning,
-        symptoms = this.symptoms.map { it.toDomain() },
+        symptoms = emptyList(),
     )

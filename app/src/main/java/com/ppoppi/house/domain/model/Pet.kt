@@ -15,6 +15,7 @@ data class Pet(
     val age: Int,
     val sex: SEX,
     val color: COLOR,
+    val id: Long? = null,
 ) : Parcelable
 
 enum class SPECIES {

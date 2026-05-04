@@ -30,7 +30,7 @@
     <string name="diagnosis_result_top_bar_navigation_description">뒤로 가기 버튼</string>
     <string name="diagnosis_result_skeleton_title">%s의 눈을 분석하고 있어요</string>
     <string name="diagnosis_result_skeleton_description">AI 모델이 안구 이미지와\n증상을 함께 분석 중입니다</string>
-    <string name="diagnosis_result_diagnosis_title">%s | %s</string>
+    <string name="diagnosis_result_diagnosis_title">사진 분석 결과 | %s | %s</string>
     <string name="diagnosis_result_diagnosis_card_description">AI 선별 결과이며 확진이 아닙니다\n최종 판단은 수의사에게 있습니다</string>
     <string name="diagnosis_result_bottom_bar_button_to_map">주변 동물 병원 찾아 보기</string>
     <string name="diagnosis_result_bottom_bar_button_to_home">완료</string>

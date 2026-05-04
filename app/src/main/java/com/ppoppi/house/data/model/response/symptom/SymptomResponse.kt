@@ -7,7 +7,7 @@ class SymptomResponse : ArrayList<SymptomResponse.SymptomResponseItem>() {
     @Serializable
     data class SymptomResponseItem(
         @SerialName("id")
-        val id: Long,
+        val id: Int,
         @SerialName("description")
         val description: String,
     )

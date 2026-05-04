@@ -17,6 +17,7 @@ class SelectActivity : ComponentActivity() {
     val pets =
         listOf(
             Pet(
+                id = 1,
                 name = "김은지",
                 species = SPECIES.DOG,
                 breed = "사람",
@@ -25,6 +26,7 @@ class SelectActivity : ComponentActivity() {
                 color = COLOR.PRIMARY200,
             ),
             Pet(
+                id = 2,
                 name = "김은지",
                 species = SPECIES.DOG,
                 breed = "사람",

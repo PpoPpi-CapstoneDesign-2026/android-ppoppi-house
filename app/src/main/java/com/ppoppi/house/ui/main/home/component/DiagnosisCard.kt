@@ -168,11 +168,11 @@ private fun DiagnosisCardPreview() {
                     symptoms =
                         listOf(
                             Symptom(
-                                id = 1L,
+                                id = 1,
                                 description = "충혈",
                             ),
                             Symptom(
-                                id = 1L,
+                                id = 2,
                                 description = "눈물",
                             ),
                         ),
