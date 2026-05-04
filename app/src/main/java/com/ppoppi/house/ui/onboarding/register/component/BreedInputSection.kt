@@ -16,6 +16,7 @@ import com.ppoppi.house.ui.theme.PpoPpiTheme
 @Composable
 fun BreedInputSection(
     breed: String?,
+    breeds: List<String>,
     onValueChanged: (breed: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -28,7 +29,7 @@ fun BreedInputSection(
 
         BreedDropdown(
             selectedBreed = breed,
-            breeds = listOf("aa", "bb", "cc", "dd", "ee", "ff", "gg"),
+            breeds = breeds,
             onBreedSelected = { onValueChanged(it) },
             modifier = Modifier.padding(top = 16.dp),
         )
@@ -41,6 +42,7 @@ private fun BreedInputSectionPreview() {
     PpoPpiTheme {
         BreedInputSection(
             breed = "푸들",
+            breeds = listOf("푸들", "말티즈", "비숑"),
             onValueChanged = {},
         )
     }
@@ -52,6 +54,7 @@ private fun BreedInputSectionPreview_Null() {
     PpoPpiTheme {
         BreedInputSection(
             breed = null,
+            breeds = emptyList(),
             onValueChanged = {},
         )
     }

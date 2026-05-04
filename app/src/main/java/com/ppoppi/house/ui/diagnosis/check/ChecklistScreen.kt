@@ -11,6 +11,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -20,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.ppoppi.house.R
 import com.ppoppi.house.ui.component.BottomBarButton
 import com.ppoppi.house.ui.diagnosis.check.model.SymptomItem
@@ -33,23 +35,14 @@ import com.ppoppi.house.ui.util.noRippleClickable
 import kotlin.collections.filter
 import kotlin.collections.toMutableList
 
-val symptoms: List<SymptomItem> =
-    listOf(
-        SymptomItem(1L, "충혈", false),
-        SymptomItem(1L, "분비물/눈곱", false),
-        SymptomItem(1L, "눈물", false),
-        SymptomItem(1L, "눈 찡그림", false),
-        SymptomItem(1L, "눈 비비기", false),
-        SymptomItem(1L, "혼탁", false),
-        SymptomItem(1L, "통증 의심", false),
-    )
-
 @Composable
 fun ChecklistScreen(
     onBackClick: () -> Unit,
     onComplete: (List<String>) -> Unit,
+    viewModel: ChecklistViewModel = hiltViewModel(),
 ) {
-    var selectedSymptoms: List<SymptomItem> by remember { mutableStateOf(symptoms) }
+    val symptoms by viewModel.symptoms.collectAsState()
+    var selectedSymptoms: List<SymptomItem> by remember(symptoms) { mutableStateOf(symptoms) }
 
     Scaffold(
         topBar = { ChecklistTopAppBar(onBackClick) },

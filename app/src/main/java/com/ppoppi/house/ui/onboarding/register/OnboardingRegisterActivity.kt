@@ -8,7 +8,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.ppoppi.house.domain.model.Pet
 import com.ppoppi.house.ui.theme.PpoPpiTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OnboardingRegisterActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val pet = intent.getParcelableExtra<Pet>(EXTRA_PET)

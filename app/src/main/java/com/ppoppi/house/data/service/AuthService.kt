@@ -8,12 +8,12 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface AuthService {
-    @POST("/api/auth/kakao")
+    @POST("/auth/kakao")
     suspend fun postAuthKakao(
         @Body request: LoginRequest,
     ): LoginResponse
 
-    @POST("/api/auth/reissue")
+    @POST("/auth/reissue")
     suspend fun postAuthReissue(
         @Body request: ReissueRequest,
     ): TokenResponse

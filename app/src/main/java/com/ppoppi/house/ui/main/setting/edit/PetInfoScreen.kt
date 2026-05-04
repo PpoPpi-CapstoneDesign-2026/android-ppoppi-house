@@ -10,6 +10,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -19,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.ppoppi.house.R
 import com.ppoppi.house.domain.model.COLOR
 import com.ppoppi.house.domain.model.Pet
@@ -42,6 +45,7 @@ fun PetInfoScreen(
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
     pet: Pet? = null,
+    viewModel: PetInfoViewModel = hiltViewModel(),
 ) {
     var name by rememberSaveable { mutableStateOf(pet?.name ?: "") }
     var species by rememberSaveable { mutableStateOf(pet?.species ?: SPECIES.DOG) }
@@ -49,6 +53,12 @@ fun PetInfoScreen(
     var sex by rememberSaveable { mutableStateOf(pet?.sex ?: SEX.MALE) }
     var age by rememberSaveable { mutableIntStateOf(pet?.age ?: 1) }
     var color by rememberSaveable { mutableIntStateOf(pet?.color?.ordinal ?: 1) }
+
+    val breeds by viewModel.breeds.collectAsState()
+
+    LaunchedEffect(species) {
+        viewModel.loadBreeds(species)
+    }
 
     val title = if (pet == null) stringResource(R.string.pet_register_top_bar) else stringResource(R.string.pet_edit_top_bar)
 
@@ -97,7 +107,10 @@ fun PetInfoScreen(
             // 종류 입력 섹션
             SpeciesInputSection(
                 species = species,
-                onValueChanged = { species = it },
+                onValueChanged = {
+                    species = it
+                    breed = null
+                },
             )
 
             Spacer(modifier = Modifier.height(30.dp))
@@ -105,6 +118,7 @@ fun PetInfoScreen(
             // 품종 입력 섹션
             BreedInputSection(
                 breed = breed,
+                breeds = breeds,
                 onValueChanged = { breed = it },
             )
 

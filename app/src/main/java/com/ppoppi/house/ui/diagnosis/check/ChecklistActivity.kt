@@ -11,7 +11,9 @@ import androidx.core.content.IntentCompat
 import com.ppoppi.house.domain.model.Pet
 import com.ppoppi.house.ui.diagnosis.result.ResultActivity
 import com.ppoppi.house.ui.theme.PpoPpiTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ChecklistActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,8 +29,8 @@ class ChecklistActivity : ComponentActivity() {
             PpoPpiTheme {
                 ChecklistScreen(
                     onBackClick = { finish() },
-                    onComplete = { symptoms ->
-                        startActivity(ResultActivity.newIntent(this, pet, imageUri, symptoms))
+                    onComplete = { checkedSymptoms ->
+                        startActivity(ResultActivity.newIntent(this, pet, imageUri, checkedSymptoms))
                     },
                 )
             }
