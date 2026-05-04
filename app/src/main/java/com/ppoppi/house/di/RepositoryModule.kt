@@ -2,9 +2,11 @@ package com.ppoppi.house.di
 
 import com.ppoppi.house.data.repository.AuthRepositoryImpl
 import com.ppoppi.house.data.repository.HospitalRepositoryImpl
+import com.ppoppi.house.data.repository.PetsRepositoryImpl
 import com.ppoppi.house.data.repository.SymptomRepositoryImpl
 import com.ppoppi.house.domain.repository.AuthRepository
 import com.ppoppi.house.domain.repository.HospitalRepository
+import com.ppoppi.house.domain.repository.PetsRepository
 import com.ppoppi.house.domain.repository.SymptomRepository
 import dagger.Binds
 import dagger.Module
@@ -26,4 +28,8 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindHospitalRepository(impl: HospitalRepositoryImpl): HospitalRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindPetRepository(impl: PetsRepositoryImpl): PetsRepository
 }
