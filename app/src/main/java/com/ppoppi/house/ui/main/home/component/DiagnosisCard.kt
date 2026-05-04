@@ -40,6 +40,7 @@ import com.ppoppi.house.ui.theme.White
 
 @Composable
 fun DiagnosisCard(
+    navigateToDiagnosis: () -> Unit,
     diagnosis: Diagnosis,
     modifier: Modifier = Modifier,
 ) {
@@ -126,7 +127,7 @@ fun DiagnosisCard(
         )
 
         Button(
-            onClick = { },
+            onClick = navigateToDiagnosis,
             modifier =
                 Modifier
                     .fillMaxWidth()
@@ -152,6 +153,7 @@ fun DiagnosisCard(
 private fun DiagnosisCardPreview() {
     PpoPpiTheme {
         DiagnosisCard(
+            navigateToDiagnosis = {},
             diagnosis =
                 Diagnosis(
                     hasDiagnosis = true,

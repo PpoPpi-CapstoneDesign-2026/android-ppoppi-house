@@ -20,7 +20,6 @@ fun ResultScreen(
     navigateToDiagnosis: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-
     Scaffold(
         topBar = { ResultTopAppBar(navigateToHome) },
         containerColor = White,
@@ -50,5 +49,3 @@ fun ResultScreen(
         }
     }
 }
-
-

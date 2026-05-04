@@ -1,8 +1,11 @@
 package com.ppoppi.house.ui.diagnosis.camera
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
@@ -19,7 +22,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PhotoLibrary
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -53,6 +60,7 @@ import com.ppoppi.house.ui.theme.Primary400
 import com.ppoppi.house.ui.theme.White
 import com.ppoppi.house.ui.util.getStyledText
 import com.ppoppi.house.ui.util.noRippleClickable
+import com.yalantis.ucrop.UCrop
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -67,6 +75,27 @@ fun CameraScreen(
     val context = LocalContext.current
     val cameraPermission = rememberPermissionState(Manifest.permission.CAMERA)
     var imageCapture by remember { mutableStateOf<ImageCapture?>(null) }
+
+    val cropLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                result.data?.let { UCrop.getOutput(it) }?.let(onCaptured)
+            }
+        }
+    val galleryLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            uri ?: return@rememberLauncherForActivityResult
+            val destFile =
+                File(context.cacheDir, "images")
+                    .also { it.mkdirs() }
+                    .let { File(it, "cropped_${System.currentTimeMillis()}.jpg") }
+            cropLauncher.launch(
+                UCrop
+                    .of(uri, Uri.fromFile(destFile))
+                    .withAspectRatio(1f, 1f)
+                    .getIntent(context),
+            )
+        }
 
     Scaffold(
         topBar = { CameraTopAppBar(onBackClick) },
@@ -146,6 +175,22 @@ fun CameraScreen(
                                 .align(Alignment.Center)
                                 .clip(CircleShape)
                                 .background(Primary400),
+                    )
+                }
+
+                IconButton(
+                    onClick = { galleryLauncher.launch("image/*") },
+                    modifier =
+                        Modifier
+                            .align(Alignment.BottomStart)
+                            .padding(start = 14.dp)
+                            .size(48.dp),
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.PhotoLibrary,
+                        contentDescription = null,
+                        tint = Primary400,
+                        modifier = Modifier.size(32.dp),
                     )
                 }
             }

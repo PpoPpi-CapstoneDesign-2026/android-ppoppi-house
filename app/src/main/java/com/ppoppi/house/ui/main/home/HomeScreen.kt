@@ -165,6 +165,7 @@ fun HomeScreen(
 
         if (todayDiagnosis != null) {
             DiagnosisCard(
+                navigateToDiagnosis = navigateToDiagnosis,
                 diagnosis = todayDiagnosis!!,
                 modifier = Modifier.padding(top = 18.dp),
             )

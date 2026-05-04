@@ -1,6 +1,5 @@
 package com.ppoppi.house.data.model.response.diagnosis
 
-
 import com.ppoppi.house.domain.model.Diagnosis
 import com.ppoppi.house.domain.model.Triage
 import com.ppoppi.house.domain.model.Triage.Companion.from
@@ -24,7 +23,7 @@ data class DiagnosisResponse(
     @SerialName("guidanceMessage")
     val guidanceMessage: String,
     @SerialName("guidanceWarning")
-    val guidanceWarning: String
+    val guidanceWarning: String,
 )
 
 fun DiagnosisResponse.toDomain(): Diagnosis =

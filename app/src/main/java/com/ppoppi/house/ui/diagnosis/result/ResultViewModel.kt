@@ -32,14 +32,17 @@ class ResultViewModel
         ) {
             viewModelScope.launch(Dispatchers.IO) {
                 val bytes =
-                    getApplication<Application>().contentResolver
-                        .openInputStream(imageUri)?.use { it.readBytes() }
+                    getApplication<Application>()
+                        .contentResolver
+                        .openInputStream(imageUri)
+                        ?.use { it.readBytes() }
                 if (bytes == null) {
                     _uiState.value = ResultUiState.Error
                     return@launch
                 }
                 val imagePart =
-                    bytes.toRequestBody("image/*".toMediaType())
+                    bytes
+                        .toRequestBody("image/*".toMediaType())
                         .let { MultipartBody.Part.createFormData("image", "image.jpg", it) }
                 runCatching { diagnosisRepository.postDiagnosis(petId, symptomIds, imagePart) }
                     .onSuccess { _uiState.value = ResultUiState.Success(it) }
