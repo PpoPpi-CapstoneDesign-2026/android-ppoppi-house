@@ -8,7 +8,7 @@ interface DiseaseService {
     @GET("/genetic-diseases/search")
     suspend fun getGeneticDiseaseSearch(
         @Query("keyword") keyword: String,
-    ): DiseaseResponse
+    ): DiseaseResponse?
 
     @GET("/genetic-diseases/random")
     suspend fun getGeneticDiseaseRandom(): DiseaseResponse

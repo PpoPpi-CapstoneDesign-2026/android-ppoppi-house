@@ -1,7 +1,10 @@
 package com.ppoppi.house.ui.onboarding.register.component
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -11,7 +14,9 @@ import androidx.compose.ui.unit.dp
 import com.ppoppi.house.R
 import com.ppoppi.house.ui.component.PpoPpiTextField
 import com.ppoppi.house.ui.theme.Black
+import com.ppoppi.house.ui.theme.Gray100
 import com.ppoppi.house.ui.theme.PpoPpiTheme
+import com.ppoppi.house.ui.theme.White
 
 @Composable
 fun NameInputSection(
@@ -32,7 +37,15 @@ fun NameInputSection(
             value = name,
             onValueChanged = { onValueChanged(it) },
             placeHolder = stringResource(R.string.pet_register_name_input_hint),
-            modifier = Modifier.padding(top = 16.dp),
+            modifier = Modifier
+                .padding(top = 16.dp)
+                .background(White, shape = RoundedCornerShape(8.dp))
+                .border(
+                    width = 1.dp,
+                    color = Gray100,
+                    shape = RoundedCornerShape(8.dp),
+                )
+                .padding(horizontal = 16.dp, vertical = 14.dp),
         )
     }
 }

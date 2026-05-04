@@ -12,7 +12,8 @@ class DiseaseRepositoryImpl
         private val diseaseService: DiseaseService,
     ) : DiseaseRepository {
         override suspend fun getGeneticDiseaseSearch(keyword: String): List<Disease> =
-            diseaseService.getGeneticDiseaseSearch(keyword).map { it.toDomain() }
+            runCatching { diseaseService.getGeneticDiseaseSearch(keyword)?.map { it.toDomain() } }
+                .getOrDefault(emptyList()) ?: emptyList()
 
         override suspend fun getGeneticDiseaseRandom(): List<Disease> = diseaseService.getGeneticDiseaseRandom().map { it.toDomain() }
     }
