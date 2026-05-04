@@ -15,6 +15,6 @@ interface PetService {
 
     @POST("/pets")
     suspend fun postPets(
-        @Body petRegisterRequest: PetRegisterRequest
+        @Body petRegisterRequest: PetRegisterRequest,
     )
 }

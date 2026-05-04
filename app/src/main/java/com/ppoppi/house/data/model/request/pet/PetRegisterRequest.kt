@@ -1,6 +1,5 @@
 package com.ppoppi.house.data.model.request.pet
 
-
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -17,5 +16,5 @@ data class PetRegisterRequest(
     @SerialName("sex")
     val sex: String,
     @SerialName("color")
-    val color: Int
+    val color: Int,
 )
