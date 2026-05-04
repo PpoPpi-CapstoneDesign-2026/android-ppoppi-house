@@ -20,10 +20,7 @@ class PetInfoActivity : ComponentActivity() {
         setContent {
             PpoPpiTheme {
                 PetInfoScreen(
-                    onComplete = { pet ->
-                        // 수정사항 저장
-                        finish()
-                    },
+                    onRegistered = { finish() },
                     onBackClick = { finish() },
                     pet = pet,
                 )

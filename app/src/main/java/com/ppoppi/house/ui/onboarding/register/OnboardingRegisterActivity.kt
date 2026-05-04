@@ -20,10 +20,7 @@ class OnboardingRegisterActivity : ComponentActivity() {
         setContent {
             PpoPpiTheme {
                 PetRegisterScreen(
-                    onComplete = { pet ->
-                        // 반려동물 저장
-                        finish()
-                    },
+                    onRegistered = { finish() },
                     onBackClick = { finish() },
                     pet = pet,
                 )

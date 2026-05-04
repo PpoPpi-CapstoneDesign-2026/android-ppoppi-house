@@ -41,7 +41,7 @@ import com.ppoppi.house.ui.theme.White
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PetInfoScreen(
-    onComplete: (pet: Pet) -> Unit,
+    onRegistered: () -> Unit,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
     pet: Pet? = null,
@@ -55,6 +55,10 @@ fun PetInfoScreen(
     var color by rememberSaveable { mutableIntStateOf(pet?.color?.ordinal ?: 1) }
 
     val breeds by viewModel.breeds.collectAsState()
+
+    LaunchedEffect(viewModel) {
+        viewModel.isRegistered.collect { onRegistered() }
+    }
 
     LaunchedEffect(species) {
         viewModel.loadBreeds(species)
@@ -71,7 +75,7 @@ fun PetInfoScreen(
         bottomBar = {
             BottomBarButton(
                 onClick = {
-                    onComplete(
+                    viewModel.registerPet(
                         Pet(
                             name = name,
                             species = species,
@@ -157,7 +161,7 @@ fun PetInfoScreen(
 fun PetInfoScreenPreview() {
     PpoPpiTheme {
         PetInfoScreen(
-            onComplete = {},
+            onRegistered = {},
             onBackClick = {},
             pet =
                 Pet(
