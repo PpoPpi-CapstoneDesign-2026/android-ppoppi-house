@@ -29,6 +29,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
+import kotlinx.coroutines.flow.drop
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -49,8 +51,10 @@ import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
+import com.ppoppi.house.domain.model.MapView
 import com.ppoppi.house.ui.main.map.component.VetHospitalBottomSheet
 import kotlinx.coroutines.launch
+import kotlin.math.pow
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -141,7 +145,20 @@ fun PetHospitalMap(
     val selectedHospitalInfo by viewModel.selectedHospitalInfo.collectAsState()
 
     LaunchedEffect(userLocation) {
-        viewModel.loadHospitals(userLocation.latitude, userLocation.longitude)
+        viewModel.loadHospitals(
+            mapView = buildMapView(cameraPositionState, userLocation.latitude, userLocation.longitude),
+            immediate = true,
+        )
+    }
+
+    LaunchedEffect(cameraPositionState) {
+        snapshotFlow { cameraPositionState.position }
+            .drop(1)
+            .collect { position ->
+                viewModel.loadHospitals(
+                    mapView = buildMapView(cameraPositionState, position.target.latitude, position.target.longitude),
+                )
+            }
     }
 
     var showBottomSheet by remember { mutableStateOf(false) }
@@ -251,4 +268,33 @@ private fun PermissionDeniedCard(modifier: Modifier = Modifier) {
             context.startActivity(intent)
         }) { Text("설정으로 이동") }
     }
+}
+
+private fun buildMapView(
+    cameraPositionState: com.google.maps.android.compose.CameraPositionState,
+    centerLat: Double,
+    centerLng: Double,
+): MapView {
+    val position = cameraPositionState.position
+    val zoom = position.zoom.toInt()
+    val bounds = cameraPositionState.projection?.visibleRegion?.latLngBounds
+
+    val northeast: MapView.LatLng
+    val southwest: MapView.LatLng
+
+    if (bounds != null) {
+        northeast = MapView.LatLng(bounds.northeast.latitude, bounds.northeast.longitude)
+        southwest = MapView.LatLng(bounds.southwest.latitude, bounds.southwest.longitude)
+    } else {
+        val delta = 0.009 * 2.0.pow((14 - zoom).toDouble())
+        northeast = MapView.LatLng(centerLat + delta, centerLng + delta)
+        southwest = MapView.LatLng(centerLat - delta, centerLng - delta)
+    }
+
+    return MapView(
+        bounds = MapView.Bounds(northeast = northeast, southwest = southwest),
+        zoom = zoom,
+        center = MapView.Center(centerLat, centerLng),
+        limit = 20,
+    )
 }

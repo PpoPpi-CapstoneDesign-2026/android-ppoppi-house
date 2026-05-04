@@ -21,7 +21,7 @@ fun BusinessStatusLabel(
     businessStatus: String,
     modifier: Modifier = Modifier,
 ) {
-    val color = if (businessStatus == "영업중") Primary200 else Gray400
+    val color = if (businessStatus == "영업 중") Primary200 else Gray400
 
     Row(
         modifier =
