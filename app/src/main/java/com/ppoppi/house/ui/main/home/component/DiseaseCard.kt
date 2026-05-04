@@ -55,8 +55,7 @@ fun DiseaseCard(
                             paint = paint,
                         )
                     }
-                }
-                .background(White, RoundedCornerShape(8.dp))
+                }.background(White, RoundedCornerShape(8.dp))
                 .border(1.dp, Gray100, RoundedCornerShape(8.dp))
                 .padding(vertical = 16.dp, horizontal = 22.dp),
     ) {
@@ -83,12 +82,13 @@ fun DiseaseCard(
 private fun DiseaseCardPreview() {
     PpoPpiTheme {
         DiseaseCard(
-            disease = Disease(
-                diseaseId = 1,
-                name = "결막염",
-                breed = "무슨 종류",
-                description = "결막염은 어쩌구 저쩌구 ㄴㅇㄹ먖ㄷ결막염은 어쩌구 저쩌구 ㄴㅇㄹ먖ㄷ결막염은 어쩌구 저쩌구 ㄴㅇㄹ먖ㄷ"
-            )
+            disease =
+                Disease(
+                    diseaseId = 1,
+                    name = "결막염",
+                    breed = "무슨 종류",
+                    description = "결막염은 어쩌구 저쩌구 ㄴㅇㄹ먖ㄷ결막염은 어쩌구 저쩌구 ㄴㅇㄹ먖ㄷ결막염은 어쩌구 저쩌구 ㄴㅇㄹ먖ㄷ",
+                ),
         )
     }
 }

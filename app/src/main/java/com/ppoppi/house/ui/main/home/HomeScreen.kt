@@ -169,7 +169,7 @@ fun HomeScreen(
             text = "오늘의 질병",
             style = PpoPpiTheme.typography.title1,
             color = Black,
-            modifier = Modifier.padding(top = 30.dp)
+            modifier = Modifier.padding(top = 30.dp),
         )
 
         DiseaseTextField(
@@ -220,21 +220,23 @@ private fun DiseaseSection(
                 }
                 if (diseases.size > 1) {
                     Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 10.dp),
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(top = 10.dp),
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         repeat(diseases.size) { index ->
                             Box(
-                                modifier = Modifier
-                                    .padding(horizontal = 3.dp)
-                                    .size(if (pagerState.currentPage == index) 8.dp else 6.dp)
-                                    .background(
-                                        color = if (pagerState.currentPage == index) Primary400 else Gray200,
-                                        shape = CircleShape,
-                                    ),
+                                modifier =
+                                    Modifier
+                                        .padding(horizontal = 3.dp)
+                                        .size(if (pagerState.currentPage == index) 8.dp else 6.dp)
+                                        .background(
+                                            color = if (pagerState.currentPage == index) Primary400 else Gray200,
+                                            shape = CircleShape,
+                                        ),
                             )
                         }
                     }
@@ -252,31 +254,31 @@ private fun DiseaseTextField(
     PpoPpiTextField(
         value = keyword,
         onValueChanged = { onValueChanged(it) },
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 8.dp)
-            .drawBehind {
-                drawIntoCanvas { canvas ->
-                    val paint = Paint()
-                    paint.asFrameworkPaint().apply {
-                        isAntiAlias = true
-                        color = Color.argb(64, 0, 0, 0)
-                        maskFilter = BlurMaskFilter(2.dp.toPx(), BlurMaskFilter.Blur.NORMAL)
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp)
+                .drawBehind {
+                    drawIntoCanvas { canvas ->
+                        val paint = Paint()
+                        paint.asFrameworkPaint().apply {
+                            isAntiAlias = true
+                            color = Color.argb(64, 0, 0, 0)
+                            maskFilter = BlurMaskFilter(2.dp.toPx(), BlurMaskFilter.Blur.NORMAL)
+                        }
+                        canvas.drawRoundRect(
+                            left = 0f,
+                            top = 2.dp.toPx(),
+                            right = size.width,
+                            bottom = size.height + 2.dp.toPx(),
+                            radiusX = 16.dp.toPx(),
+                            radiusY = 16.dp.toPx(),
+                            paint = paint,
+                        )
                     }
-                    canvas.drawRoundRect(
-                        left = 0f,
-                        top = 2.dp.toPx(),
-                        right = size.width,
-                        bottom = size.height + 2.dp.toPx(),
-                        radiusX = 16.dp.toPx(),
-                        radiusY = 16.dp.toPx(),
-                        paint = paint,
-                    )
-                }
-            }
-            .background(White, shape = RoundedCornerShape(16.dp))
-            .border(1.dp, Gray100, RoundedCornerShape(16.dp))
-            .padding(horizontal = 16.dp, vertical = 14.dp),
+                }.background(White, shape = RoundedCornerShape(16.dp))
+                .border(1.dp, Gray100, RoundedCornerShape(16.dp))
+                .padding(horizontal = 16.dp, vertical = 14.dp),
         maxLength = 10,
         placeHolder = "궁금한 질병을 검색해 보세요",
         prefix = {

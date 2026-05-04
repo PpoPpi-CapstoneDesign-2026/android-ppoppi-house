@@ -37,15 +37,15 @@ fun NameInputSection(
             value = name,
             onValueChanged = { onValueChanged(it) },
             placeHolder = stringResource(R.string.pet_register_name_input_hint),
-            modifier = Modifier
-                .padding(top = 16.dp)
-                .background(White, shape = RoundedCornerShape(8.dp))
-                .border(
-                    width = 1.dp,
-                    color = Gray100,
-                    shape = RoundedCornerShape(8.dp),
-                )
-                .padding(horizontal = 16.dp, vertical = 14.dp),
+            modifier =
+                Modifier
+                    .padding(top = 16.dp)
+                    .background(White, shape = RoundedCornerShape(8.dp))
+                    .border(
+                        width = 1.dp,
+                        color = Gray100,
+                        shape = RoundedCornerShape(8.dp),
+                    ).padding(horizontal = 16.dp, vertical = 14.dp),
         )
     }
 }

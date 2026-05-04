@@ -42,9 +42,11 @@ fun PpoPpiTextField(
             singleLine = true,
             decorationBox = { innerTextField ->
                 Row {
-                    prefix(Modifier
-                        .padding(end = 8.dp)
-                        .align(Alignment.CenterVertically))
+                    prefix(
+                        Modifier
+                            .padding(end = 8.dp)
+                            .align(Alignment.CenterVertically),
+                    )
 
                     Box(
                         modifier = Modifier.weight(1f),

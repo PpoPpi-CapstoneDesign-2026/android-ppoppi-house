@@ -35,7 +35,8 @@ class PetRegisterViewModel
 
         fun registerPet(pet: Pet) {
             viewModelScope.launch {
-                petsRepository.postPet(pet)
+                petsRepository
+                    .postPet(pet)
                     .onSuccess { _isRegistered.emit(Unit) }
             }
         }

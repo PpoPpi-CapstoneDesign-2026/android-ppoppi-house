@@ -29,18 +29,19 @@ class SplashViewModel
         private fun checkAuthStatus() {
             viewModelScope.launch {
                 val minDelay = async { delay(MINIMUM_SPLASH_DURATION_MS) }
-                val authResult = async {
-                    runCatching {
-                        symptomRepository.getSymptoms()
-                        SplashUiState.Authenticated
-                    }.getOrElse { e ->
-                        if (e is HttpException && e.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
-                            SplashUiState.Unauthenticated
-                        } else {
-                            SplashUiState.Unauthenticated
+                val authResult =
+                    async {
+                        runCatching {
+                            symptomRepository.getSymptoms()
+                            SplashUiState.Authenticated
+                        }.getOrElse { e ->
+                            if (e is HttpException && e.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                                SplashUiState.Unauthenticated
+                            } else {
+                                SplashUiState.Unauthenticated
+                            }
                         }
                     }
-                }
                 minDelay.await()
                 _uiState.value = authResult.await()
             }

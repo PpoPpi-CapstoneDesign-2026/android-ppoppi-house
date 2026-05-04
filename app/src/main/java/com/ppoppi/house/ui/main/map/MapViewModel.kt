@@ -28,13 +28,17 @@ class MapViewModel
 
         private var loadHospitalsJob: Job? = null
 
-        fun loadHospitals(mapView: MapView, immediate: Boolean = false) {
+        fun loadHospitals(
+            mapView: MapView,
+            immediate: Boolean = false,
+        ) {
             loadHospitalsJob?.cancel()
-            loadHospitalsJob = viewModelScope.launch {
-                if (!immediate) delay(SEARCH_DEBOUNCE_MS)
-                runCatching { hospitalRepository.postHospitalsSearch(mapView) }
-                    .onSuccess { _hospitals.value = it }
-            }
+            loadHospitalsJob =
+                viewModelScope.launch {
+                    if (!immediate) delay(SEARCH_DEBOUNCE_MS)
+                    runCatching { hospitalRepository.postHospitalsSearch(mapView) }
+                        .onSuccess { _hospitals.value = it }
+                }
         }
 
         fun loadHospitalInfo(
