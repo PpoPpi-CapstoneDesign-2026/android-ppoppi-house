@@ -25,7 +25,7 @@ import com.ppoppi.house.ui.theme.PpoPpiTheme
 
 @Composable
 fun ConfidenceScore(
-    confidenceScore: Double,
+    confidenceScore: Int,
     triageColor: Color,
     modifier: Modifier = Modifier,
 ) {
@@ -73,7 +73,7 @@ fun ConfidenceScore(
         Spacer(modifier = Modifier.width(8.dp))
 
         Text(
-            text = "${confidenceScore.toInt()}%",
+            text = "$confidenceScore%",
             style = PpoPpiTheme.typography.label1,
             color = triageColor,
         )
@@ -85,7 +85,7 @@ fun ConfidenceScore(
 private fun ConfidenceScorePreview() {
     PpoPpiTheme {
         ConfidenceScore(
-            confidenceScore = 70.0,
+            confidenceScore = 70,
             triageColor = Amber200,
         )
     }

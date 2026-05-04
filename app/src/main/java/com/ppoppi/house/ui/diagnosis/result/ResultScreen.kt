@@ -74,7 +74,7 @@ fun ResultScreen(
             )
 
             TriageBadge(
-                triage = diagnosis.triageKey,
+                triage = diagnosis.triage,
                 modifier =
                     Modifier
                         .padding(top = 14.dp),
@@ -84,7 +84,7 @@ fun ResultScreen(
                 text =
                     stringResource(
                         R.string.diagnosis_result_diagnosis_title,
-                        diagnosis.guideTitle,
+                        diagnosis.guideWarning,
                         diagnosis.affectedArea,
                     ),
                 style = PpoPpiTheme.typography.title1,
@@ -94,7 +94,7 @@ fun ResultScreen(
 
             ConfidenceScore(
                 confidenceScore = diagnosis.triageConfidence,
-                triageColor = diagnosis.triageKey.toColor()[1],
+                triageColor = diagnosis.triage.toColor()[1],
                 modifier =
                     Modifier
                         .padding(top = 12.dp)
@@ -132,7 +132,7 @@ fun ResultScreen(
 
                 Button(
                     onClick = {
-                        if (diagnosis.triageKey == Triage.URGENT || diagnosis.triageKey == Triage.SOON) {
+                        if (diagnosis.triage == Triage.URGENT || diagnosis.triage == Triage.SOON) {
                             navigateToMap()
                         } else {
                             navigateToHome()
@@ -145,13 +145,13 @@ fun ResultScreen(
                     shape = RoundedCornerShape(8.dp),
                     colors =
                         ButtonDefaults.buttonColors(
-                            containerColor = diagnosis.triageKey.toColor()[1],
+                            containerColor = diagnosis.triage.toColor()[1],
                         ),
                     contentPadding = PaddingValues(vertical = 12.dp),
                 ) {
                     Text(
                         text =
-                            if (diagnosis.triageKey == Triage.URGENT || diagnosis.triageKey == Triage.SOON) {
+                            if (diagnosis.triage == Triage.URGENT || diagnosis.triage == Triage.SOON) {
                                 stringResource(
                                     R.string.diagnosis_result_bottom_bar_button_to_map,
                                 )

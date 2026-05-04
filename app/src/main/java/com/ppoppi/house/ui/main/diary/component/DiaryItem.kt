@@ -116,7 +116,7 @@ fun DiaryItem(
 
         // 진단 결과
         if (diagnosis != null) {
-            val (backgroundColor, borderColor, textColor) = diagnosis.triageKey.toColor()
+            val (backgroundColor, borderColor, textColor) = diagnosis.triage.toColor()
             Text(
                 text = "🔍진단 결과",
                 style = PpoPpiTheme.typography.title3,
@@ -152,11 +152,11 @@ fun DiaryItem(
                         horizontalArrangement = Arrangement.spacedBy(14.dp),
                     ) {
                         Text(
-                            text = diagnosis.guideTitle,
+                            text = diagnosis.guideWarning,
                             style = PpoPpiTheme.typography.body1,
                             color = Black,
                         )
-                        TriageBadge(triage = diagnosis.triageKey)
+                        TriageBadge(triage = diagnosis.triage)
                     }
                     Row(
                         modifier = Modifier.padding(top = 10.dp),
@@ -170,7 +170,7 @@ fun DiaryItem(
                         Text(
                             text = "${diagnosis.triageConfidence.toInt()}%",
                             style = PpoPpiTheme.typography.label1,
-                            color = diagnosis.triageKey.toColor()[1],
+                            color = diagnosis.triage.toColor()[1],
                         )
                     }
                     Spacer(modifier = Modifier.height(12.dp))
@@ -257,13 +257,16 @@ private fun DiaryItemPreview() {
                 ),
             diagnosis =
                 Diagnosis(
-                    guideTitle = "결막염",
-                    triageKey = Triage.URGENT,
-                    triageConfidence = 80.0,
+                    guideWarning = "결막염",
+                    triage = Triage.URGENT,
+                    triageConfidence = 80,
                     affectedArea = "각막",
-                    guideMsg = "어쩌구저쩌구",
+                    guideMessage = "어쩌구저쩌구",
                     guideAction = "어쩌구저쩌구",
                     imageUrl = "https://picsum.photos/400/400",
+                    hasDiagnosis = true,
+                    diseaseName = "결막염",
+                    symptoms = listOf(),
                 ),
             checklist = listOf("눈물", "눈곱"),
             memo = "메모입니다?메모입니다?메모입니다?메모입니다?메모입니다?메모입니다?메모입니다?메모입니다?메모입니다?메모입니다?메모입니다?\n메모입니다?메모입니다?",

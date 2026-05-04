@@ -18,13 +18,16 @@ import com.ppoppi.house.ui.theme.PpoPpiTheme
 class ResultActivity : ComponentActivity() {
     val diagnosis =
         Diagnosis(
-            guideTitle = "결막염",
-            triageKey = Triage.MONITOR,
-            triageConfidence = 70.0,
+            hasDiagnosis = true,
+            imageUrl = "",
+            triage = Triage.URGENT,
+            diseaseName = "결막염",
             affectedArea = "각막",
-            guideMsg = "결막염이 의심 어쩌",
-            guideAction = "일주일 내 내원 권장",
-            imageUrl = null,
+            triageConfidence = 80,
+            guideAction = "asdfasdf",
+            guideMessage = "일주일 내",
+            guideWarning = "sdf",
+            symptoms = emptyList(),
         )
 
     override fun onCreate(savedInstanceState: Bundle?) {

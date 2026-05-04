@@ -34,7 +34,7 @@ fun ResultCard(
     diagnosis: Diagnosis,
     modifier: Modifier = Modifier,
 ) {
-    val textColor = diagnosis.triageKey.toColor()[1]
+    val textColor = diagnosis.triage.toColor()[1]
     Column(
         modifier =
             modifier
@@ -71,12 +71,12 @@ fun ResultCard(
                 }.padding(20.dp),
     ) {
         Text(
-            text = diagnosis.guideMsg.getColoredText(textColor, diagnosis.guideTitle),
+            text = diagnosis.guideMessage.getColoredText(textColor, diagnosis.guideWarning),
             style = PpoPpiTheme.typography.title1,
             color = Black,
         )
         Text(
-            text = diagnosis.guideMsg,
+            text = diagnosis.guideMessage,
             style = PpoPpiTheme.typography.body1,
             color = Gray400,
         )
@@ -89,13 +89,13 @@ fun ResultCard(
             color = Gray100,
         )
         Text(
-            text = diagnosis.guideMsg.getColoredText(textColor, diagnosis.guideTitle),
+            text = diagnosis.guideMessage.getColoredText(textColor, diagnosis.guideWarning),
             style = PpoPpiTheme.typography.title1,
             color = Black,
             modifier = Modifier.padding(top = 12.dp),
         )
         Text(
-            text = diagnosis.guideMsg,
+            text = diagnosis.guideMessage,
             style = PpoPpiTheme.typography.body1,
             color = Gray400,
         )
@@ -109,13 +109,16 @@ private fun ResultCardPreview() {
         ResultCard(
             diagnosis =
                 Diagnosis(
-                    guideTitle = "결막염",
-                    triageKey = Triage.URGENT,
-                    triageConfidence = 70.0,
+                    triage = Triage.URGENT,
+                    triageConfidence = 70,
                     affectedArea = "각막",
-                    guideMsg = "결막염이 의심 어쩌구",
+                    guideMessage = "결막염이 의심 어쩌구",
                     guideAction = "액션 어쩌구",
                     imageUrl = null,
+                    hasDiagnosis = true,
+                    diseaseName = "결막염",
+                    symptoms = emptyList(),
+                    guideWarning = "asdfasdf",
                 ),
         )
     }

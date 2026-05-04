@@ -29,5 +29,7 @@ enum class Triage {
                 MONITOR -> listOf(Blue50, Blue400, Blue600)
                 NORMAL -> listOf(Primary50, Primary600, Primary800)
             }
+
+        fun Triage.Companion.from(value: String): Triage = Triage.valueOf(value)
     }
 }

@@ -27,7 +27,7 @@ import com.ppoppi.house.ui.theme.Primary400
 import com.ppoppi.house.ui.theme.White
 
 @Composable
-fun DiagnosisCard(
+fun ToDiagnosisCard(
     onClick: () -> Unit,
     name: String,
     modifier: Modifier = Modifier,
@@ -95,9 +95,9 @@ fun DiagnosisCard(
 
 @Preview(showBackground = true)
 @Composable
-private fun DiagnosisCardPreview() {
+private fun ToDiagnosisCardPreview() {
     PpoPpiTheme {
-        DiagnosisCard(
+        ToDiagnosisCard(
             onClick = {},
             name = "뽀삐",
         )

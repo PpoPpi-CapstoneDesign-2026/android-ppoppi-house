@@ -43,10 +43,10 @@ import com.ppoppi.house.domain.model.Pet
 import com.ppoppi.house.domain.model.SEX
 import com.ppoppi.house.domain.model.SPECIES
 import com.ppoppi.house.ui.component.PpoPpiTextField
-import com.ppoppi.house.ui.main.home.component.DiagnosisCard
 import com.ppoppi.house.ui.main.home.component.DiseaseCard
 import com.ppoppi.house.ui.main.home.component.PetAddButton
 import com.ppoppi.house.ui.main.home.component.PetButton
+import com.ppoppi.house.ui.main.home.component.ToDiagnosisCard
 import com.ppoppi.house.ui.main.setting.edit.PetInfoActivity
 import com.ppoppi.house.ui.theme.Black
 import com.ppoppi.house.ui.theme.Gray100
@@ -163,7 +163,7 @@ fun HomeScreen(
         )
 
         if (diagnosisResult == null) {
-            DiagnosisCard(
+            ToDiagnosisCard(
                 onClick = (navigateToDiagnosis),
                 name = selectedPet.name,
                 modifier = Modifier.padding(top = 18.dp),

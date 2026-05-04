@@ -1,6 +1,6 @@
 package com.ppoppi.house.domain.repository
 
-import com.ppoppi.house.data.model.response.diagnosis.DiagnosisTodayResponse
+import com.ppoppi.house.domain.model.Diagnosis
 import java.time.LocalDate
 
 interface DiagnosisRepository {
@@ -8,5 +8,5 @@ interface DiagnosisRepository {
     suspend fun getDiagnosisToday(
         petId: Long,
         date: LocalDate,
-    ): DiagnosisTodayResponse
+    ): Diagnosis
 }
