@@ -1,4 +1,4 @@
-package com.ppoppi.house.data.model.request
+package com.ppoppi.house.data.model.request.auth
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
