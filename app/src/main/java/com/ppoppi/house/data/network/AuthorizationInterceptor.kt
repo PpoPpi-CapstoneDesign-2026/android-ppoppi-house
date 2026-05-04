@@ -76,7 +76,7 @@ class AuthorizationInterceptor
             val request =
                 Request
                     .Builder()
-                    .url("${BuildConfig.BASE_URL.trimEnd('/')}/api/auth/reissue")
+                    .url("${BuildConfig.BASE_URL.trimEnd('/')}/auth/reissue")
                     .post(requestBody)
                     .build()
 
