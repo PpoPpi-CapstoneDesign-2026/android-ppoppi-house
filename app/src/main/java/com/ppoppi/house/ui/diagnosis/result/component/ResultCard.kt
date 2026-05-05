@@ -38,24 +38,29 @@ fun ResultCard(
     val accentColor = triageColors[1]
     val highlightColor = triageColors[2]
 
-    val title = when (diagnosis.triage) {
-        Triage.NORMAL -> "정상 안구입니다".getColoredText(highlightColor, "정상 안구")
-        else -> {
-            if (diagnosis.diseaseName == "정상") "정상 안구입니다".getColoredText(highlightColor, "정상 안구")
-            else "${diagnosis.diseaseName}이 의심됩니다.".getColoredText(
-                highlightColor,
-                diagnosis.diseaseName
-            )
+    val title =
+        when (diagnosis.triage) {
+            Triage.NORMAL -> "정상 안구입니다".getColoredText(highlightColor, "정상 안구")
+            else -> {
+                if (diagnosis.diseaseName == "정상") {
+                    "정상 안구입니다".getColoredText(highlightColor, "정상 안구")
+                } else {
+                    "${diagnosis.diseaseName}이 의심됩니다.".getColoredText(
+                        highlightColor,
+                        diagnosis.diseaseName,
+                    )
+                }
+            }
         }
-    }
 
-    val action = when (diagnosis.triage) {
-        Triage.URGENT, Triage.SOON ->
-            "${diagnosis.guideAction} 내원 권장".getColoredText(highlightColor, diagnosis.guideAction)
+    val action =
+        when (diagnosis.triage) {
+            Triage.URGENT, Triage.SOON ->
+                "${diagnosis.guideAction} 내원 권장".getColoredText(highlightColor, diagnosis.guideAction)
 
-        else ->
-            diagnosis.guideAction.getColoredText(highlightColor, diagnosis.guideAction)
-    }
+            else ->
+                diagnosis.guideAction.getColoredText(highlightColor, diagnosis.guideAction)
+        }
 
     Column(
         modifier =
@@ -82,8 +87,7 @@ fun ResultCard(
                             paint = paint,
                         )
                     }
-                }
-                .clip(RoundedCornerShape(8.dp))
+                }.clip(RoundedCornerShape(8.dp))
                 .background(White)
                 .drawBehind {
                     drawRect(
@@ -91,8 +95,7 @@ fun ResultCard(
                         topLeft = Offset.Zero,
                         size = Size(4.dp.toPx(), size.height),
                     )
-                }
-                .padding(20.dp),
+                }.padding(20.dp),
     ) {
         Text(
             text = title,
@@ -107,9 +110,10 @@ fun ResultCard(
 
         if (diagnosis.triage != Triage.NORMAL) {
             HorizontalDivider(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 12.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = 12.dp),
                 thickness = 1.dp,
                 color = Gray100,
             )
