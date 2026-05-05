@@ -1,11 +1,14 @@
 package com.ppoppi.house.ui.main.home
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ppoppi.house.domain.model.Diagnosis
 import com.ppoppi.house.domain.model.Disease
+import com.ppoppi.house.domain.model.Pet
 import com.ppoppi.house.domain.repository.DiagnosisRepository
 import com.ppoppi.house.domain.repository.DiseaseRepository
+import com.ppoppi.house.domain.repository.PetsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -21,6 +24,7 @@ class HomeViewModel
     constructor(
         private val diseaseRepository: DiseaseRepository,
         private val diagnosisRepository: DiagnosisRepository,
+        private val petsRepository: PetsRepository,
     ) : ViewModel() {
         private val _diseases = MutableStateFlow<List<Disease>?>(null)
         val diseases: StateFlow<List<Disease>?> = _diseases
@@ -28,18 +32,36 @@ class HomeViewModel
         private val _todayDiagnosis = MutableStateFlow<Diagnosis?>(null)
         val todayDiagnosis: StateFlow<Diagnosis?> = _todayDiagnosis
 
+        private val _pets = MutableStateFlow<List<Pet>>(emptyList())
+        val pets: StateFlow<List<Pet>> = _pets
+
         private var searchJob: Job? = null
 
         init {
             viewModelScope.launch {
+                runCatching { petsRepository.getPets() }
+                    .onSuccess { _pets.value = it }
+            }
+            viewModelScope.launch {
                 runCatching { diseaseRepository.getGeneticDiseaseRandom() }
                     .onSuccess { _diseases.value = it.take(MAX_DISEASE_COUNT) }
             }
+            loadDiagnosis(_pets.value.firstOrNull()?.id ?: 0)
+        }
+
+        fun loadDiagnosis(petId: Long) {
             viewModelScope.launch {
-                runCatching { diagnosisRepository.getDiagnosisToday(petId = 1L, date = LocalDate.now()) }
-                    .onSuccess { diagnosis ->
-                        if (diagnosis.hasDiagnosis) _todayDiagnosis.value = diagnosis
-                    }
+                runCatching {
+                    diagnosisRepository.getDiagnosisToday(
+                        petId = petId,
+                        date = LocalDate.now(),
+                    )
+                }.onSuccess { diagnosis ->
+                    if (diagnosis.hasDiagnosis) _todayDiagnosis.value = diagnosis
+                    else _todayDiagnosis.value = null
+                }.onFailure {
+                    _todayDiagnosis.value = null
+                }
             }
         }
 

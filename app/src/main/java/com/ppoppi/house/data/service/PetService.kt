@@ -2,6 +2,7 @@ package com.ppoppi.house.data.service
 
 import com.ppoppi.house.data.model.request.pet.PetRegisterRequest
 import com.ppoppi.house.data.model.response.pet.BreedsResponse
+import com.ppoppi.house.data.model.response.pet.PetsResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -17,4 +18,7 @@ interface PetService {
     suspend fun postPets(
         @Body petRegisterRequest: PetRegisterRequest,
     )
+
+    @GET("/pets")
+    suspend fun getPets(): PetsResponse
 }

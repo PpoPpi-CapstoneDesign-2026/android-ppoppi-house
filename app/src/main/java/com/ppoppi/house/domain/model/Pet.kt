@@ -29,6 +29,8 @@ enum class SPECIES {
                 DOG -> "강아지"
                 CAT -> "고양이"
             }
+
+        fun SPECIES.Companion.from(value: String): SPECIES = SPECIES.valueOf(value)
     }
 }
 
@@ -43,6 +45,8 @@ enum class SEX {
                 MALE -> "남"
                 FEMALE -> "여"
             }
+
+        fun SEX.Companion.from(value: String): SEX = SEX.valueOf(value)
     }
 }
 

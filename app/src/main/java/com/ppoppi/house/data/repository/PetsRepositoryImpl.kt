@@ -1,6 +1,7 @@
 package com.ppoppi.house.data.repository
 
 import com.ppoppi.house.data.model.request.pet.PetRegisterRequest
+import com.ppoppi.house.data.model.response.pet.toDomain
 import com.ppoppi.house.data.service.PetService
 import com.ppoppi.house.domain.model.Pet
 import com.ppoppi.house.domain.model.SPECIES
@@ -27,4 +28,6 @@ class PetsRepositoryImpl
                     ),
                 )
             }
+
+        override suspend fun getPets(): List<Pet> = petService.getPets().map { it.toDomain() }
     }

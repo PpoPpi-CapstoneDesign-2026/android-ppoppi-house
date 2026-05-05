@@ -1,15 +1,11 @@
 package com.ppoppi.house.ui.main.home
 
-import android.R.attr.top
-import android.graphics.BlurMaskFilter
-import android.graphics.Color
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -30,9 +26,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.graphics.Paint
-import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -40,11 +33,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ppoppi.house.R
-import com.ppoppi.house.domain.model.COLOR
 import com.ppoppi.house.domain.model.Disease
 import com.ppoppi.house.domain.model.Pet
-import com.ppoppi.house.domain.model.SEX
-import com.ppoppi.house.domain.model.SPECIES
 import com.ppoppi.house.ui.component.PpoPpiTextField
 import com.ppoppi.house.ui.main.home.component.DiagnosisCard
 import com.ppoppi.house.ui.main.home.component.DiseaseCard
@@ -76,6 +66,18 @@ fun HomeScreen(
     var isInitialized by remember { mutableStateOf(false) }
     val diseases by viewModel.diseases.collectAsState()
     val todayDiagnosis by viewModel.todayDiagnosis.collectAsState()
+    val pets by viewModel.pets.collectAsState()
+    var selectedPet by remember { mutableStateOf<Pet?>(null) }
+
+    LaunchedEffect(pets) {
+        if (selectedPet == null && pets.isNotEmpty()) {
+            selectedPet = pets.first()
+        }
+    }
+
+    LaunchedEffect(selectedPet) {
+        viewModel.loadDiagnosis(selectedPet?.id ?: 0)
+    }
 
     LaunchedEffect(keyword) {
         if (!isInitialized) {
@@ -84,26 +86,6 @@ fun HomeScreen(
         }
         viewModel.loadDiseases(keyword)
     }
-    val pets =
-        listOf(
-            Pet(
-                name = "뽀삐",
-                species = SPECIES.DOG,
-                breed = "뽀삐",
-                age = 1,
-                sex = SEX.MALE,
-                color = COLOR.PRIMARY50,
-            ),
-            Pet(
-                name = "뽀빠",
-                species = SPECIES.CAT,
-                breed = "뽀삐",
-                age = 1,
-                sex = SEX.MALE,
-                color = COLOR.PRIMARY50,
-            ),
-        )
-    var selectedPet by remember { mutableStateOf(pets.first()) }
 
     Column(
         modifier =
@@ -129,7 +111,6 @@ fun HomeScreen(
                 modifier = Modifier,
                 tint = Primary200,
             )
-
         }
 
         Row(
@@ -176,7 +157,7 @@ fun HomeScreen(
         } else {
             ToDiagnosisCard(
                 onClick = (navigateToDiagnosis),
-                name = selectedPet.name,
+                name = selectedPet?.name ?: "",
                 modifier = Modifier.padding(top = 18.dp),
             )
         }
