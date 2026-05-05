@@ -21,6 +21,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,10 +32,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.ppoppi.house.domain.model.COLOR
-import com.ppoppi.house.domain.model.Pet
-import com.ppoppi.house.domain.model.SEX
-import com.ppoppi.house.domain.model.SPECIES
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.ppoppi.house.ui.component.PetItem
 import com.ppoppi.house.ui.main.setting.component.DeleteAccountDialog
 import com.ppoppi.house.ui.main.setting.component.LogoutDialog
@@ -47,29 +45,14 @@ import com.ppoppi.house.ui.theme.PpoPpiTheme
 import com.ppoppi.house.ui.util.noRippleClickable
 
 @Composable
-fun SettingScreen(modifier: Modifier = Modifier) {
+fun SettingScreen(
+    modifier: Modifier = Modifier,
+    viewModel: SettingViewModel = hiltViewModel(),
+) {
     val context = LocalContext.current
     var showLogoutDialog by remember { mutableStateOf(false) }
     var showAccountDeleteDialog by remember { mutableStateOf(false) }
-    val pets =
-        listOf(
-            Pet(
-                name = "뽀삐",
-                species = SPECIES.DOG,
-                breed = "뽀삐",
-                age = 1,
-                sex = SEX.MALE,
-                color = COLOR.PRIMARY50,
-            ),
-            Pet(
-                name = "뽀빠",
-                species = SPECIES.CAT,
-                breed = "뽀삐",
-                age = 1,
-                sex = SEX.MALE,
-                color = COLOR.PRIMARY200,
-            ),
-        )
+    val pets by viewModel.pets.collectAsState()
 
     Column(
         modifier =

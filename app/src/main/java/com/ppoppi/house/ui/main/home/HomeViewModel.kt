@@ -1,6 +1,5 @@
 package com.ppoppi.house.ui.main.home
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ppoppi.house.domain.model.Diagnosis
@@ -57,8 +56,11 @@ class HomeViewModel
                         date = LocalDate.now(),
                     )
                 }.onSuccess { diagnosis ->
-                    if (diagnosis.hasDiagnosis) _todayDiagnosis.value = diagnosis
-                    else _todayDiagnosis.value = null
+                    if (diagnosis.hasDiagnosis) {
+                        _todayDiagnosis.value = diagnosis
+                    } else {
+                        _todayDiagnosis.value = null
+                    }
                 }.onFailure {
                     _todayDiagnosis.value = null
                 }
