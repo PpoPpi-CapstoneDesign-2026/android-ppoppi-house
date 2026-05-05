@@ -34,7 +34,29 @@ fun ResultCard(
     diagnosis: Diagnosis,
     modifier: Modifier = Modifier,
 ) {
-    val textColor = diagnosis.triage.toColor()[1]
+    val triageColors = diagnosis.triage.toColor()
+    val accentColor = triageColors[1]
+    val highlightColor = triageColors[2]
+
+    val title = when (diagnosis.triage) {
+        Triage.NORMAL -> "정상 안구입니다".getColoredText(highlightColor, "정상 안구")
+        else -> {
+            if (diagnosis.diseaseName == "정상") "정상 안구입니다".getColoredText(highlightColor, "정상 안구")
+            else "${diagnosis.diseaseName}이 의심됩니다.".getColoredText(
+                highlightColor,
+                diagnosis.diseaseName
+            )
+        }
+    }
+
+    val action = when (diagnosis.triage) {
+        Triage.URGENT, Triage.SOON ->
+            "${diagnosis.guideAction} 내원 권장".getColoredText(highlightColor, diagnosis.guideAction)
+
+        else ->
+            diagnosis.guideAction.getColoredText(highlightColor, diagnosis.guideAction)
+    }
+
     Column(
         modifier =
             modifier
@@ -65,30 +87,13 @@ fun ResultCard(
                 .background(White)
                 .drawBehind {
                     drawRect(
-                        color = textColor,
-                        topLeft = Offset(0f, 0f),
+                        color = accentColor,
+                        topLeft = Offset.Zero,
                         size = Size(4.dp.toPx(), size.height),
                     )
                 }
                 .padding(20.dp),
     ) {
-        val highlightColor = diagnosis.triage.toColor()[2]
-        val title = if (diagnosis.triage == Triage.NORMAL) "정상 안구입니다".getColoredText(
-            highlightColor,
-            "정상 안구"
-        ) else "${diagnosis.diseaseName}이 의심됩니다.".getColoredText(
-            highlightColor,
-            diagnosis.diseaseName
-        )
-        val action =
-            if (diagnosis.triage == Triage.URGENT || diagnosis.triage == Triage.SOON) "${diagnosis.guideAction} 내원 권장".getColoredText(
-                highlightColor,
-                diagnosis.guideAction
-            ) else diagnosis.guideAction.getColoredText(
-                highlightColor,
-                diagnosis.guideAction
-            )
-
         Text(
             text = title,
             style = PpoPpiTheme.typography.title1,
@@ -102,10 +107,9 @@ fun ResultCard(
 
         if (diagnosis.triage != Triage.NORMAL) {
             HorizontalDivider(
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(top = 12.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 12.dp),
                 thickness = 1.dp,
                 color = Gray100,
             )
@@ -131,16 +135,16 @@ private fun ResultCardPreview() {
         ResultCard(
             diagnosis =
                 Diagnosis(
-                    triage = Triage.URGENT,
-                    triageConfidence = 70,
-                    affectedArea = "각막",
-                    guideMessage = "결막염이 의심 어쩌구",
-                    guideAction = "액션 어쩌구",
-                    imageUrl = null,
                     hasDiagnosis = true,
+                    imageUrl = null,
+                    triage = Triage.URGENT,
                     diseaseName = "결막염",
-                    symptoms = emptyList(),
+                    affectedArea = "각막",
+                    triageConfidence = 70,
+                    guideAction = "액션 어쩌구",
+                    guideMessage = "결막염이 의심 어쩌구",
                     guideWarning = "asdfasdf",
+                    symptoms = emptyList(),
                 ),
         )
     }

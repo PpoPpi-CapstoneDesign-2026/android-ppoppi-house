@@ -69,12 +69,11 @@ fun ResultContent(
         )
 
         Text(
-            text =
-                stringResource(
-                    R.string.diagnosis_result_diagnosis_title,
-                    diagnosis.diseaseName,
-                    diagnosis.affectedArea,
-                ),
+            text = if (diagnosis.affectedArea.isEmpty()) {
+                "사진 분석 결과 | ${diagnosis.diseaseName}"
+            } else {
+                "사진 분석 결과 | ${diagnosis.diseaseName} | ${diagnosis.affectedArea}"
+            },
             style = PpoPpiTheme.typography.title1,
             color = Black,
             modifier = Modifier.padding(top = 12.dp),
