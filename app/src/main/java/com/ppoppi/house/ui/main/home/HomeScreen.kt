@@ -1,5 +1,6 @@
 package com.ppoppi.house.ui.main.home
 
+import android.R.attr.top
 import android.graphics.BlurMaskFilter
 import android.graphics.Color
 import androidx.compose.foundation.background
@@ -14,8 +15,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -102,31 +105,32 @@ fun HomeScreen(
         )
     var selectedPet by remember { mutableStateOf(pets.first()) }
 
-    Box(
-        modifier =
-            modifier
-                .fillMaxSize()
-                .padding(18.dp),
-        contentAlignment = Alignment.TopEnd,
-    ) {
-        Icon(
-            painter = painterResource(R.drawable.ic_home),
-            contentDescription = null,
-            modifier = Modifier,
-            tint = Primary200,
-        )
-    }
     Column(
         modifier =
             modifier
-                .padding(top = 26.dp)
-                .padding(horizontal = 26.dp),
+                .padding(top = 18.dp)
+                .padding(horizontal = 18.dp)
+                .verticalScroll(rememberScrollState()),
     ) {
-        Text(
-            text = "홈",
-            style = PpoPpiTheme.typography.headline1,
-            color = Black,
-        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text = "홈",
+                style = PpoPpiTheme.typography.headline1,
+                color = Black,
+                modifier = Modifier.padding(top = 8.dp, start = 8.dp),
+            )
+            Icon(
+                painter = painterResource(R.drawable.ic_home),
+                contentDescription = null,
+                modifier = Modifier,
+                tint = Primary200,
+            )
+
+        }
 
         Row(
             modifier =
@@ -191,7 +195,7 @@ fun HomeScreen(
 
         DiseaseSection(
             diseases = diseases,
-            modifier = Modifier.padding(top = 16.dp),
+            modifier = Modifier.padding(top = 16.dp, bottom = 18.dp),
         )
     }
 }
@@ -224,13 +228,17 @@ private fun DiseaseSection(
                 )
             }
         }
+
         else -> {
             val pagerState = rememberPagerState(pageCount = { diseases.size })
             LaunchedEffect(diseases) {
                 pagerState.scrollToPage(0)
             }
             Column(modifier = modifier) {
-                HorizontalPager(state = pagerState) { page ->
+                HorizontalPager(
+                    state = pagerState,
+                    pageSpacing = 12.dp,
+                ) { page ->
                     DiseaseCard(disease = diseases[page])
                 }
                 if (diseases.size > 1) {
@@ -273,25 +281,7 @@ private fun DiseaseTextField(
             Modifier
                 .fillMaxWidth()
                 .padding(top = 8.dp)
-                .drawBehind {
-                    drawIntoCanvas { canvas ->
-                        val paint = Paint()
-                        paint.asFrameworkPaint().apply {
-                            isAntiAlias = true
-                            color = Color.argb(64, 0, 0, 0)
-                            maskFilter = BlurMaskFilter(2.dp.toPx(), BlurMaskFilter.Blur.NORMAL)
-                        }
-                        canvas.drawRoundRect(
-                            left = 0f,
-                            top = 2.dp.toPx(),
-                            right = size.width,
-                            bottom = size.height + 2.dp.toPx(),
-                            radiusX = 16.dp.toPx(),
-                            radiusY = 16.dp.toPx(),
-                            paint = paint,
-                        )
-                    }
-                }.background(White, shape = RoundedCornerShape(16.dp))
+                .background(White, shape = RoundedCornerShape(16.dp))
                 .border(1.dp, Gray100, RoundedCornerShape(16.dp))
                 .padding(horizontal = 16.dp, vertical = 14.dp),
         maxLength = 10,

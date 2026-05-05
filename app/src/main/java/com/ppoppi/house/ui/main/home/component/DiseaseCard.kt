@@ -7,6 +7,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -18,6 +19,7 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ppoppi.house.domain.model.Disease
@@ -37,6 +39,7 @@ fun DiseaseCard(
         modifier =
             modifier
                 .fillMaxWidth()
+                .height(160.dp)
                 .drawBehind {
                     drawIntoCanvas { canvas ->
                         val paint = Paint()
@@ -73,6 +76,8 @@ fun DiseaseCard(
             style = PpoPpiTheme.typography.body3,
             color = Black,
             modifier = Modifier.padding(top = 16.dp),
+            maxLines = 3,
+            overflow = TextOverflow.Ellipsis,
         )
     }
 }
