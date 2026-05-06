@@ -9,6 +9,7 @@ import android.provider.Settings
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -51,6 +52,7 @@ import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.ppoppi.house.domain.model.MapView
+import com.ppoppi.house.ui.main.map.component.FilterButton
 import com.ppoppi.house.ui.main.map.component.VetHospitalBottomSheet
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.launch
@@ -146,7 +148,12 @@ fun PetHospitalMap(
 
     LaunchedEffect(userLocation) {
         viewModel.loadHospitals(
-            mapView = buildMapView(cameraPositionState, userLocation.latitude, userLocation.longitude),
+            mapView =
+                buildMapView(
+                    cameraPositionState,
+                    userLocation.latitude,
+                    userLocation.longitude,
+                ),
             immediate = true,
         )
     }
@@ -156,7 +163,12 @@ fun PetHospitalMap(
             .drop(1)
             .collect { position ->
                 viewModel.loadHospitals(
-                    mapView = buildMapView(cameraPositionState, position.target.latitude, position.target.longitude),
+                    mapView =
+                        buildMapView(
+                            cameraPositionState,
+                            position.target.latitude,
+                            position.target.longitude,
+                        ),
                 )
             }
     }
@@ -164,43 +176,67 @@ fun PetHospitalMap(
     var showBottomSheet by remember { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val scope = rememberCoroutineScope()
+    var selectedFilter by remember { mutableStateOf("전체") }
 
-    GoogleMap(
-        modifier = modifier.fillMaxSize(),
-        cameraPositionState = cameraPositionState,
-        properties =
-            MapProperties(
-                isMyLocationEnabled = true,
-                mapType = MapType.NORMAL,
-            ),
-        uiSettings =
-            MapUiSettings(
-                myLocationButtonEnabled = true,
-                zoomControlsEnabled = true,
-            ),
-    ) {
-        Marker(
-            state = MarkerState(position = userLocation),
-            title = "현재 위치",
-            snippet = "내 반려동물과 함께 있는 곳",
-        )
-
-        hospitals.forEach { hospital ->
+    Box(modifier = modifier.fillMaxSize()) {
+        GoogleMap(
+            modifier = Modifier.fillMaxSize(),
+            cameraPositionState = cameraPositionState,
+            properties =
+                MapProperties(
+                    isMyLocationEnabled = true,
+                    mapType = MapType.NORMAL,
+                ),
+            uiSettings =
+                MapUiSettings(
+                    myLocationButtonEnabled = true,
+                    zoomControlsEnabled = true,
+                ),
+        ) {
             Marker(
-                state = MarkerState(position = LatLng(hospital.latitude, hospital.longitude)),
-                title = hospital.name,
-                snippet = "${hospital.distanceMeter}m",
-                icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE),
-                onClick = {
-                    showBottomSheet = true
-                    viewModel.loadHospitalInfo(
-                        hospitalId = hospital.hospitalId.toLong(),
-                        centerLat = userLocation.latitude,
-                        centerLng = userLocation.longitude,
+                state = MarkerState(position = userLocation),
+                title = "현재 위치",
+                snippet = "내 반려동물과 함께 있는 곳",
+            )
+
+            hospitals
+                .filter { selectedFilter == "전체" || it.is24hr }
+                .forEach { hospital ->
+                    Marker(
+                        state = MarkerState(position = LatLng(hospital.latitude, hospital.longitude)),
+                        title = hospital.name,
+                        snippet = "${hospital.distanceMeter}m",
+                        icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE),
+                        onClick = {
+                            showBottomSheet = true
+                            viewModel.loadHospitalInfo(
+                                hospitalId = hospital.hospitalId.toLong(),
+                                centerLat = userLocation.latitude,
+                                centerLng = userLocation.longitude,
+                            )
+                            scope.launch { sheetState.show() }
+                            true
+                        },
                     )
-                    scope.launch { sheetState.show() }
-                    true
-                },
+                }
+        }
+
+        Row(
+            modifier =
+                Modifier
+                    .align(Alignment.TopStart)
+                    .padding(12.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            FilterButton(
+                onClick = { selectedFilter = "전체" },
+                text = "전체",
+                isSelected = selectedFilter == "전체",
+            )
+            FilterButton(
+                onClick = { selectedFilter = "24시 응급" },
+                text = "24시 응급",
+                isSelected = selectedFilter == "24시 응급",
             )
         }
     }
@@ -217,7 +253,10 @@ fun PetHospitalMap(
                 VetHospitalBottomSheet(hospital = selectedHospitalInfo!!)
             } else {
                 Box(
-                    modifier = Modifier.fillMaxWidth().height(200.dp),
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .height(200.dp),
                     contentAlignment = Alignment.Center,
                 ) {
                     CircularProgressIndicator()
@@ -233,7 +272,10 @@ private fun PermissionRationaleCard(
     onConfirm: () -> Unit,
 ) {
     Column(
-        modifier = modifier.fillMaxSize().padding(24.dp),
+        modifier =
+            modifier
+                .fillMaxSize()
+                .padding(24.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -252,7 +294,10 @@ private fun PermissionRationaleCard(
 private fun PermissionDeniedCard(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     Column(
-        modifier = modifier.fillMaxSize().padding(24.dp),
+        modifier =
+            modifier
+                .fillMaxSize()
+                .padding(24.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
