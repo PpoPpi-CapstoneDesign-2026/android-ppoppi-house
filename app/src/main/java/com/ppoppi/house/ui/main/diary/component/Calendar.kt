@@ -181,8 +181,7 @@ fun Calendar(
                                                 .background(
                                                     color = Primary50,
                                                     shape = RoundedCornerShape(4.dp),
-                                                )
-                                                .border(
+                                                ).border(
                                                     color = Primary100,
                                                     width = 1.dp,
                                                     shape = RoundedCornerShape(4.dp),
@@ -247,20 +246,21 @@ private fun CalendarPreview() {
             onClickPlus = {},
             selectedDate = LocalDate.now(),
             onSelectDate = { },
-            monthDiary = listOf(
-                MonthDiary(
-                    date = LocalDate.of(2026, 5, 1),
-                    color = listOf(COLOR.PRIMARY100, COLOR.PRIMARY600)
+            monthDiary =
+                listOf(
+                    MonthDiary(
+                        date = LocalDate.of(2026, 5, 1),
+                        color = listOf(COLOR.PRIMARY100, COLOR.PRIMARY600),
+                    ),
+                    MonthDiary(
+                        date = LocalDate.of(2026, 5, 2),
+                        color = listOf(COLOR.PRIMARY100),
+                    ),
+                    MonthDiary(
+                        date = LocalDate.of(2026, 5, 5),
+                        color = listOf(COLOR.PRIMARY100, COLOR.PRIMARY600, COLOR.PRIMARY200),
+                    ),
                 ),
-                MonthDiary(
-                    date = LocalDate.of(2026, 5, 2),
-                    color = listOf(COLOR.PRIMARY100)
-                ),
-                MonthDiary(
-                    date = LocalDate.of(2026, 5, 5),
-                    color = listOf(COLOR.PRIMARY100, COLOR.PRIMARY600, COLOR.PRIMARY200)
-                ),
-            )
         )
     }
 }

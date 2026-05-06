@@ -4,7 +4,6 @@ import android.os.Parcelable
 import androidx.compose.ui.graphics.Color
 import com.ppoppi.house.ui.theme.Primary100
 import com.ppoppi.house.ui.theme.Primary200
-import com.ppoppi.house.ui.theme.Primary50
 import com.ppoppi.house.ui.theme.Primary600
 import kotlinx.parcelize.Parcelize
 

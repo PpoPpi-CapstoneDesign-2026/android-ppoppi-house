@@ -27,8 +27,9 @@ class DiaryAddActivity : ComponentActivity() {
         fun newIntent(
             context: Context,
             petId: Long,
-        ): Intent = Intent(context, DiaryAddActivity::class.java).apply {
-            putExtra(EXTRA_PET_ID, petId)
-        }
+        ): Intent =
+            Intent(context, DiaryAddActivity::class.java).apply {
+                putExtra(EXTRA_PET_ID, petId)
+            }
     }
 }

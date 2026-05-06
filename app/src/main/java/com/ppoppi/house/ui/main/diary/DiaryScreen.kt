@@ -18,9 +18,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -60,7 +58,6 @@ import com.ppoppi.house.ui.main.diary.component.DiaryItem
 import com.ppoppi.house.ui.theme.Black
 import com.ppoppi.house.ui.theme.Gray100
 import com.ppoppi.house.ui.theme.PpoPpiTheme
-import com.ppoppi.house.ui.theme.Primary200
 import com.ppoppi.house.ui.theme.Primary400
 import com.ppoppi.house.ui.theme.Primary50
 import com.ppoppi.house.ui.theme.Primary800
@@ -269,12 +266,13 @@ fun DiaryScreen(
                                 text = pet.name,
                                 style = PpoPpiTheme.typography.title3,
                                 color = Black,
-                                modifier = Modifier
-                                    .wrapContentSize()
-                                    .clip(RoundedCornerShape(8.dp))
-                                    .background(White)
-                                    .border(1.dp, Gray100, RoundedCornerShape(8.dp))
-                                    .padding(horizontal = 8.dp, vertical = 8.dp)
+                                modifier =
+                                    Modifier
+                                        .wrapContentSize()
+                                        .clip(RoundedCornerShape(8.dp))
+                                        .background(White)
+                                        .border(1.dp, Gray100, RoundedCornerShape(8.dp))
+                                        .padding(horizontal = 8.dp, vertical = 8.dp),
                             )
 
                             Box(
@@ -291,13 +289,12 @@ fun DiaryScreen(
                                                     context.startActivity(
                                                         DiaryAddActivity.newIntent(
                                                             context,
-                                                            id
-                                                        )
+                                                            id,
+                                                        ),
                                                     )
                                                 }
-                                            }
-                                        )
-                                        .padding(horizontal = 16.dp, vertical = 10.dp),
+                                            },
+                                        ).padding(horizontal = 16.dp, vertical = 10.dp),
                                 contentAlignment = Alignment.Center,
                             ) {
                                 Text(

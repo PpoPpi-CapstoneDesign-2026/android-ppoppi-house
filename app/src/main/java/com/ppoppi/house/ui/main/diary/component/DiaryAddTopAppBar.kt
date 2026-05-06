@@ -26,9 +26,7 @@ import com.ppoppi.house.ui.util.noRippleClickable
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DiaryAddTopBar(
-    onBackClick: () -> Unit,
-) {
+fun DiaryAddTopBar(onBackClick: () -> Unit) {
     Column {
         CenterAlignedTopAppBar(
             title = {
