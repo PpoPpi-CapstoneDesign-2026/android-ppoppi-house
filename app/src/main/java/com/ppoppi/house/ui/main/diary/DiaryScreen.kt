@@ -1,14 +1,26 @@
 package com.ppoppi.house.ui.main.diary
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -32,6 +44,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -44,11 +57,15 @@ import com.ppoppi.house.domain.model.SPECIES
 import com.ppoppi.house.domain.model.Triage
 import com.ppoppi.house.ui.main.diary.component.Calendar
 import com.ppoppi.house.ui.main.diary.component.DiaryItem
+import com.ppoppi.house.ui.theme.Black
+import com.ppoppi.house.ui.theme.Gray100
 import com.ppoppi.house.ui.theme.PpoPpiTheme
+import com.ppoppi.house.ui.theme.Primary200
 import com.ppoppi.house.ui.theme.Primary400
 import com.ppoppi.house.ui.theme.Primary50
 import com.ppoppi.house.ui.theme.Primary800
 import com.ppoppi.house.ui.theme.White
+import com.ppoppi.house.ui.util.noRippleClickable
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.TextStyle
@@ -61,12 +78,15 @@ fun DiaryScreen(
     currentTime: LocalDate = LocalDate.now(),
     viewModel: DiaryViewModel = hiltViewModel(),
 ) {
+    val context = LocalContext.current
     val listState = rememberLazyListState()
     val density = LocalDensity.current
 
     var yearMonth by remember { mutableStateOf(YearMonth.now()) }
     var selectedDate by remember { mutableStateOf(currentTime) }
     val monthDiaries by viewModel.monthDiaries.collectAsState()
+    val pets by viewModel.pets.collectAsState()
+    var isFabExpanded by remember { mutableStateOf(false) }
 
     LaunchedEffect(yearMonth) {
         viewModel.loadMonthDiaries(yearMonth)
@@ -87,7 +107,8 @@ fun DiaryScreen(
 
                     return if (delta < 0) { // 위로 스크롤 (올리기)
                         if (headerScrollOffset > -collapseThreshold) {
-                            val consumed = delta.coerceAtLeast(-collapseThreshold - headerScrollOffset)
+                            val consumed =
+                                delta.coerceAtLeast(-collapseThreshold - headerScrollOffset)
                             headerScrollOffset += consumed
                             Offset(0f, consumed)
                         } else {
@@ -222,26 +243,92 @@ fun DiaryScreen(
             }
         }
 
-        // 플로팅 버튼
-        Box(
+        Column(
             modifier =
                 Modifier
                     .align(Alignment.BottomEnd)
-                    .padding(16.dp)
-                    .size(50.dp)
-                    .clip(RoundedCornerShape(100.dp))
-                    .background(Primary400, RoundedCornerShape(100.dp)),
+                    .padding(16.dp),
+            horizontalAlignment = Alignment.End,
+            verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            Icon(
-                imageVector = Icons.Default.Add,
-                tint = White,
-                contentDescription = null,
+            AnimatedVisibility(
+                visible = isFabExpanded,
+                enter = fadeIn() + expandVertically(expandFrom = Alignment.Bottom),
+                exit = fadeOut() + shrinkVertically(shrinkTowards = Alignment.Bottom),
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.End,
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                ) {
+                    pets.forEach { pet ->
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        ) {
+                            Text(
+                                text = pet.name,
+                                style = PpoPpiTheme.typography.title3,
+                                color = Black,
+                                modifier = Modifier
+                                    .wrapContentSize()
+                                    .clip(RoundedCornerShape(8.dp))
+                                    .background(White)
+                                    .border(1.dp, Gray100, RoundedCornerShape(8.dp))
+                                    .padding(horizontal = 8.dp, vertical = 8.dp)
+                            )
+
+                            Box(
+                                modifier =
+                                    Modifier
+                                        .size(60.dp)
+                                        .clip(RoundedCornerShape(100.dp))
+                                        .background(White, RoundedCornerShape(100.dp))
+                                        .border(1.dp, Gray100, RoundedCornerShape(100.dp))
+                                        .noRippleClickable(
+                                            onClick = {
+                                                isFabExpanded = false
+                                                pet.id?.let { id ->
+                                                    context.startActivity(
+                                                        DiaryAddActivity.newIntent(
+                                                            context,
+                                                            id
+                                                        )
+                                                    )
+                                                }
+                                            }
+                                        )
+                                        .padding(horizontal = 16.dp, vertical = 10.dp),
+                                contentAlignment = Alignment.Center,
+                            ) {
+                                Text(
+                                    text = if (pet.species == SPECIES.DOG) "🐶" else "🐱",
+                                    style = PpoPpiTheme.typography.headline1,
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+
+            Box(
                 modifier =
                     Modifier
-                        .fillMaxSize()
-                        .padding(10.dp)
-                        .align(Alignment.Center),
-            )
+                        .size(70.dp)
+                        .clip(RoundedCornerShape(100.dp))
+                        .background(Primary400, RoundedCornerShape(100.dp))
+                        .noRippleClickable(onClick = { isFabExpanded = !isFabExpanded }),
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    tint = White,
+                    contentDescription = null,
+                    modifier =
+                        Modifier
+                            .fillMaxSize()
+                            .padding(10.dp)
+                            .align(Alignment.Center),
+                )
+            }
         }
     }
 }
