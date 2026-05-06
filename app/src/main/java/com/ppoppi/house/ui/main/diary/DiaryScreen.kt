@@ -47,12 +47,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.ppoppi.house.domain.model.COLOR
-import com.ppoppi.house.domain.model.Diagnosis
-import com.ppoppi.house.domain.model.Pet
-import com.ppoppi.house.domain.model.SEX
 import com.ppoppi.house.domain.model.SPECIES
-import com.ppoppi.house.domain.model.Triage
 import com.ppoppi.house.ui.main.diary.component.Calendar
 import com.ppoppi.house.ui.main.diary.component.DiaryItem
 import com.ppoppi.house.ui.theme.Black
@@ -60,8 +55,9 @@ import com.ppoppi.house.ui.theme.Gray100
 import com.ppoppi.house.ui.theme.PpoPpiTheme
 import com.ppoppi.house.ui.theme.Primary400
 import com.ppoppi.house.ui.theme.Primary50
-import com.ppoppi.house.ui.theme.Primary800
+import com.ppoppi.house.ui.theme.Primary600
 import com.ppoppi.house.ui.theme.White
+import com.ppoppi.house.ui.util.getColoredText
 import com.ppoppi.house.ui.util.noRippleClickable
 import java.time.LocalDate
 import java.time.YearMonth
@@ -83,15 +79,19 @@ fun DiaryScreen(
     var selectedDate by remember { mutableStateOf(currentTime) }
     val monthDiaries by viewModel.monthDiaries.collectAsState()
     val pets by viewModel.pets.collectAsState()
+    val dailyDiaries by viewModel.dailyDiaries.collectAsState()
     var isFabExpanded by remember { mutableStateOf(false) }
 
     LaunchedEffect(yearMonth) {
         viewModel.loadMonthDiaries(yearMonth)
     }
 
-    // 달력 접힘 제어를 위한 오프셋 상태
+    LaunchedEffect(selectedDate) {
+        viewModel.loadDailyDiaries(selectedDate)
+    }
+
     var headerScrollOffset by remember { mutableStateOf(0f) }
-    val collapseThreshold = with(density) { 150.dp.toPx() } // 접히기 전까지 소비할 스크롤 양
+    val collapseThreshold = with(density) { 150.dp.toPx() }
 
     val nestedScrollConnection =
         remember {
@@ -102,7 +102,7 @@ fun DiaryScreen(
                 ): Offset {
                     val delta = available.y
 
-                    return if (delta < 0) { // 위로 스크롤 (올리기)
+                    return if (delta < 0) {
                         if (headerScrollOffset > -collapseThreshold) {
                             val consumed =
                                 delta.coerceAtLeast(-collapseThreshold - headerScrollOffset)
@@ -111,7 +111,7 @@ fun DiaryScreen(
                         } else {
                             Offset.Zero
                         }
-                    } else { // 아래로 스크롤 (내리기)
+                    } else {
                         if (listState.firstVisibleItemIndex == 0 && listState.firstVisibleItemScrollOffset == 0) {
                             if (headerScrollOffset < 0) {
                                 val consumed = delta.coerceAtMost(-headerScrollOffset)
@@ -131,51 +131,6 @@ fun DiaryScreen(
     val isCollapsed by remember {
         derivedStateOf { headerScrollOffset < -20f }
     }
-
-    // 예시 데이터 리스트
-    val diaryItems =
-        remember {
-            listOf(
-                DiaryData(
-                    pet = Pet("뽀삐", SPECIES.CAT, "몰라", 1, SEX.MALE, COLOR.PRIMARY600),
-                    diagnosis =
-                        Diagnosis(
-                            true,
-                            "https://picsum.photos/400/400",
-                            Triage.URGENT,
-                            "결막염",
-                            "각막",
-                            80,
-                            "ㅁㄴㅇㄹㅁㄴㅇㄹ",
-                            guideMessage = "ㅁㄴㅇㄹ",
-                            guideWarning = "ㅁㄴㄹㅁㄴㅇㄹ",
-                            symptoms = listOf(),
-                        ),
-                    checklist = listOf("눈물", "눈곱"),
-                    memo = "",
-                    healthChecklist = emptyList(),
-                ),
-                DiaryData(
-                    pet = Pet("나비", SPECIES.CAT, "몰라", 2, SEX.FEMALE, COLOR.PRIMARY600),
-                    diagnosis =
-                        Diagnosis(
-                            true,
-                            "https://picsum.photos/400/400",
-                            Triage.URGENT,
-                            "결막염",
-                            "각막",
-                            80,
-                            "ㅁㄴㅇㄹㅁㄴㅇㄹ",
-                            guideMessage = "ㅁㄴㅇㄹ",
-                            guideWarning = "ㅁㄴㄹㅁㄴㅇㄹ",
-                            symptoms = listOf(),
-                        ),
-                    checklist = listOf("가려움"),
-                    memo = "오늘은 나비가 어쩌구 저쩌구 메모메모",
-                    healthChecklist = listOf("활동량 적음", "식욕 없음"),
-                ),
-            )
-        }
 
     Box(
         modifier =
@@ -210,11 +165,17 @@ fun DiaryScreen(
             // 날짜 표시 헤더
             item {
                 Text(
-                    text = "${selectedDate.monthValue}월 ${selectedDate.dayOfMonth}일 (${
-                        selectedDate.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.KOREAN)
-                    })",
+                    text =
+                        "${selectedDate.monthValue}월 ${selectedDate.dayOfMonth}일 (${
+                            selectedDate.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.KOREAN)
+                        })".getColoredText(
+                            Primary600,
+                            "(${
+                                selectedDate.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.KOREAN)
+                            })",
+                        ),
                     style = PpoPpiTheme.typography.title1,
-                    color = Primary800,
+                    color = Black,
                     modifier =
                         Modifier
                             .fillMaxWidth()
@@ -223,14 +184,32 @@ fun DiaryScreen(
             }
 
             // 개별 다이어리 아이템들
-            items(diaryItems) { data ->
-                Box(modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp)) {
-                    DiaryItem(
-                        pet = data.pet,
-                        diagnosis = data.diagnosis,
-                        checklist = data.checklist,
-                        memo = data.memo,
-                        healthChecklist = data.healthChecklist,
+            items(dailyDiaries) { diary ->
+                val pet = pets.find { it.id == diary.petId }
+                if (pet != null) {
+                    Box(modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp)) {
+                        DiaryItem(
+                            pet = pet,
+                            diagnosis = diary.diagnosis,
+                            memo = diary.memo,
+                            healthChecklist = diary.healthChecklist,
+                        )
+                    }
+                }
+            }
+
+            if (dailyDiaries.isEmpty()) {
+                item {
+                    Text(
+                        text = "아직 다이어리가 없어요",
+                        style = PpoPpiTheme.typography.body2,
+                        color = Black,
+                        modifier =
+                            Modifier.padding(
+                                start = 20.dp,
+                                end = 20.dp,
+                                top = 20.dp,
+                            ),
                     )
                 }
             }
@@ -329,14 +308,6 @@ fun DiaryScreen(
         }
     }
 }
-
-data class DiaryData(
-    val pet: Pet,
-    val diagnosis: Diagnosis,
-    val checklist: List<String>,
-    val memo: String,
-    val healthChecklist: List<String>,
-)
 
 @Composable
 @Preview(showBackground = true)

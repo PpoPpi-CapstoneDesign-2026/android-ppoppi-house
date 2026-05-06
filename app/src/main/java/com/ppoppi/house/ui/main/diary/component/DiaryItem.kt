@@ -1,5 +1,6 @@
 package com.ppoppi.house.ui.main.diary.component
 
+import android.R.attr.description
 import android.graphics.BlurMaskFilter
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -48,7 +49,6 @@ import com.ppoppi.house.ui.theme.White
 fun DiaryItem(
     pet: Pet,
     diagnosis: Diagnosis?,
-    checklist: List<String>,
     memo: String?,
     healthChecklist: List<String>,
     modifier: Modifier = Modifier,
@@ -182,9 +182,9 @@ fun DiaryItem(
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp),
             ) {
-                checklist.forEach { description ->
+                diagnosis.symptoms?.forEach { symptom ->
                     ChecklistItem(
-                        checklist = description,
+                        checklist = symptom.description,
                         backgroundColor = backgroundColor,
                         textColor = textColor,
                         borderColor = borderColor,
@@ -268,7 +268,6 @@ private fun DiaryItemPreview() {
                     diseaseName = "결막염",
                     symptoms = listOf(),
                 ),
-            checklist = listOf("눈물", "눈곱"),
             memo = "메모입니다?메모입니다?메모입니다?메모입니다?메모입니다?메모입니다?메모입니다?메모입니다?메모입니다?메모입니다?메모입니다?\n메모입니다?메모입니다?",
             healthChecklist = listOf("식욕 없음", "활동량 적음", "활동량 적음", "활동량 적음", "활동량 적음"),
         )

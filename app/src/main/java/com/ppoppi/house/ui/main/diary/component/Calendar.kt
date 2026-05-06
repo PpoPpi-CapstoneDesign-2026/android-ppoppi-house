@@ -195,7 +195,7 @@ fun Calendar(
                             if (day != null) {
                                 Text(
                                     text = day.toString(),
-                                    style = PpoPpiTheme.typography.body3,
+                                    style = PpoPpiTheme.typography.body2,
                                     color =
                                         when {
                                             isSunday -> Red400
