@@ -170,7 +170,7 @@ fun PetInfoScreenPreview() {
                     breed = "뽀삐",
                     age = 1,
                     sex = SEX.MALE,
-                    color = COLOR.PRIMARY50,
+                    color = COLOR.PRIMARY100,
                 ),
         )
     }

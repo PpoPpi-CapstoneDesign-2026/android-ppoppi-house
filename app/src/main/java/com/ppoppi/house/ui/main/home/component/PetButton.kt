@@ -73,7 +73,7 @@ private fun PetButtonPreview() {
                     breed = "말티즈",
                     age = 1,
                     sex = SEX.MALE,
-                    color = COLOR.PRIMARY50,
+                    color = COLOR.PRIMARY100,
                 ),
             isSelected = true,
         )

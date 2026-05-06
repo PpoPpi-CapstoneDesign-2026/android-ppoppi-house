@@ -2,6 +2,7 @@ package com.ppoppi.house.domain.model
 
 import android.os.Parcelable
 import androidx.compose.ui.graphics.Color
+import com.ppoppi.house.ui.theme.Primary100
 import com.ppoppi.house.ui.theme.Primary200
 import com.ppoppi.house.ui.theme.Primary50
 import com.ppoppi.house.ui.theme.Primary600
@@ -51,7 +52,7 @@ enum class SEX {
 }
 
 enum class COLOR {
-    PRIMARY50,
+    PRIMARY100,
     PRIMARY200,
     PRIMARY600,
     ;
@@ -59,7 +60,7 @@ enum class COLOR {
     companion object {
         fun COLOR.toColor(): Color =
             when (this) {
-                PRIMARY50 -> Primary50
+                PRIMARY100 -> Primary100
                 PRIMARY200 -> Primary200
                 PRIMARY600 -> Primary600
             }

@@ -124,7 +124,7 @@ private fun PetItemPreview() {
                     breed = "푸들",
                     age = 2,
                     sex = SEX.FEMALE,
-                    color = COLOR.PRIMARY50,
+                    color = COLOR.PRIMARY100,
                 ),
             onClick = {},
         )

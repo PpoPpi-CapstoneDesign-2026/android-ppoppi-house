@@ -84,7 +84,7 @@ private fun PetSelectScreenPreview() {
                     breed = "사람",
                     age = 24,
                     sex = SEX.FEMALE,
-                    color = COLOR.PRIMARY50,
+                    color = COLOR.PRIMARY100,
                 ),
                 Pet(
                     name = "김은지",
