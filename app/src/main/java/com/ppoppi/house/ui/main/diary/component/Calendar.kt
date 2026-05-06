@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
@@ -27,6 +28,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.ppoppi.house.domain.model.COLOR
+import com.ppoppi.house.domain.model.COLOR.Companion.toColor
+import com.ppoppi.house.domain.model.MonthDiary
 import com.ppoppi.house.ui.theme.Black
 import com.ppoppi.house.ui.theme.Blue400
 import com.ppoppi.house.ui.theme.Gray100
@@ -44,6 +48,7 @@ fun Calendar(
     onClickPlus: () -> Unit,
     onSelectDate: (LocalDate) -> Unit,
     selectedDate: LocalDate,
+    monthDiary: List<MonthDiary>,
     modifier: Modifier = Modifier,
     yearMonth: YearMonth = YearMonth.now(),
     currentTime: YearMonth = YearMonth.now(),
@@ -53,6 +58,7 @@ fun Calendar(
     val totalDays = yearMonth.lengthOfMonth()
     val cells: List<Int?> = List(firstDayOfWeek) { null } + (1..totalDays).toList()
     val weeks = cells.chunked(7)
+    val diaryMap = monthDiary.associate { it.date to it.color }
 
     val selectedWeekIndex =
         if (selectedDate.year == yearMonth.year && selectedDate.month == yearMonth.month) {
@@ -175,7 +181,8 @@ fun Calendar(
                                                 .background(
                                                     color = Primary50,
                                                     shape = RoundedCornerShape(4.dp),
-                                                ).border(
+                                                )
+                                                .border(
                                                     color = Primary100,
                                                     width = 1.dp,
                                                     shape = RoundedCornerShape(4.dp),
@@ -197,6 +204,29 @@ fun Calendar(
                                             else -> Black
                                         },
                                 )
+                                val diaryColors = diaryMap[yearMonth.atDay(day)]
+                                if (!diaryColors.isNullOrEmpty()) {
+                                    Row(
+                                        modifier =
+                                            Modifier
+                                                .align(Alignment.BottomCenter)
+                                                .padding(bottom = 6.dp),
+                                        horizontalArrangement = Arrangement.spacedBy(2.dp),
+                                        verticalAlignment = Alignment.CenterVertically,
+                                    ) {
+                                        diaryColors.forEach { color ->
+                                            Box(
+                                                modifier =
+                                                    Modifier
+                                                        .size(6.dp)
+                                                        .background(
+                                                            color = color.toColor(),
+                                                            shape = CircleShape,
+                                                        ),
+                                            )
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -217,6 +247,20 @@ private fun CalendarPreview() {
             onClickPlus = {},
             selectedDate = LocalDate.now(),
             onSelectDate = { },
+            monthDiary = listOf(
+                MonthDiary(
+                    date = LocalDate.of(2026, 5, 1),
+                    color = listOf(COLOR.PRIMARY100, COLOR.PRIMARY600)
+                ),
+                MonthDiary(
+                    date = LocalDate.of(2026, 5, 2),
+                    color = listOf(COLOR.PRIMARY100)
+                ),
+                MonthDiary(
+                    date = LocalDate.of(2026, 5, 5),
+                    color = listOf(COLOR.PRIMARY100, COLOR.PRIMARY600, COLOR.PRIMARY200)
+                ),
+            )
         )
     }
 }

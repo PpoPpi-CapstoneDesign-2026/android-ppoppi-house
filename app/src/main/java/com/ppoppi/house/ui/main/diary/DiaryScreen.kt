@@ -18,6 +18,8 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,6 +35,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.ppoppi.house.domain.model.COLOR
 import com.ppoppi.house.domain.model.Diagnosis
 import com.ppoppi.house.domain.model.Pet
@@ -56,12 +59,18 @@ import java.util.Locale
 fun DiaryScreen(
     modifier: Modifier = Modifier,
     currentTime: LocalDate = LocalDate.now(),
+    viewModel: DiaryViewModel = hiltViewModel(),
 ) {
     val listState = rememberLazyListState()
     val density = LocalDensity.current
 
     var yearMonth by remember { mutableStateOf(YearMonth.now()) }
     var selectedDate by remember { mutableStateOf(currentTime) }
+    val monthDiaries by viewModel.monthDiaries.collectAsState()
+
+    LaunchedEffect(yearMonth) {
+        viewModel.loadMonthDiaries(yearMonth)
+    }
 
     // 달력 접힘 제어를 위한 오프셋 상태
     var headerScrollOffset by remember { mutableStateOf(0f) }
@@ -176,6 +185,7 @@ fun DiaryScreen(
                     selectedDate = selectedDate,
                     isCollapsed = isCollapsed,
                     modifier = Modifier.background(White),
+                    monthDiary = monthDiaries,
                 )
             }
 
