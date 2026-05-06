@@ -93,7 +93,8 @@ fun CameraScreen(
                 UCrop
                     .of(uri, Uri.fromFile(destFile))
                     .withAspectRatio(1f, 1f)
-                    .getIntent(context),
+                    .getIntent(context)
+                    .setClass(context, PpoPpiUCropActivity::class.java),
             )
         }
 

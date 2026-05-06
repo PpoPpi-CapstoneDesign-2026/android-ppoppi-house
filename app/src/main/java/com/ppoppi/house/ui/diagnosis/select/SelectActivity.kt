@@ -6,48 +6,22 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.ppoppi.house.domain.model.COLOR
-import com.ppoppi.house.domain.model.Pet
-import com.ppoppi.house.domain.model.SEX
-import com.ppoppi.house.domain.model.SPECIES
+import androidx.activity.viewModels
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import com.ppoppi.house.ui.diagnosis.camera.CameraActivity
 import com.ppoppi.house.ui.theme.PpoPpiTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SelectActivity : ComponentActivity() {
-    val pets =
-        listOf(
-            Pet(
-                id = 1,
-                name = "김은지",
-                species = SPECIES.DOG,
-                breed = "사람",
-                age = 24,
-                sex = SEX.FEMALE,
-                color = COLOR.PRIMARY200,
-            ),
-            Pet(
-                id = 2,
-                name = "김은지",
-                species = SPECIES.DOG,
-                breed = "사람",
-                age = 24,
-                sex = SEX.FEMALE,
-                color = COLOR.PRIMARY100,
-            ),
-            Pet(
-                name = "김은지",
-                species = SPECIES.DOG,
-                breed = "사람",
-                age = 24,
-                sex = SEX.FEMALE,
-                color = COLOR.PRIMARY600,
-            ),
-        )
+    private val viewModel: PetSelectViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val pets by viewModel.pets.collectAsState()
             PpoPpiTheme {
                 PetSelectScreen(
                     onBackClick = { finish() },
@@ -59,6 +33,11 @@ class SelectActivity : ComponentActivity() {
                 )
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.getPets()
     }
 
     companion object {

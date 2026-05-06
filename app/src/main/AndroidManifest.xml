@@ -91,10 +91,10 @@
             android:theme="@style/Theme.PpoPpiHouse" />
 
         <activity
-            android:name="com.yalantis.ucrop.UCropActivity"
+            android:name=".ui.diagnosis.camera.PpoPpiUCropActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.UCropNoEdgeToEdge" />
 
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"

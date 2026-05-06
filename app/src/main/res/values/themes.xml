@@ -3,6 +3,16 @@
 
     <style name="Theme.PpoPpiHouse" parent="android:Theme.Material.Light.NoActionBar" />
 
+    <style name="Theme.UCropNoEdgeToEdge" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
+
     <style name="Theme.PpoPpiHouse.NoSystemSplash" parent="Theme.PpoPpiHouse">
         <!-- Android 12+ 시스템 스플래시 아이콘 숨기기 -->
         <item name="android:windowSplashScreenAnimatedIcon">@android:color/transparent</item>
