@@ -6,38 +6,23 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.ppoppi.house.domain.model.COLOR
-import com.ppoppi.house.domain.model.Pet
-import com.ppoppi.house.domain.model.SEX
-import com.ppoppi.house.domain.model.SPECIES
+import androidx.activity.viewModels
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import com.ppoppi.house.ui.main.MainActivity
 import com.ppoppi.house.ui.onboarding.register.OnboardingRegisterActivity
 import com.ppoppi.house.ui.theme.PpoPpiTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OnboardingListActivity : ComponentActivity() {
+    private val viewModel: OnboardingListViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        val pets: List<Pet> =
-            listOf(
-                Pet(
-                    name = "asdf",
-                    species = SPECIES.DOG,
-                    breed = "푸들",
-                    age = 2,
-                    sex = SEX.FEMALE,
-                    color = COLOR.PRIMARY200,
-                ),
-                Pet(
-                    name = "asdf",
-                    species = SPECIES.DOG,
-                    breed = "푸들",
-                    age = 2,
-                    sex = SEX.FEMALE,
-                    color = COLOR.PRIMARY100,
-                ),
-            )
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val pets by viewModel.pets.collectAsState()
             PpoPpiTheme {
                 PetListScreen(
                     onStart = {
@@ -56,6 +41,11 @@ class OnboardingListActivity : ComponentActivity() {
                 )
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.getPets()
     }
 
     companion object {
