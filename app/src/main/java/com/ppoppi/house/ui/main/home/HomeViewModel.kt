@@ -10,6 +10,8 @@ import com.ppoppi.house.domain.repository.DiseaseRepository
 import com.ppoppi.house.domain.repository.PetsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,6 +27,9 @@ class HomeViewModel
         private val diagnosisRepository: DiagnosisRepository,
         private val petsRepository: PetsRepository,
     ) : ViewModel() {
+        private val _isLoading = MutableStateFlow(true)
+        val isLoading: StateFlow<Boolean> = _isLoading
+
         private val _diseases = MutableStateFlow<List<Disease>?>(null)
         val diseases: StateFlow<List<Disease>?> = _diseases
 
@@ -38,14 +43,18 @@ class HomeViewModel
 
         init {
             viewModelScope.launch {
-                runCatching { petsRepository.getPets() }
-                    .onSuccess { _pets.value = it }
+                coroutineScope {
+                    val petsJob = async { runCatching { petsRepository.getPets() }.onSuccess { _pets.value = it } }
+                    val diseasesJob = async {
+                        runCatching { diseaseRepository.getGeneticDiseaseRandom() }
+                            .onSuccess { _diseases.value = it.take(MAX_DISEASE_COUNT) }
+                    }
+                    petsJob.await()
+                    diseasesJob.await()
+                }
+                _isLoading.value = false
+                loadDiagnosis(_pets.value.firstOrNull()?.id ?: 0)
             }
-            viewModelScope.launch {
-                runCatching { diseaseRepository.getGeneticDiseaseRandom() }
-                    .onSuccess { _diseases.value = it.take(MAX_DISEASE_COUNT) }
-            }
-            loadDiagnosis(_pets.value.firstOrNull()?.id ?: 0)
         }
 
         fun loadDiagnosis(petId: Long) {

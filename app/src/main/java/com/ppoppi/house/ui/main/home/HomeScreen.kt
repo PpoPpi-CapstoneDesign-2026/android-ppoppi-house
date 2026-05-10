@@ -64,6 +64,7 @@ fun HomeScreen(
     val context = LocalContext.current
     var keyword by remember { mutableStateOf("") }
     var isInitialized by remember { mutableStateOf(false) }
+    val isLoading by viewModel.isLoading.collectAsState()
     val diseases by viewModel.diseases.collectAsState()
     val todayDiagnosis by viewModel.todayDiagnosis.collectAsState()
     val pets by viewModel.pets.collectAsState()
@@ -85,6 +86,11 @@ fun HomeScreen(
             return@LaunchedEffect
         }
         viewModel.loadDiseases(keyword)
+    }
+
+    if (isLoading) {
+        HomeSkeletonScreen(modifier = modifier)
+        return
     }
 
     Column(
