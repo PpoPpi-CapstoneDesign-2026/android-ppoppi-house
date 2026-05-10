@@ -48,8 +48,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ppoppi.house.domain.model.SPECIES
+import com.ppoppi.house.ui.component.shimmerBrush
 import com.ppoppi.house.ui.main.diary.component.Calendar
 import com.ppoppi.house.ui.main.diary.component.DiaryItem
+import com.ppoppi.house.ui.main.diary.component.DiaryItemSkeleton
 import com.ppoppi.house.ui.theme.Black
 import com.ppoppi.house.ui.theme.Gray100
 import com.ppoppi.house.ui.theme.PpoPpiTheme
@@ -77,6 +79,7 @@ fun DiaryScreen(
 
     var yearMonth by remember { mutableStateOf(YearMonth.now()) }
     var selectedDate by remember { mutableStateOf(currentTime) }
+    val isLoading by viewModel.isLoading.collectAsState()
     val monthDiaries by viewModel.monthDiaries.collectAsState()
     val pets by viewModel.pets.collectAsState()
     val dailyDiaries by viewModel.dailyDiaries.collectAsState()
@@ -164,58 +167,76 @@ fun DiaryScreen(
 
             // 날짜 표시 헤더
             item {
-                Text(
-                    text =
-                        "${selectedDate.monthValue}월 ${selectedDate.dayOfMonth}일 (${
-                            selectedDate.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.KOREAN)
-                        })".getColoredText(
-                            Primary600,
-                            "(${
-                                selectedDate.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.KOREAN)
-                            })",
-                        ),
-                    style = PpoPpiTheme.typography.title1,
-                    color = Black,
-                    modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 12.dp),
-                )
-            }
-
-            // 개별 다이어리 아이템들
-            items(dailyDiaries) { diary ->
-                val pet = pets.find { it.id == diary.petId }
-                if (pet != null) {
-                    Box(modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp)) {
-                        DiaryItem(
-                            pet = pet,
-                            diagnosis = diary.diagnosis,
-                            memo = diary.memo,
-                            healthChecklist = diary.healthChecklist,
-                        )
-                    }
-                }
-            }
-
-            if (dailyDiaries.isEmpty()) {
-                item {
+                if (isLoading) {
+                    val brush = shimmerBrush()
+                    Box(
+                        modifier = Modifier
+                            .padding(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 12.dp)
+                            .size(140.dp, 20.dp)
+                            .background(brush, RoundedCornerShape(4.dp)),
+                    )
+                } else {
                     Text(
-                        text = "아직 다이어리가 없어요",
-                        style = PpoPpiTheme.typography.body2,
+                        text =
+                            "${selectedDate.monthValue}월 ${selectedDate.dayOfMonth}일 (${
+                                selectedDate.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.KOREAN)
+                            })".getColoredText(
+                                Primary600,
+                                "(${
+                                    selectedDate.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.KOREAN)
+                                })",
+                            ),
+                        style = PpoPpiTheme.typography.title1,
                         color = Black,
                         modifier =
-                            Modifier.padding(
-                                start = 20.dp,
-                                end = 20.dp,
-                                top = 20.dp,
-                            ),
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 12.dp),
                     )
                 }
             }
 
-            item {
-                Spacer(modifier = Modifier.height(20.dp))
+            if (isLoading) {
+                items(2) {
+                    Box(modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp)) {
+                        DiaryItemSkeleton()
+                    }
+                }
+            } else {
+                // 개별 다이어리 아이템들
+                items(dailyDiaries) { diary ->
+                    val pet = pets.find { it.id == diary.petId }
+                    if (pet != null) {
+                        Box(modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp)) {
+                            DiaryItem(
+                                pet = pet,
+                                diagnosis = diary.diagnosis,
+                                memo = diary.memo,
+                                healthChecklist = diary.healthChecklist,
+                            )
+                        }
+                    }
+                }
+
+                if (dailyDiaries.isEmpty()) {
+                    item {
+                        Text(
+                            text = "아직 다이어리가 없어요",
+                            style = PpoPpiTheme.typography.body2,
+                            color = Black,
+                            modifier =
+                                Modifier.padding(
+                                    start = 20.dp,
+                                    end = 20.dp,
+                                    top = 20.dp,
+                                ),
+                        )
+                    }
+                }
+
+                item {
+                    Spacer(modifier = Modifier.height(20.dp))
+                }
             }
         }
 

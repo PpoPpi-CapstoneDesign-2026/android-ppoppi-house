@@ -8,6 +8,8 @@ import com.ppoppi.house.domain.model.Pet
 import com.ppoppi.house.domain.repository.DiaryRepository
 import com.ppoppi.house.domain.repository.PetsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -22,6 +24,9 @@ class DiaryViewModel
         private val diaryRepository: DiaryRepository,
         private val petsRepository: PetsRepository,
     ) : ViewModel() {
+        private val _isLoading = MutableStateFlow(true)
+        val isLoading: StateFlow<Boolean> = _isLoading
+
         private val _monthDiaries = MutableStateFlow<List<MonthDiary>>(emptyList())
         val monthDiaries: StateFlow<List<MonthDiary>> = _monthDiaries
 
@@ -33,10 +38,17 @@ class DiaryViewModel
 
         init {
             viewModelScope.launch {
-                runCatching { petsRepository.getPets() }
-                    .onSuccess { _pets.value = it }
+                val now = YearMonth.now()
+                coroutineScope {
+                    launch { runCatching { petsRepository.getPets() }.onSuccess { _pets.value = it } }
+                    launch {
+                        runCatching { diaryRepository.getDiariesMonth(now.year, now.monthValue) }
+                            .onSuccess { _monthDiaries.value = it }
+                    }
+                }
+                delay(5000)
+                _isLoading.value = false
             }
-            loadMonthDiaries(YearMonth.now())
         }
 
         fun loadDailyDiaries(date: LocalDate) {
