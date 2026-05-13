@@ -35,50 +35,52 @@ fun DiaryItemSkeleton(modifier: Modifier = Modifier) {
     val brush = shimmerBrush()
 
     Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .drawBehind {
-                drawIntoCanvas { canvas ->
-                    val paint = Paint().apply {
-                        asFrameworkPaint().apply {
-                            isAntiAlias = true
-                            color = Black.copy(alpha = 0.25f).toArgb()
-                            maskFilter = BlurMaskFilter(4.dp.toPx(), BlurMaskFilter.Blur.NORMAL)
-                        }
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .drawBehind {
+                    drawIntoCanvas { canvas ->
+                        val paint =
+                            Paint().apply {
+                                asFrameworkPaint().apply {
+                                    isAntiAlias = true
+                                    color = Black.copy(alpha = 0.25f).toArgb()
+                                    maskFilter = BlurMaskFilter(4.dp.toPx(), BlurMaskFilter.Blur.NORMAL)
+                                }
+                            }
+                        canvas.drawRoundRect(
+                            left = 0f,
+                            top = 4.dp.toPx(),
+                            right = size.width,
+                            bottom = size.height + 4.dp.toPx(),
+                            radiusX = 8.dp.toPx(),
+                            radiusY = 8.dp.toPx(),
+                            paint = paint,
+                        )
                     }
-                    canvas.drawRoundRect(
-                        left = 0f,
-                        top = 4.dp.toPx(),
-                        right = size.width,
-                        bottom = size.height + 4.dp.toPx(),
-                        radiusX = 8.dp.toPx(),
-                        radiusY = 8.dp.toPx(),
-                        paint = paint,
+                }.clip(RoundedCornerShape(8.dp))
+                .background(White)
+                .drawBehind {
+                    drawRect(
+                        color = Gray100,
+                        topLeft = Offset(0f, 0f),
+                        size = Size(4.dp.toPx(), size.height),
                     )
-                }
-            }
-            .clip(RoundedCornerShape(8.dp))
-            .background(White)
-            .drawBehind {
-                drawRect(
-                    color = Gray100,
-                    topLeft = Offset(0f, 0f),
-                    size = Size(4.dp.toPx(), size.height),
-                )
-            }
-            .padding(16.dp),
+                }.padding(16.dp),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Box(
-                modifier = Modifier
-                    .size(10.dp)
-                    .background(brush, CircleShape),
+                modifier =
+                    Modifier
+                        .size(10.dp)
+                        .background(brush, CircleShape),
             )
             Box(
-                modifier = Modifier
-                    .padding(start = 6.dp)
-                    .size(80.dp, 16.dp)
-                    .background(brush, RoundedCornerShape(4.dp)),
+                modifier =
+                    Modifier
+                        .padding(start = 6.dp)
+                        .size(80.dp, 16.dp)
+                        .background(brush, RoundedCornerShape(4.dp)),
             )
         }
 
@@ -89,34 +91,39 @@ fun DiaryItemSkeleton(modifier: Modifier = Modifier) {
         )
 
         Box(
-            modifier = Modifier
-                .padding(top = 10.dp)
-                .size(60.dp, 14.dp)
-                .background(brush, RoundedCornerShape(4.dp)),
+            modifier =
+                Modifier
+                    .padding(top = 10.dp)
+                    .size(60.dp, 14.dp)
+                    .background(brush, RoundedCornerShape(4.dp)),
         )
 
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 14.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = 14.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Box(
-                modifier = Modifier
-                    .size(80.dp)
-                    .background(brush, RoundedCornerShape(8.dp)),
+                modifier =
+                    Modifier
+                        .size(80.dp)
+                        .background(brush, RoundedCornerShape(8.dp)),
             )
             Column(modifier = Modifier.padding(start = 10.dp)) {
                 Box(
-                    modifier = Modifier
-                        .size(100.dp, 16.dp)
-                        .background(brush, RoundedCornerShape(4.dp)),
+                    modifier =
+                        Modifier
+                            .size(100.dp, 16.dp)
+                            .background(brush, RoundedCornerShape(4.dp)),
                 )
                 Box(
-                    modifier = Modifier
-                        .padding(top = 10.dp)
-                        .size(70.dp, 12.dp)
-                        .background(brush, RoundedCornerShape(4.dp)),
+                    modifier =
+                        Modifier
+                            .padding(top = 10.dp)
+                            .size(70.dp, 12.dp)
+                            .background(brush, RoundedCornerShape(4.dp)),
                 )
             }
         }
@@ -127,9 +134,10 @@ fun DiaryItemSkeleton(modifier: Modifier = Modifier) {
         ) {
             repeat(3) {
                 Box(
-                    modifier = Modifier
-                        .size(60.dp, 28.dp)
-                        .background(brush, RoundedCornerShape(100.dp)),
+                    modifier =
+                        Modifier
+                            .size(60.dp, 28.dp)
+                            .background(brush, RoundedCornerShape(100.dp)),
                 )
             }
         }

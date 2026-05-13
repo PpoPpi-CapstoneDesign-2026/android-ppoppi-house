@@ -26,83 +26,94 @@ fun HomeSkeletonScreen(modifier: Modifier = Modifier) {
     val brush = shimmerBrush()
 
     Column(
-        modifier = modifier
-            .padding(top = 18.dp)
-            .padding(horizontal = 18.dp)
-            .verticalScroll(rememberScrollState()),
+        modifier =
+            modifier
+                .padding(top = 18.dp)
+                .padding(horizontal = 18.dp)
+                .verticalScroll(rememberScrollState()),
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Box(
-                modifier = Modifier
-                    .padding(start = 8.dp)
-                    .size(40.dp, 28.dp)
-                    .background(brush, RoundedCornerShape(4.dp)),
+                modifier =
+                    Modifier
+                        .padding(start = 8.dp)
+                        .size(40.dp, 28.dp)
+                        .background(brush, RoundedCornerShape(4.dp)),
             )
             Box(
-                modifier = Modifier
-                    .size(24.dp)
-                    .background(brush, CircleShape),
+                modifier =
+                    Modifier
+                        .size(24.dp)
+                        .background(brush, CircleShape),
             )
         }
 
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 10.dp)
-                .padding(top = 10.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 10.dp)
+                    .padding(top = 10.dp),
             horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             repeat(2) {
                 Box(
-                    modifier = Modifier
-                        .size(60.dp, 66.dp)
-                        .background(brush, RoundedCornerShape(10.dp)),
+                    modifier =
+                        Modifier
+                            .size(60.dp, 66.dp)
+                            .background(brush, RoundedCornerShape(10.dp)),
                 )
             }
         }
 
         Box(
-            modifier = Modifier
-                .padding(top = 12.dp)
-                .size(130.dp, 20.dp)
-                .background(brush, RoundedCornerShape(4.dp)),
+            modifier =
+                Modifier
+                    .padding(top = 12.dp)
+                    .size(130.dp, 20.dp)
+                    .background(brush, RoundedCornerShape(4.dp)),
         )
 
         Box(
-            modifier = Modifier
-                .padding(top = 18.dp)
-                .fillMaxWidth()
-                .height(240.dp)
-                .background(brush, RoundedCornerShape(8.dp)),
+            modifier =
+                Modifier
+                    .padding(top = 18.dp)
+                    .fillMaxWidth()
+                    .height(240.dp)
+                    .background(brush, RoundedCornerShape(8.dp)),
         )
 
         Box(
-            modifier = Modifier
-                .padding(top = 30.dp)
-                .size(80.dp, 20.dp)
-                .background(brush, RoundedCornerShape(4.dp)),
+            modifier =
+                Modifier
+                    .padding(top = 30.dp)
+                    .size(80.dp, 20.dp)
+                    .background(brush, RoundedCornerShape(4.dp)),
         )
 
         Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp)
-                .height(48.dp)
-                .background(brush, RoundedCornerShape(16.dp)),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp)
+                    .height(48.dp)
+                    .background(brush, RoundedCornerShape(16.dp)),
         )
 
         Box(
-            modifier = Modifier
-                .padding(top = 16.dp, bottom = 18.dp)
-                .fillMaxWidth()
-                .height(160.dp)
-                .background(brush, RoundedCornerShape(8.dp)),
+            modifier =
+                Modifier
+                    .padding(top = 16.dp, bottom = 18.dp)
+                    .fillMaxWidth()
+                    .height(160.dp)
+                    .background(brush, RoundedCornerShape(8.dp)),
         )
     }
 }

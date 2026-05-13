@@ -170,10 +170,11 @@ fun DiaryScreen(
                 if (isLoading) {
                     val brush = shimmerBrush()
                     Box(
-                        modifier = Modifier
-                            .padding(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 12.dp)
-                            .size(140.dp, 20.dp)
-                            .background(brush, RoundedCornerShape(4.dp)),
+                        modifier =
+                            Modifier
+                                .padding(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 12.dp)
+                                .size(140.dp, 20.dp)
+                                .background(brush, RoundedCornerShape(4.dp)),
                     )
                 } else {
                     Text(
