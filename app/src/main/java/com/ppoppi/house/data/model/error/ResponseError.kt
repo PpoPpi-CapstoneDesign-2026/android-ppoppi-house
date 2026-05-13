@@ -4,6 +4,6 @@ sealed class ResponseError {
     sealed class AccountError(
         val code: String,
     ) : ResponseError() {
-        data object Unauthorized : AccountError("TOKEN_EXPIRED")
+        data object Unauthorized : AccountError("UNAUTHORIZED")
     }
 }

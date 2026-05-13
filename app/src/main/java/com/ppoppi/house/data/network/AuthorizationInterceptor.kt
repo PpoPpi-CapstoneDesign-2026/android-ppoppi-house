@@ -108,6 +108,6 @@ class AuthorizationInterceptor
         companion object {
             private const val HEADER_NAME_AUTHORIZATION = "Authorization"
             private const val HEADER_VALUE_AUTHORIZATION = "Bearer %s"
-            private const val ERROR_BODY = "error"
+            private const val ERROR_BODY = "code"
         }
     }
