@@ -25,6 +25,9 @@ class PetInfoViewModel
         private val _isRegistered = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
         val isRegistered: SharedFlow<Unit> = _isRegistered
 
+        private val _isDeleted = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
+        val isDeleted: SharedFlow<Unit> = _isDeleted
+
         fun loadBreeds(species: SPECIES) {
             viewModelScope.launch {
                 _breeds.value = emptyList()
@@ -38,6 +41,25 @@ class PetInfoViewModel
                 petsRepository
                     .postPet(pet)
                     .onSuccess { _isRegistered.emit(Unit) }
+            }
+        }
+
+        fun putPet(
+            petId: Long,
+            pet: Pet,
+        ) {
+            viewModelScope.launch {
+                petsRepository
+                    .putPet(petId, pet)
+                    .onSuccess { _isRegistered.emit(Unit) }
+            }
+        }
+
+        fun deletePet(petId: Long) {
+            viewModelScope.launch {
+                petsRepository
+                    .deletePet(petId)
+                    .onSuccess { _isDeleted.emit(Unit) }
             }
         }
     }

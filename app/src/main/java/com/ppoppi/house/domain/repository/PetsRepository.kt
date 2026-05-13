@@ -9,4 +9,11 @@ interface PetsRepository {
     suspend fun postPet(pet: Pet): Result<Unit>
 
     suspend fun getPets(): List<Pet>
+
+    suspend fun deletePet(petId: Long): Result<Unit>
+
+    suspend fun putPet(
+        petId: Long,
+        pet: Pet,
+    ): Result<Unit>
 }

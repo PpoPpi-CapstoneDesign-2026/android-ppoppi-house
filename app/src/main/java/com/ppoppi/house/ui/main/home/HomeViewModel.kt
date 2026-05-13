@@ -45,15 +45,16 @@ class HomeViewModel
             viewModelScope.launch {
                 coroutineScope {
                     val petsJob = async { runCatching { petsRepository.getPets() }.onSuccess { _pets.value = it } }
-                    val diseasesJob = async {
-                        runCatching { diseaseRepository.getGeneticDiseaseRandom() }
-                            .onSuccess { _diseases.value = it.take(MAX_DISEASE_COUNT) }
-                    }
+                    val diseasesJob =
+                        async {
+                            runCatching { diseaseRepository.getGeneticDiseaseRandom() }
+                                .onSuccess { _diseases.value = it.take(MAX_DISEASE_COUNT) }
+                        }
                     petsJob.await()
                     diseasesJob.await()
+                    loadDiagnosis(_pets.value.firstOrNull()?.id ?: 0)
                 }
                 _isLoading.value = false
-                loadDiagnosis(_pets.value.firstOrNull()?.id ?: 0)
             }
         }
 

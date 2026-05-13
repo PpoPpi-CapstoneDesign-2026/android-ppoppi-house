@@ -30,4 +30,28 @@ class PetsRepositoryImpl
             }
 
         override suspend fun getPets(): List<Pet> = petService.getPets().map { it.toDomain() }
+
+        override suspend fun deletePet(petId: Long): Result<Unit> =
+            runCatching {
+                petService.deletePets(petId)
+            }
+
+        override suspend fun putPet(
+            petId: Long,
+            pet: Pet,
+        ): Result<Unit> =
+            runCatching {
+                petService.putPets(
+                    petId = petId,
+                    petRegisterRequest =
+                        PetRegisterRequest(
+                            name = pet.name,
+                            species = pet.species.name,
+                            breed = pet.breed,
+                            age = pet.age,
+                            sex = pet.sex.name,
+                            color = pet.color.ordinal,
+                        ),
+                )
+            }
     }

@@ -20,6 +20,10 @@ class SettingViewModel
         val pets: StateFlow<List<Pet>> = _pets
 
         init {
+            loadPets()
+        }
+
+        fun loadPets() {
             viewModelScope.launch {
                 runCatching { petsRepository.getPets() }
                     .onSuccess { _pets.value = it }

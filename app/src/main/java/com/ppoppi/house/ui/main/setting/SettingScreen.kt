@@ -3,6 +3,8 @@ package com.ppoppi.house.ui.main.setting
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -53,6 +55,12 @@ fun SettingScreen(
     var showLogoutDialog by remember { mutableStateOf(false) }
     var showAccountDeleteDialog by remember { mutableStateOf(false) }
     val pets by viewModel.pets.collectAsState()
+
+    val petInfoLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult(),
+    ) {
+        viewModel.loadPets()
+    }
 
     Column(
         modifier =
@@ -218,7 +226,7 @@ fun SettingScreen(
                     pet = pet,
                     onClick = {
                         val intent = PetInfoActivity.newIntent(context, pet)
-                        context.startActivity(intent)
+                        petInfoLauncher.launch(intent)
                     },
                 )
                 Spacer(modifier = Modifier.height(10.dp))
@@ -228,7 +236,7 @@ fun SettingScreen(
                 AddPetButton(
                     onClick = {
                         val intent = PetInfoActivity.newIntent(context)
-                        context.startActivity(intent)
+                        petInfoLauncher.launch(intent)
                     },
                 )
             }

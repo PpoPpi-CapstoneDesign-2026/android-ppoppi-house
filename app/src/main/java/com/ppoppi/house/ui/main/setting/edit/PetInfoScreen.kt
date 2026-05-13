@@ -9,6 +9,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -35,8 +36,10 @@ import com.ppoppi.house.ui.onboarding.register.component.NameInputSection
 import com.ppoppi.house.ui.onboarding.register.component.PetRegisterTopAppBar
 import com.ppoppi.house.ui.onboarding.register.component.SexInputSection
 import com.ppoppi.house.ui.onboarding.register.component.SpeciesInputSection
+import com.ppoppi.house.ui.theme.Gray300
 import com.ppoppi.house.ui.theme.PpoPpiTheme
 import com.ppoppi.house.ui.theme.White
+import com.ppoppi.house.ui.util.noRippleClickable
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -60,11 +63,16 @@ fun PetInfoScreen(
         viewModel.isRegistered.collect { onRegistered() }
     }
 
+    LaunchedEffect(viewModel) {
+        viewModel.isDeleted.collect { onRegistered() }
+    }
+
     LaunchedEffect(species) {
         viewModel.loadBreeds(species)
     }
 
-    val title = if (pet == null) stringResource(R.string.pet_register_top_bar) else stringResource(R.string.pet_edit_top_bar)
+    val title =
+        if (pet == null) stringResource(R.string.pet_register_top_bar) else stringResource(R.string.pet_edit_top_bar)
 
     Scaffold(
         topBar = { PetRegisterTopAppBar(title, onBackClick) },
@@ -75,7 +83,7 @@ fun PetInfoScreen(
         bottomBar = {
             BottomBarButton(
                 onClick = {
-                    viewModel.registerPet(
+                    val petData =
                         Pet(
                             name = name,
                             species = species,
@@ -83,14 +91,27 @@ fun PetInfoScreen(
                             age = age,
                             sex = sex,
                             color = COLOR.entries[color],
-                        ),
-                    )
+                        )
+                    if (pet?.id != null) {
+                        viewModel.putPet(pet.id, petData)
+                    } else {
+                        viewModel.registerPet(petData)
+                    }
                 },
                 text = stringResource(R.string.pet_register_bottom_bar_button),
+                content = {
+                    if (pet != null) {
+                        Text(
+                            text = "삭제하기",
+                            style = PpoPpiTheme.typography.label1,
+                            color = Gray300,
+                            modifier = Modifier.noRippleClickable(onClick = { pet.id?.let { viewModel.deletePet(it) } }),
+                        )
+                    }
+                },
             )
         },
     ) { innerPadding ->
-
         Column(
             modifier =
                 Modifier

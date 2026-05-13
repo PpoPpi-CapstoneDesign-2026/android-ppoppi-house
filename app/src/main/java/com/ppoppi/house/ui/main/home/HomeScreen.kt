@@ -77,7 +77,7 @@ fun HomeScreen(
     }
 
     LaunchedEffect(selectedPet) {
-        viewModel.loadDiagnosis(selectedPet?.id ?: 0)
+        selectedPet?.let { viewModel.loadDiagnosis(it.id ?: 0) }
     }
 
     LaunchedEffect(keyword) {

@@ -4,8 +4,11 @@ import com.ppoppi.house.data.model.request.pet.PetRegisterRequest
 import com.ppoppi.house.data.model.response.pet.BreedsResponse
 import com.ppoppi.house.data.model.response.pet.PetsResponse
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface PetService {
@@ -21,4 +24,15 @@ interface PetService {
 
     @GET("/pets")
     suspend fun getPets(): PetsResponse
+
+    @DELETE("/pets/{petId}")
+    suspend fun deletePets(
+        @Path("petId") petId: Long,
+    )
+
+    @PUT("/pets/{petId}")
+    suspend fun putPets(
+        @Path("petId") petId: Long,
+        @Body petRegisterRequest: PetRegisterRequest,
+    )
 }
