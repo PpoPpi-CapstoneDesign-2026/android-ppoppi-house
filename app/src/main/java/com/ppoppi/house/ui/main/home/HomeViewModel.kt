@@ -41,8 +41,9 @@ class HomeViewModel
 
         private var searchJob: Job? = null
 
-        init {
+        fun load() {
             viewModelScope.launch {
+                _isLoading.value = true
                 coroutineScope {
                     val petsJob = async { runCatching { petsRepository.getPets() }.onSuccess { _pets.value = it } }
                     val diseasesJob =

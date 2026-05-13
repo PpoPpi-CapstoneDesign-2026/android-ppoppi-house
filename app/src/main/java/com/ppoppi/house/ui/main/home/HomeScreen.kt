@@ -27,11 +27,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import com.ppoppi.house.R
 import com.ppoppi.house.domain.model.Disease
 import com.ppoppi.house.domain.model.Pet
@@ -62,9 +65,16 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
     var keyword by remember { mutableStateOf("") }
     var isInitialized by remember { mutableStateOf(false) }
     val isLoading by viewModel.isLoading.collectAsState()
+
+    LaunchedEffect(lifecycleOwner) {
+        lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            viewModel.load()
+        }
+    }
     val diseases by viewModel.diseases.collectAsState()
     val todayDiagnosis by viewModel.todayDiagnosis.collectAsState()
     val pets by viewModel.pets.collectAsState()

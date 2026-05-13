@@ -76,10 +76,9 @@ fun MainBottomNavigationBar(
                             ) {
                                 navController.navigate(item.screenRoute) {
                                     navController.graph.startDestinationRoute?.let {
-                                        popUpTo(it) { saveState = true }
+                                        popUpTo(it)
                                     }
                                     launchSingleTop = true
-                                    restoreState = true
                                 }
                             }.padding(vertical = 12.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,

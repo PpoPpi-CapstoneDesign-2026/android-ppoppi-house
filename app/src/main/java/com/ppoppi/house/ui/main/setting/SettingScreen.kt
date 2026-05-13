@@ -56,11 +56,12 @@ fun SettingScreen(
     var showAccountDeleteDialog by remember { mutableStateOf(false) }
     val pets by viewModel.pets.collectAsState()
 
-    val petInfoLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartActivityForResult(),
-    ) {
-        viewModel.loadPets()
-    }
+    val petInfoLauncher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.StartActivityForResult(),
+        ) {
+            viewModel.loadPets()
+        }
 
     Column(
         modifier =
