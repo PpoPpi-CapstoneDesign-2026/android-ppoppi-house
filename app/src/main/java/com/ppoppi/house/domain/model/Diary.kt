@@ -6,5 +6,10 @@ data class Diary(
     val petName: String,
     val diagnosis: Diagnosis?,
     val memo: String,
-    val healthChecklist: List<String>,
+    val healthChecklist: List<HealthChecklist>,
+)
+
+data class HealthChecklist(
+    val id: Long,
+    val description: String,
 )

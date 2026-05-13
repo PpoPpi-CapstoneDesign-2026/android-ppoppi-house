@@ -1,6 +1,7 @@
 package com.ppoppi.house.domain.repository
 
 import com.ppoppi.house.domain.model.Diary
+import com.ppoppi.house.domain.model.HealthChecklist
 import com.ppoppi.house.domain.model.MonthDiary
 
 interface DiaryRepository {
@@ -14,4 +15,6 @@ interface DiaryRepository {
         month: Int,
         day: Int,
     ): List<Diary>
+
+    suspend fun getHealthChecklist(): List<HealthChecklist>
 }

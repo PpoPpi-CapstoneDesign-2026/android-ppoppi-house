@@ -1,9 +1,9 @@
 package com.ppoppi.house.data.repository
 
-import androidx.camera.core.impl.utils.LiveDataUtil.map
 import com.ppoppi.house.data.model.response.diary.toDomain
 import com.ppoppi.house.data.service.DiaryService
 import com.ppoppi.house.domain.model.Diary
+import com.ppoppi.house.domain.model.HealthChecklist
 import com.ppoppi.house.domain.model.MonthDiary
 import com.ppoppi.house.domain.repository.DiaryRepository
 import javax.inject.Inject
@@ -27,6 +27,11 @@ class DiaryRepositoryImpl
             day: Int,
         ): List<Diary> {
             val result = diaryService.getDiariesDaily(year, month, day)
+            return result.map { it.toDomain() }
+        }
+
+        override suspend fun getHealthChecklist(): List<HealthChecklist> {
+            val result = diaryService.getHealthChecklist()
             return result.map { it.toDomain() }
         }
     }

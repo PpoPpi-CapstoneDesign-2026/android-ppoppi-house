@@ -1,6 +1,5 @@
 package com.ppoppi.house.ui.main.diary.component
 
-import android.R.attr.description
 import android.graphics.BlurMaskFilter
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -32,6 +31,7 @@ import coil.compose.AsyncImage
 import com.ppoppi.house.domain.model.COLOR
 import com.ppoppi.house.domain.model.COLOR.Companion.toColor
 import com.ppoppi.house.domain.model.Diagnosis
+import com.ppoppi.house.domain.model.HealthChecklist
 import com.ppoppi.house.domain.model.Pet
 import com.ppoppi.house.domain.model.SEX
 import com.ppoppi.house.domain.model.SPECIES
@@ -41,16 +41,18 @@ import com.ppoppi.house.ui.diagnosis.result.component.TriageBadge
 import com.ppoppi.house.ui.theme.Black
 import com.ppoppi.house.ui.theme.Gray100
 import com.ppoppi.house.ui.theme.Gray300
+import com.ppoppi.house.ui.theme.Gray400
 import com.ppoppi.house.ui.theme.PpoPpiTheme
 import com.ppoppi.house.ui.theme.Primary800
 import com.ppoppi.house.ui.theme.White
+import kotlin.collections.isNotEmpty
 
 @Composable
 fun DiaryItem(
     pet: Pet,
     diagnosis: Diagnosis?,
     memo: String?,
-    healthChecklist: List<String>,
+    healthChecklist: List<HealthChecklist>,
     modifier: Modifier = Modifier,
 ) {
     val petColor = pet.color.toColor()
@@ -152,7 +154,7 @@ fun DiaryItem(
                         horizontalArrangement = Arrangement.spacedBy(14.dp),
                     ) {
                         Text(
-                            text = diagnosis.guideWarning,
+                            text = diagnosis.diseaseName,
                             style = PpoPpiTheme.typography.body1,
                             color = Black,
                         )
@@ -166,9 +168,10 @@ fun DiaryItem(
                             text = "신뢰도",
                             style = PpoPpiTheme.typography.label1,
                             color = Gray300,
+                            modifier = Modifier.padding(end = 4.dp),
                         )
                         Text(
-                            text = "${diagnosis.triageConfidence.toInt()}%",
+                            text = "${diagnosis.triageConfidence}%",
                             style = PpoPpiTheme.typography.label1,
                             color = diagnosis.triage.toColor()[1],
                         )
@@ -177,20 +180,29 @@ fun DiaryItem(
                 }
             }
 
-            FlowRow(
-                modifier = Modifier.padding(top = 10.dp),
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp),
-            ) {
-                diagnosis.symptoms?.forEach { symptom ->
-                    ChecklistItem(
-                        checklist = symptom.description,
-                        backgroundColor = backgroundColor,
-                        textColor = textColor,
-                        borderColor = borderColor,
-                    )
+            if (diagnosis.symptoms.isNullOrEmpty()) {
+                FlowRow(
+                    modifier = Modifier.padding(top = 10.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    verticalArrangement = Arrangement.spacedBy(10.dp),
+                ) {
+                    diagnosis.symptoms?.forEach { symptom ->
+                        ChecklistItem(
+                            checklist = symptom.description,
+                            backgroundColor = backgroundColor,
+                            textColor = textColor,
+                            borderColor = borderColor,
+                        )
+                    }
                 }
             }
+
+            Text(
+                text = diagnosis.guideWarning,
+                style = PpoPpiTheme.typography.body5,
+                color = Gray400,
+                modifier = Modifier.padding(top = 10.dp),
+            )
 
             if (memo?.isNotEmpty() == true || healthChecklist.isNotEmpty()) {
                 HorizontalDivider(
@@ -234,7 +246,7 @@ fun DiaryItem(
         ) {
             healthChecklist.forEach {
                 ChecklistItem(
-                    checklist = it,
+                    checklist = it.description,
                 )
             }
         }
@@ -269,7 +281,7 @@ private fun DiaryItemPreview() {
                     symptoms = listOf(),
                 ),
             memo = "메모입니다?메모입니다?메모입니다?메모입니다?메모입니다?메모입니다?메모입니다?메모입니다?메모입니다?메모입니다?메모입니다?\n메모입니다?메모입니다?",
-            healthChecklist = listOf("식욕 없음", "활동량 적음", "활동량 적음", "활동량 적음", "활동량 적음"),
+            healthChecklist = listOf(HealthChecklist(1, "식욕 없음"), HealthChecklist(2, "변비")),
         )
     }
 }

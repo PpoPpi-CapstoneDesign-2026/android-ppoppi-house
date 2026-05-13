@@ -1,8 +1,10 @@
 package com.ppoppi.house.data.model.response.diary
 
+import androidx.camera.core.impl.utils.LiveDataUtil.map
 import com.ppoppi.house.data.model.response.diagnosis.DiagnosisResponse
 import com.ppoppi.house.data.model.response.diagnosis.toDomain
 import com.ppoppi.house.domain.model.Diary
+import com.ppoppi.house.domain.model.HealthChecklist
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -18,9 +20,9 @@ class DailyDiariesResponse : ArrayList<DailyDiariesResponse.DailyDiaryResponseIt
         @SerialName("entryDate")
         val entryDate: String,
         @SerialName("memo")
-        val memo: String,
+        val memo: String?,
         @SerialName("checkIds")
-        val checkIds: List<Int>,
+        val checkIds: List<Long>,
         @SerialName("checkNames")
         val checkNames: List<String>,
         @SerialName("diagnosis")
@@ -34,6 +36,9 @@ fun DailyDiariesResponse.DailyDiaryResponseItem.toDomain(): Diary =
         petId = this.petId,
         petName = this.petName,
         diagnosis = this.diagnosis?.toDomain(),
-        memo = this.memo,
-        healthChecklist = this.checkNames,
+        memo = this.memo ?: "",
+        healthChecklist =
+            this.checkIds.zip(this.checkNames).map { (id, name) ->
+                HealthChecklist(id, name)
+            },
     )

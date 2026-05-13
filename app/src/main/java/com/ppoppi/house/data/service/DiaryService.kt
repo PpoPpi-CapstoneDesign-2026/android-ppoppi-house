@@ -1,6 +1,7 @@
 package com.ppoppi.house.data.service
 
 import com.ppoppi.house.data.model.response.diary.DailyDiariesResponse
+import com.ppoppi.house.data.model.response.diary.HealthChecklistResponse
 import com.ppoppi.house.data.model.response.diary.MonthDiariesResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -18,4 +19,7 @@ interface DiaryService {
         @Query("month") month: Int,
         @Query("day") day: Int,
     ): DailyDiariesResponse
+
+    @GET("/diaries/checks")
+    suspend fun getHealthChecklist(): HealthChecklistResponse
 }

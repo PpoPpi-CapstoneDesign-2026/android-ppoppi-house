@@ -1,15 +1,16 @@
 package com.ppoppi.house.ui.main.diary
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ppoppi.house.domain.model.Diary
+import com.ppoppi.house.domain.model.HealthChecklist
 import com.ppoppi.house.domain.model.MonthDiary
 import com.ppoppi.house.domain.model.Pet
 import com.ppoppi.house.domain.repository.DiaryRepository
 import com.ppoppi.house.domain.repository.PetsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -36,6 +37,9 @@ class DiaryViewModel
         private val _dailyDiaries = MutableStateFlow<List<Diary>>(emptyList())
         val dailyDiaries: StateFlow<List<Diary>> = _dailyDiaries
 
+        private val _healthChecklists = MutableStateFlow<List<HealthChecklist>>(emptyList())
+        val healthChecklists: StateFlow<List<HealthChecklist>> = _healthChecklists
+
         init {
             viewModelScope.launch {
                 val now = YearMonth.now()
@@ -45,8 +49,11 @@ class DiaryViewModel
                         runCatching { diaryRepository.getDiariesMonth(now.year, now.monthValue) }
                             .onSuccess { _monthDiaries.value = it }
                     }
+                    launch {
+                        runCatching { diaryRepository.getHealthChecklist() }
+                            .onSuccess { _healthChecklists.value = it }
+                    }
                 }
-                delay(5000)
                 _isLoading.value = false
             }
         }
@@ -56,6 +63,9 @@ class DiaryViewModel
                 runCatching {
                     diaryRepository.getDiariesDaily(date.year, date.monthValue, date.dayOfMonth)
                 }.onSuccess { _dailyDiaries.value = it }
+                    .onFailure {
+                        Log.d("hwannow_log", "$it")
+                    }
             }
         }
 

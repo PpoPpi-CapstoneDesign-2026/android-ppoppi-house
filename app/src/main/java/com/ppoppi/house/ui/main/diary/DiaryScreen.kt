@@ -25,8 +25,11 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -47,9 +50,11 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.ppoppi.house.domain.model.Diary
 import com.ppoppi.house.domain.model.SPECIES
 import com.ppoppi.house.ui.component.shimmerBrush
 import com.ppoppi.house.ui.main.diary.component.Calendar
+import com.ppoppi.house.ui.main.diary.component.DiaryDetailBottomSheet
 import com.ppoppi.house.ui.main.diary.component.DiaryItem
 import com.ppoppi.house.ui.main.diary.component.DiaryItemSkeleton
 import com.ppoppi.house.ui.theme.Black
@@ -66,7 +71,7 @@ import java.time.YearMonth
 import java.time.format.TextStyle
 import java.util.Locale
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun DiaryScreen(
     modifier: Modifier = Modifier,
@@ -83,7 +88,10 @@ fun DiaryScreen(
     val monthDiaries by viewModel.monthDiaries.collectAsState()
     val pets by viewModel.pets.collectAsState()
     val dailyDiaries by viewModel.dailyDiaries.collectAsState()
+    val healthChecklists by viewModel.healthChecklists.collectAsState()
     var isFabExpanded by remember { mutableStateOf(false) }
+    var selectedDiary by remember { mutableStateOf<Diary?>(null) }
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
     LaunchedEffect(yearMonth) {
         viewModel.loadMonthDiaries(yearMonth)
@@ -180,11 +188,17 @@ fun DiaryScreen(
                     Text(
                         text =
                             "${selectedDate.monthValue}월 ${selectedDate.dayOfMonth}일 (${
-                                selectedDate.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.KOREAN)
+                                selectedDate.dayOfWeek.getDisplayName(
+                                    TextStyle.SHORT,
+                                    Locale.KOREAN,
+                                )
                             })".getColoredText(
                                 Primary600,
                                 "(${
-                                    selectedDate.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.KOREAN)
+                                    selectedDate.dayOfWeek.getDisplayName(
+                                        TextStyle.SHORT,
+                                        Locale.KOREAN,
+                                    )
                                 })",
                             ),
                         style = PpoPpiTheme.typography.title1,
@@ -208,7 +222,12 @@ fun DiaryScreen(
                 items(dailyDiaries) { diary ->
                     val pet = pets.find { it.id == diary.petId }
                     if (pet != null) {
-                        Box(modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp)) {
+                        Box(
+                            modifier =
+                                Modifier
+                                    .padding(horizontal = 20.dp, vertical = 8.dp)
+                                    .noRippleClickable(onClick = { selectedDiary = diary }),
+                        ) {
                             DiaryItem(
                                 pet = pet,
                                 diagnosis = diary.diagnosis,
@@ -327,6 +346,21 @@ fun DiaryScreen(
                             .align(Alignment.Center),
                 )
             }
+        }
+    }
+
+    selectedDiary?.let { diary ->
+        ModalBottomSheet(
+            onDismissRequest = { selectedDiary = null },
+            sheetState = sheetState,
+        ) {
+            DiaryDetailBottomSheet(
+                petId = diary.petId,
+                petName = diary.petName,
+                memo = diary.memo,
+                healthChecklist = healthChecklists,
+                onDismiss = { selectedDiary = null },
+            )
         }
     }
 }
