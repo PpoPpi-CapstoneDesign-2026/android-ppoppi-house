@@ -3,9 +3,12 @@ package com.ppoppi.house.ui.main.setting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ppoppi.house.domain.model.Pet
+import com.ppoppi.house.domain.repository.AuthRepository
 import com.ppoppi.house.domain.repository.PetsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -15,9 +18,13 @@ class SettingViewModel
     @Inject
     constructor(
         private val petsRepository: PetsRepository,
+        private val authRepository: AuthRepository,
     ) : ViewModel() {
         private val _pets = MutableStateFlow<List<Pet>>(emptyList())
         val pets: StateFlow<List<Pet>> = _pets
+
+        private val _navigateToLogin = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
+        val navigateToLogin: SharedFlow<Unit> = _navigateToLogin
 
         init {
             loadPets()
@@ -27,6 +34,20 @@ class SettingViewModel
             viewModelScope.launch {
                 runCatching { petsRepository.getPets() }
                     .onSuccess { _pets.value = it }
+            }
+        }
+
+        fun logout() {
+            viewModelScope.launch {
+                authRepository.authLogout()
+                    .onSuccess { _navigateToLogin.emit(Unit) }
+            }
+        }
+
+        fun withdrawal() {
+            viewModelScope.launch {
+                authRepository.authWithdrawal()
+                    .onSuccess { _navigateToLogin.emit(Unit) }
             }
         }
     }

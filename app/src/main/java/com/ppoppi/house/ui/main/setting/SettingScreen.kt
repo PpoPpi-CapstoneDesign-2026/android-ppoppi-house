@@ -23,6 +23,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import com.ppoppi.house.ui.login.LoginActivity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -55,6 +57,16 @@ fun SettingScreen(
     var showLogoutDialog by remember { mutableStateOf(false) }
     var showAccountDeleteDialog by remember { mutableStateOf(false) }
     val pets by viewModel.pets.collectAsState()
+
+    LaunchedEffect(viewModel) {
+        viewModel.navigateToLogin.collect {
+            context.startActivity(
+                Intent(context, LoginActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                },
+            )
+        }
+    }
 
     val petInfoLauncher =
         rememberLauncherForActivityResult(
@@ -254,7 +266,8 @@ fun SettingScreen(
     if (showLogoutDialog) {
         LogoutDialog(
             onConfirm = {
-                // TODO: 로그아웃 로직 추가
+                showLogoutDialog = false
+                viewModel.logout()
             },
             onDismiss = { showLogoutDialog = false },
         )
@@ -263,7 +276,8 @@ fun SettingScreen(
     if (showAccountDeleteDialog) {
         DeleteAccountDialog(
             onConfirm = {
-                // TODO: 회원 탈퇴 로직 추가
+                showAccountDeleteDialog = false
+                viewModel.withdrawal()
             },
             onDismiss = { showAccountDeleteDialog = false },
         )

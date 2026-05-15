@@ -5,6 +5,7 @@ import com.ppoppi.house.data.model.request.auth.ReissueRequest
 import com.ppoppi.house.data.model.response.auth.LoginResponse
 import com.ppoppi.house.data.model.response.auth.TokenResponse
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.POST
 
 interface AuthService {
@@ -17,4 +18,10 @@ interface AuthService {
     suspend fun postAuthReissue(
         @Body request: ReissueRequest,
     ): TokenResponse
+
+    @DELETE("/auth/logout")
+    suspend fun deleteAuthLogout()
+
+    @DELETE("/auth/withdraw")
+    suspend fun deleteAuthWithdrawal()
 }

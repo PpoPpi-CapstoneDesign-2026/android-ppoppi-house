@@ -7,4 +7,8 @@ interface AuthRepository {
     suspend fun loginWithKakao(kakaoToken: String): LoginResponse
 
     suspend fun authRefresh(refreshToken: String): TokenResponse
+
+    suspend fun authLogout(): Result<Unit>
+
+    suspend fun authWithdrawal(): Result<Unit>
 }
