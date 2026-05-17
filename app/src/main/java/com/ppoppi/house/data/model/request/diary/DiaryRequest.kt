@@ -1,6 +1,5 @@
 package com.ppoppi.house.data.model.request.diary
 
-
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -11,5 +10,5 @@ data class DiaryRequest(
     @SerialName("memo")
     val memo: String,
     @SerialName("checkIds")
-    val checkIds: List<Long>
+    val checkIds: List<Long>,
 )

@@ -1,5 +1,7 @@
 package com.ppoppi.house.ui.main.diary
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
@@ -45,8 +47,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
@@ -85,28 +85,29 @@ fun DiaryScreen(
     val listState = rememberLazyListState()
     val density = LocalDensity.current
 
-    val diaryAddLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartActivityForResult(),
-    ) { result ->
-        if (result.resultCode == android.app.Activity.RESULT_OK) {
-            val data = result.data ?: return@rememberLauncherForActivityResult
-            val petId = data.getLongExtra(DiaryAddActivity.RESULT_PET_ID, -1L)
-            val petName = data.getStringExtra(DiaryAddActivity.RESULT_PET_NAME).orEmpty()
-            val memo = data.getStringExtra(DiaryAddActivity.RESULT_MEMO).orEmpty()
-            val checkIds = data.getLongArrayExtra(DiaryAddActivity.RESULT_CHECK_IDS)?.toList() ?: emptyList()
-            val checkNames = data.getStringArrayExtra(DiaryAddActivity.RESULT_CHECK_NAMES)?.toList() ?: emptyList()
-            viewModel.addDiaryOptimistically(
-                Diary(
-                    id = -1L,
-                    petId = petId,
-                    petName = petName,
-                    diagnosis = null,
-                    memo = memo,
-                    healthChecklist = checkIds.zip(checkNames).map { (id, name) -> HealthChecklist(id, name) },
-                ),
-            )
+    val diaryAddLauncher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.StartActivityForResult(),
+        ) { result ->
+            if (result.resultCode == android.app.Activity.RESULT_OK) {
+                val data = result.data ?: return@rememberLauncherForActivityResult
+                val petId = data.getLongExtra(DiaryAddActivity.RESULT_PET_ID, -1L)
+                val petName = data.getStringExtra(DiaryAddActivity.RESULT_PET_NAME).orEmpty()
+                val memo = data.getStringExtra(DiaryAddActivity.RESULT_MEMO).orEmpty()
+                val checkIds = data.getLongArrayExtra(DiaryAddActivity.RESULT_CHECK_IDS)?.toList() ?: emptyList()
+                val checkNames = data.getStringArrayExtra(DiaryAddActivity.RESULT_CHECK_NAMES)?.toList() ?: emptyList()
+                viewModel.addDiaryOptimistically(
+                    Diary(
+                        id = -1L,
+                        petId = petId,
+                        petName = petName,
+                        diagnosis = null,
+                        memo = memo,
+                        healthChecklist = checkIds.zip(checkNames).map { (id, name) -> HealthChecklist(id, name) },
+                    ),
+                )
+            }
         }
-    }
 
     var yearMonth by remember { mutableStateOf(YearMonth.now()) }
     var selectedDate by remember { mutableStateOf(currentTime) }

@@ -37,7 +37,8 @@ class DiaryAddViewModel
             checkIds: List<Long>,
         ) {
             viewModelScope.launch {
-                diaryRepository.postDiary(petId, memo, checkIds)
+                diaryRepository
+                    .postDiary(petId, memo, checkIds)
                     .onSuccess { _savedEvent.emit(Unit) }
             }
         }

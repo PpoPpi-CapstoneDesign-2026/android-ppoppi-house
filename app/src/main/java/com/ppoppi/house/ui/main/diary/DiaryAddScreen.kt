@@ -82,7 +82,7 @@ fun DiaryAddScreen(
                 text = "${petName}의 다이어리를 추가해 보세요".getColoredText(Primary400, petName),
                 style = PpoPpiTheme.typography.title1,
                 color = Black,
-                modifier = Modifier.padding(top = 24.dp)
+                modifier = Modifier.padding(top = 24.dp),
             )
 
             Text(

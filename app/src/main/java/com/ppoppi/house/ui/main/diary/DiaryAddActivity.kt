@@ -6,7 +6,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.ppoppi.house.domain.model.HealthChecklist
 import com.ppoppi.house.ui.theme.PpoPpiTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,13 +21,14 @@ class DiaryAddActivity : ComponentActivity() {
                 DiaryAddScreen(
                     onBackClick = { finish() },
                     onSaveSuccess = { savedPetId, savedPetName, memo, selectedChecklist ->
-                        val resultIntent = Intent().apply {
-                            putExtra(RESULT_PET_ID, savedPetId)
-                            putExtra(RESULT_PET_NAME, savedPetName)
-                            putExtra(RESULT_MEMO, memo)
-                            putExtra(RESULT_CHECK_IDS, selectedChecklist.map { it.id }.toLongArray())
-                            putExtra(RESULT_CHECK_NAMES, selectedChecklist.map { it.description }.toTypedArray())
-                        }
+                        val resultIntent =
+                            Intent().apply {
+                                putExtra(RESULT_PET_ID, savedPetId)
+                                putExtra(RESULT_PET_NAME, savedPetName)
+                                putExtra(RESULT_MEMO, memo)
+                                putExtra(RESULT_CHECK_IDS, selectedChecklist.map { it.id }.toLongArray())
+                                putExtra(RESULT_CHECK_NAMES, selectedChecklist.map { it.description }.toTypedArray())
+                            }
                         setResult(RESULT_OK, resultIntent)
                         finish()
                     },

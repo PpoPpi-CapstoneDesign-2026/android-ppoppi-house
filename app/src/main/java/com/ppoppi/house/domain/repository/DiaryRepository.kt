@@ -30,7 +30,5 @@ interface DiaryRepository {
         checkIds: List<Long>,
     ): Result<Unit>
 
-    suspend fun deleteDiary(
-        diaryId: Long,
-    ): Result<Unit>
+    suspend fun deleteDiary(diaryId: Long): Result<Unit>
 }
