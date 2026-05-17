@@ -13,6 +13,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.YearMonth
@@ -37,6 +38,9 @@ class DiaryViewModel
         private val _dailyDiaries = MutableStateFlow<List<Diary>>(emptyList())
         val dailyDiaries: StateFlow<List<Diary>> = _dailyDiaries
 
+        private val _isDiaryLoading = MutableStateFlow(false)
+        val isDiaryLoading: StateFlow<Boolean> = _isDiaryLoading
+
         private val _healthChecklists = MutableStateFlow<List<HealthChecklist>>(emptyList())
         val healthChecklists: StateFlow<List<HealthChecklist>> = _healthChecklists
 
@@ -60,12 +64,12 @@ class DiaryViewModel
 
         fun loadDailyDiaries(date: LocalDate) {
             viewModelScope.launch {
+                _isDiaryLoading.value = true
                 runCatching {
                     diaryRepository.getDiariesDaily(date.year, date.monthValue, date.dayOfMonth)
                 }.onSuccess { _dailyDiaries.value = it }
-                    .onFailure {
-                        Log.d("hwannow_log", "$it")
-                    }
+                    .onFailure { Log.d("hwannow_log", "$it") }
+                _isDiaryLoading.value = false
             }
         }
 
@@ -73,6 +77,22 @@ class DiaryViewModel
             viewModelScope.launch {
                 runCatching { diaryRepository.getDiariesMonth(yearMonth.year, yearMonth.monthValue) }
                     .onSuccess { _monthDiaries.value = it }
+            }
+        }
+
+        fun updateDiary(
+            diaryId: Long,
+            memo: String,
+            checkIds: List<Int>,
+        ) {
+            val updatedChecklist = _healthChecklists.value.filter { it.id.toInt() in checkIds }
+            _dailyDiaries.update { diaries ->
+                diaries.map { diary ->
+                    if (diary.id == diaryId) diary.copy(memo = memo, healthChecklist = updatedChecklist) else diary
+                }
+            }
+            viewModelScope.launch {
+                diaryRepository.updateDairy(diaryId, memo, checkIds)
             }
         }
     }

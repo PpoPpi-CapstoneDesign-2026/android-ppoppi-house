@@ -16,10 +16,12 @@ import androidx.compose.ui.unit.dp
 import com.ppoppi.house.ui.theme.PpoPpiTheme
 import com.ppoppi.house.ui.theme.Primary200
 import com.ppoppi.house.ui.theme.White
+import com.ppoppi.house.ui.util.noRippleClickable
 
 @Composable
 fun ChecklistItem(
     checklist: String,
+    onClick: () -> Unit = {},
     modifier: Modifier = Modifier,
     backgroundColor: Color = Primary200,
     borderColor: Color = Primary200,
@@ -28,6 +30,7 @@ fun ChecklistItem(
     Row(
         modifier =
             modifier
+                .noRippleClickable(onClick = onClick)
                 .clip(RoundedCornerShape(100.dp))
                 .background(backgroundColor)
                 .border(1.dp, borderColor, RoundedCornerShape(100.dp))
@@ -46,6 +49,6 @@ fun ChecklistItem(
 @Composable
 private fun ChecklistItemPreview() {
     PpoPpiTheme {
-        ChecklistItem(checklist = "충혈")
+        ChecklistItem(checklist = "충혈", onClick = {})
     }
 }

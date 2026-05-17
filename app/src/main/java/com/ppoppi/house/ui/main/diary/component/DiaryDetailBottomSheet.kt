@@ -1,11 +1,13 @@
 package com.ppoppi.house.ui.main.diary.component
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,6 +18,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,7 +37,10 @@ import com.ppoppi.house.ui.theme.Gray200
 import com.ppoppi.house.ui.theme.Gray300
 import com.ppoppi.house.ui.theme.Gray400
 import com.ppoppi.house.ui.theme.PpoPpiTheme
+import com.ppoppi.house.ui.theme.Primary200
+import com.ppoppi.house.ui.theme.Primary400
 import com.ppoppi.house.ui.theme.Primary800
+import com.ppoppi.house.ui.theme.White
 import com.ppoppi.house.ui.util.getColoredText
 import com.ppoppi.house.ui.util.noRippleClickable
 
@@ -41,18 +48,22 @@ import com.ppoppi.house.ui.util.noRippleClickable
 @Composable
 fun DiaryDetailBottomSheet(
     onDismiss: () -> Unit,
+    onUpdate: (memo: String, checkIds: List<Int>) -> Unit,
     petId: Long,
     petName: String,
     memo: String,
     healthChecklist: List<HealthChecklist>,
+    checkedChecklist: List<HealthChecklist>,
     modifier: Modifier = Modifier,
 ) {
     var memo by remember { mutableStateOf(memo) }
+    var checkedIds by remember { mutableStateOf(checkedChecklist.map { it.id }.toSet()) }
 
     Column(
         modifier =
             modifier
                 .fillMaxWidth()
+                .background(White)
                 .padding(horizontal = 24.dp, vertical = 16.dp),
     ) {
         Row(
@@ -131,8 +142,35 @@ fun DiaryDetailBottomSheet(
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             healthChecklist.forEach { item ->
-                ChecklistItem(checklist = item.description)
+                val isChecked = item.id in checkedIds
+                ChecklistItem(
+                    checklist = item.description,
+                    onClick = {
+                        checkedIds =
+                            if (isChecked) checkedIds - item.id else checkedIds + item.id
+                    },
+                    backgroundColor = if (isChecked) Primary200 else White,
+                    borderColor = if (isChecked) Primary200 else Gray200,
+                    textColor = if (isChecked) White else Gray200,
+                )
             }
+        }
+
+        Button(
+            onClick = { onUpdate(memo, checkedIds.map { it.toInt() }) },
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(8.dp),
+            colors =
+                ButtonDefaults.buttonColors(
+                    containerColor = Primary400,
+                ),
+            contentPadding = PaddingValues(vertical = 12.dp),
+        ) {
+            Text(
+                text = "수정하기",
+                style = PpoPpiTheme.typography.title1,
+                color = White,
+            )
         }
     }
 }
@@ -143,6 +181,7 @@ private fun DiaryDetailBottomSheetPreview() {
     PpoPpiTheme {
         DiaryDetailBottomSheet(
             onDismiss = {},
+            onUpdate = { _, _ -> },
             petId = 1,
             petName = "뽀삐",
             memo = "뽀삐의 메모",
@@ -151,6 +190,7 @@ private fun DiaryDetailBottomSheetPreview() {
                     HealthChecklist(id = 1, description = "식욕 없음"),
                     HealthChecklist(id = 2, description = "활동량 적음"),
                 ),
+            checkedChecklist = listOf(),
         )
     }
 }

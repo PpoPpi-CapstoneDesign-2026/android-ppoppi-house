@@ -2,6 +2,7 @@ package com.ppoppi.house.ui.main.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -39,6 +40,7 @@ import com.ppoppi.house.R
 import com.ppoppi.house.domain.model.Disease
 import com.ppoppi.house.domain.model.Pet
 import com.ppoppi.house.ui.component.PpoPpiTextField
+import com.ppoppi.house.ui.component.shimmerBrush
 import com.ppoppi.house.ui.main.home.component.DiagnosisCard
 import com.ppoppi.house.ui.main.home.component.DiseaseCard
 import com.ppoppi.house.ui.main.home.component.PetAddButton
@@ -77,6 +79,7 @@ fun HomeScreen(
     }
     val diseases by viewModel.diseases.collectAsState()
     val todayDiagnosis by viewModel.todayDiagnosis.collectAsState()
+    val isDiagnosisLoading by viewModel.isDiagnosisLoading.collectAsState()
     val pets by viewModel.pets.collectAsState()
     var selectedPet by remember { mutableStateOf<Pet?>(null) }
 
@@ -164,7 +167,17 @@ fun HomeScreen(
             modifier = Modifier.padding(top = 12.dp),
         )
 
-        if (todayDiagnosis != null) {
+        if (isDiagnosisLoading) {
+            val brush = shimmerBrush()
+            Box(
+                modifier =
+                    Modifier
+                        .padding(top = 18.dp)
+                        .fillMaxWidth()
+                        .height(240.dp)
+                        .background(brush, RoundedCornerShape(8.dp)),
+            )
+        } else if (todayDiagnosis != null) {
             DiagnosisCard(
                 navigateToDiagnosis = navigateToDiagnosis,
                 diagnosis = todayDiagnosis!!,

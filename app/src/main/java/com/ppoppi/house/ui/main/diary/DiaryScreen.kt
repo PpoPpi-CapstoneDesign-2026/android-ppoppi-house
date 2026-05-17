@@ -85,6 +85,7 @@ fun DiaryScreen(
     var yearMonth by remember { mutableStateOf(YearMonth.now()) }
     var selectedDate by remember { mutableStateOf(currentTime) }
     val isLoading by viewModel.isLoading.collectAsState()
+    val isDiaryLoading by viewModel.isDiaryLoading.collectAsState()
     val monthDiaries by viewModel.monthDiaries.collectAsState()
     val pets by viewModel.pets.collectAsState()
     val dailyDiaries by viewModel.dailyDiaries.collectAsState()
@@ -211,7 +212,7 @@ fun DiaryScreen(
                 }
             }
 
-            if (isLoading) {
+            if (isLoading || isDiaryLoading) {
                 items(2) {
                     Box(modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp)) {
                         DiaryItemSkeleton()
@@ -360,6 +361,11 @@ fun DiaryScreen(
                 memo = diary.memo,
                 healthChecklist = healthChecklists,
                 onDismiss = { selectedDiary = null },
+                onUpdate = { memo, checkIds ->
+                    viewModel.updateDiary(diary.id, memo, checkIds)
+                    selectedDiary = null
+                },
+                checkedChecklist = diary.healthChecklist,
             )
         }
     }

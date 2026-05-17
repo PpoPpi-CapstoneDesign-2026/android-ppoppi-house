@@ -17,4 +17,10 @@ interface DiaryRepository {
     ): List<Diary>
 
     suspend fun getHealthChecklist(): List<HealthChecklist>
+
+    suspend fun updateDairy(
+        diaryId: Long,
+        memo: String,
+        checkIds: List<Int>
+    ): Result<Unit>
 }

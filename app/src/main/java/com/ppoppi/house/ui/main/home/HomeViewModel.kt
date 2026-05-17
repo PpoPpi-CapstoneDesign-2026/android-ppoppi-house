@@ -36,6 +36,9 @@ class HomeViewModel
         private val _todayDiagnosis = MutableStateFlow<Diagnosis?>(null)
         val todayDiagnosis: StateFlow<Diagnosis?> = _todayDiagnosis
 
+        private val _isDiagnosisLoading = MutableStateFlow(false)
+        val isDiagnosisLoading: StateFlow<Boolean> = _isDiagnosisLoading
+
         private val _pets = MutableStateFlow<List<Pet>>(emptyList())
         val pets: StateFlow<List<Pet>> = _pets
 
@@ -61,20 +64,18 @@ class HomeViewModel
 
         fun loadDiagnosis(petId: Long) {
             viewModelScope.launch {
+                _isDiagnosisLoading.value = true
                 runCatching {
                     diagnosisRepository.getDiagnosisToday(
                         petId = petId,
                         date = LocalDate.now(),
                     )
                 }.onSuccess { diagnosis ->
-                    if (diagnosis.hasDiagnosis) {
-                        _todayDiagnosis.value = diagnosis
-                    } else {
-                        _todayDiagnosis.value = null
-                    }
+                    _todayDiagnosis.value = if (diagnosis.hasDiagnosis) diagnosis else null
                 }.onFailure {
                     _todayDiagnosis.value = null
                 }
+                _isDiagnosisLoading.value = false
             }
         }
 
