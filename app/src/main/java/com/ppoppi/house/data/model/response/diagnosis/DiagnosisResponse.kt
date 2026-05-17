@@ -35,15 +35,15 @@ data class DiagnosisResponse(
         @SerialName("id")
         val id: Int,
         @SerialName("description")
-        val description: String
+        val description: String,
     )
 }
+
 fun DiagnosisResponse.Symptom.toDomain(): Symptom =
     Symptom(
         id = this.id,
         description = this.description,
     )
-
 
 fun DiagnosisResponse.toDomain(): Diagnosis =
     Diagnosis(

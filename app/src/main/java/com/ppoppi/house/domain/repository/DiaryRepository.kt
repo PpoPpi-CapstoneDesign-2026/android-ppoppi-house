@@ -21,6 +21,6 @@ interface DiaryRepository {
     suspend fun updateDairy(
         diaryId: Long,
         memo: String,
-        checkIds: List<Int>
+        checkIds: List<Int>,
     ): Result<Unit>
 }

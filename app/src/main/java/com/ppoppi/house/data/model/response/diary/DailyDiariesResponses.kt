@@ -1,6 +1,5 @@
 package com.ppoppi.house.data.model.response.diary
 
-
 import com.ppoppi.house.data.model.response.diagnosis.DiagnosisResponse
 import com.ppoppi.house.data.model.response.diagnosis.toDomain
 import com.ppoppi.house.data.model.response.diary.DailyDiariesResponse
@@ -9,7 +8,7 @@ import com.ppoppi.house.domain.model.HealthChecklist
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-class DailyDiariesResponse : ArrayList<DailyDiariesResponse.DailyDiariesResponsesItem>(){
+class DailyDiariesResponse : ArrayList<DailyDiariesResponse.DailyDiariesResponsesItem>() {
     @Serializable
     data class DailyDiariesResponsesItem(
         @SerialName("diaryId")
@@ -27,7 +26,7 @@ class DailyDiariesResponse : ArrayList<DailyDiariesResponse.DailyDiariesResponse
         @SerialName("checkNames")
         val checkNames: List<String>,
         @SerialName("diagnosis")
-        val diagnosis: DiagnosisResponse
+        val diagnosis: DiagnosisResponse,
     )
 }
 

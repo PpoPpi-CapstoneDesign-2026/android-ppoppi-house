@@ -39,14 +39,16 @@ class SettingViewModel
 
         fun logout() {
             viewModelScope.launch {
-                authRepository.authLogout()
+                authRepository
+                    .authLogout()
                     .onSuccess { _navigateToLogin.emit(Unit) }
             }
         }
 
         fun withdrawal() {
             viewModelScope.launch {
-                authRepository.authWithdrawal()
+                authRepository
+                    .authWithdrawal()
                     .onSuccess { _navigateToLogin.emit(Unit) }
             }
         }
