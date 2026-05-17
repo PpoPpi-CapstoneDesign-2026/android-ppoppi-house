@@ -45,12 +45,15 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ppoppi.house.domain.model.Diary
+import com.ppoppi.house.domain.model.HealthChecklist
 import com.ppoppi.house.domain.model.SPECIES
 import com.ppoppi.house.ui.component.shimmerBrush
 import com.ppoppi.house.ui.main.diary.component.Calendar
@@ -81,6 +84,29 @@ fun DiaryScreen(
     val context = LocalContext.current
     val listState = rememberLazyListState()
     val density = LocalDensity.current
+
+    val diaryAddLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult(),
+    ) { result ->
+        if (result.resultCode == android.app.Activity.RESULT_OK) {
+            val data = result.data ?: return@rememberLauncherForActivityResult
+            val petId = data.getLongExtra(DiaryAddActivity.RESULT_PET_ID, -1L)
+            val petName = data.getStringExtra(DiaryAddActivity.RESULT_PET_NAME).orEmpty()
+            val memo = data.getStringExtra(DiaryAddActivity.RESULT_MEMO).orEmpty()
+            val checkIds = data.getLongArrayExtra(DiaryAddActivity.RESULT_CHECK_IDS)?.toList() ?: emptyList()
+            val checkNames = data.getStringArrayExtra(DiaryAddActivity.RESULT_CHECK_NAMES)?.toList() ?: emptyList()
+            viewModel.addDiaryOptimistically(
+                Diary(
+                    id = -1L,
+                    petId = petId,
+                    petName = petName,
+                    diagnosis = null,
+                    memo = memo,
+                    healthChecklist = checkIds.zip(checkNames).map { (id, name) -> HealthChecklist(id, name) },
+                ),
+            )
+        }
+    }
 
     var yearMonth by remember { mutableStateOf(YearMonth.now()) }
     var selectedDate by remember { mutableStateOf(currentTime) }
@@ -306,13 +332,15 @@ fun DiaryScreen(
                                         .noRippleClickable(
                                             onClick = {
                                                 isFabExpanded = false
-                                                pet.id?.let { id ->
-                                                    context.startActivity(
-                                                        DiaryAddActivity.newIntent(
-                                                            context,
-                                                            id,
-                                                        ),
-                                                    )
+                                                val existingDiary = dailyDiaries.find { it.petId == pet.id }
+                                                if (existingDiary != null) {
+                                                    selectedDiary = existingDiary
+                                                } else {
+                                                    pet.id?.let { id ->
+                                                        diaryAddLauncher.launch(
+                                                            DiaryAddActivity.newIntent(context, id, pet.name),
+                                                        )
+                                                    }
                                                 }
                                             },
                                         ).padding(horizontal = 16.dp, vertical = 10.dp),
@@ -354,6 +382,7 @@ fun DiaryScreen(
         ModalBottomSheet(
             onDismissRequest = { selectedDiary = null },
             sheetState = sheetState,
+            containerColor = White,
         ) {
             DiaryDetailBottomSheet(
                 petId = diary.petId,
@@ -363,6 +392,10 @@ fun DiaryScreen(
                 onDismiss = { selectedDiary = null },
                 onUpdate = { memo, checkIds ->
                     viewModel.updateDiary(diary.id, memo, checkIds)
+                    selectedDiary = null
+                },
+                onDelete = {
+                    viewModel.deleteDiary(diary.id)
                     selectedDiary = null
                 },
                 checkedChecklist = diary.healthChecklist,

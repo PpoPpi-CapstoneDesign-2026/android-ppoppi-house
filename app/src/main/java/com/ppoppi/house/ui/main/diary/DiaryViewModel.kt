@@ -80,6 +80,17 @@ class DiaryViewModel
             }
         }
 
+        fun addDiaryOptimistically(diary: Diary) {
+            _dailyDiaries.update { it + diary }
+        }
+
+        fun deleteDiary(diaryId: Long) {
+            _dailyDiaries.update { diaries -> diaries.filter { it.id != diaryId } }
+            viewModelScope.launch {
+                diaryRepository.deleteDiary(diaryId)
+            }
+        }
+
         fun updateDiary(
             diaryId: Long,
             memo: String,

@@ -26,7 +26,7 @@ class DailyDiariesResponse : ArrayList<DailyDiariesResponse.DailyDiariesResponse
         @SerialName("checkNames")
         val checkNames: List<String>,
         @SerialName("diagnosis")
-        val diagnosis: DiagnosisResponse,
+        val diagnosis: DiagnosisResponse? = null,
     )
 }
 
@@ -35,7 +35,7 @@ fun DailyDiariesResponse.DailyDiariesResponsesItem.toDomain(): Diary =
         id = this.diaryId,
         petId = this.petId,
         petName = this.petName,
-        diagnosis = this.diagnosis.toDomain(),
+        diagnosis = this.diagnosis?.toDomain(),
         memo = this.memo ?: "",
         healthChecklist =
             this.checkIds.zip(this.checkNames).map { (id, name) ->

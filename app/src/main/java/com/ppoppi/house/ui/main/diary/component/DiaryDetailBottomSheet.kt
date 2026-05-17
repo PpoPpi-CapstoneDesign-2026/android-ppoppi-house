@@ -49,6 +49,7 @@ import com.ppoppi.house.ui.util.noRippleClickable
 fun DiaryDetailBottomSheet(
     onDismiss: () -> Unit,
     onUpdate: (memo: String, checkIds: List<Int>) -> Unit,
+    onDelete: () -> Unit,
     petId: Long,
     petName: String,
     memo: String,
@@ -63,7 +64,6 @@ fun DiaryDetailBottomSheet(
         modifier =
             modifier
                 .fillMaxWidth()
-                .background(White)
                 .padding(horizontal = 24.dp, vertical = 16.dp),
     ) {
         Row(
@@ -172,6 +172,17 @@ fun DiaryDetailBottomSheet(
                 color = White,
             )
         }
+
+        Text(
+            text = "삭제하기",
+            style = PpoPpiTheme.typography.label1,
+            color = Gray300,
+            modifier =
+                Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(top = 12.dp, bottom = 8.dp)
+                    .noRippleClickable(onClick = onDelete),
+        )
     }
 }
 
@@ -182,6 +193,7 @@ private fun DiaryDetailBottomSheetPreview() {
         DiaryDetailBottomSheet(
             onDismiss = {},
             onUpdate = { _, _ -> },
+            onDelete = {},
             petId = 1,
             petName = "뽀삐",
             memo = "뽀삐의 메모",

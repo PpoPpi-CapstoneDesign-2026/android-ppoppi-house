@@ -23,4 +23,14 @@ interface DiaryRepository {
         memo: String,
         checkIds: List<Int>,
     ): Result<Unit>
+
+    suspend fun postDiary(
+        petId: Long,
+        memo: String,
+        checkIds: List<Long>,
+    ): Result<Unit>
+
+    suspend fun deleteDiary(
+        diaryId: Long,
+    ): Result<Unit>
 }
