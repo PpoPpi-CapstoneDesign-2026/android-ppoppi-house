@@ -180,7 +180,7 @@ fun DiaryItem(
                 }
             }
 
-            if (diagnosis.symptoms.isNullOrEmpty()) {
+            if (!diagnosis.symptoms.isNullOrEmpty()) {
                 FlowRow(
                     modifier = Modifier.padding(top = 10.dp),
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
