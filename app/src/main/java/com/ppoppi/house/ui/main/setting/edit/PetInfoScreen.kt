@@ -1,8 +1,10 @@
 package com.ppoppi.house.ui.main.setting.edit
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -16,13 +18,17 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.ppoppi.house.ui.component.CustomToast
+import kotlinx.coroutines.delay
 import com.ppoppi.house.R
 import com.ppoppi.house.domain.model.COLOR
 import com.ppoppi.house.domain.model.Pet
@@ -59,12 +65,27 @@ fun PetInfoScreen(
 
     val breeds by viewModel.breeds.collectAsState()
 
-    LaunchedEffect(viewModel) {
-        viewModel.isRegistered.collect { onRegistered() }
+    var toastMessage by remember { mutableStateOf<String?>(null) }
+    var isToastVisible by remember { mutableStateOf(false) }
+
+    LaunchedEffect(toastMessage) {
+        if (toastMessage != null) {
+            isToastVisible = true
+            delay(700L)
+            onRegistered()
+        }
     }
 
     LaunchedEffect(viewModel) {
-        viewModel.isDeleted.collect { onRegistered() }
+        viewModel.isRegistered.collect {
+            toastMessage = if (pet == null) "반려동물이 추가됐어요" else "반려동물 정보가 수정됐어요"
+        }
+    }
+
+    LaunchedEffect(viewModel) {
+        viewModel.isDeleted.collect {
+            toastMessage = "반려동물이 삭제됐어요"
+        }
     }
 
     LaunchedEffect(species) {
@@ -74,6 +95,7 @@ fun PetInfoScreen(
     val title =
         if (pet == null) stringResource(R.string.pet_register_top_bar) else stringResource(R.string.pet_edit_top_bar)
 
+    Box(modifier = modifier.fillMaxSize()) {
     Scaffold(
         topBar = { PetRegisterTopAppBar(title, onBackClick) },
         modifier =
@@ -174,6 +196,15 @@ fun PetInfoScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
         }
+    }
+
+    toastMessage?.let { message ->
+        CustomToast(
+            message = message,
+            visible = isToastVisible,
+            modifier = Modifier.align(Alignment.BottomCenter),
+        )
+    }
     }
 }
 
