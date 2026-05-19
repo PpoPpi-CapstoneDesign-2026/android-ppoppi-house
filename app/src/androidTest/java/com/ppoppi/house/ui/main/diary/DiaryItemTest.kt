@@ -22,7 +22,7 @@ class DiaryItemTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private val 강아지 =
+    private val dog =
         Pet(
             id = 1L,
             name = "뽀삐",
@@ -38,7 +38,7 @@ class DiaryItemTest {
         composeTestRule.setContent {
             PpoPpiTheme {
                 DiaryItem(
-                    pet = 강아지,
+                    pet = dog,
                     diagnosis = null,
                     memo = null,
                     healthChecklist = emptyList(),
@@ -53,7 +53,7 @@ class DiaryItemTest {
         composeTestRule.setContent {
             PpoPpiTheme {
                 DiaryItem(
-                    pet = 강아지,
+                    pet = dog,
                     diagnosis = null,
                     memo = "오늘 산책을 다녀왔어요",
                     healthChecklist = emptyList(),
@@ -68,7 +68,7 @@ class DiaryItemTest {
         composeTestRule.setContent {
             PpoPpiTheme {
                 DiaryItem(
-                    pet = 강아지,
+                    pet = dog,
                     diagnosis = null,
                     memo = "메모 내용",
                     healthChecklist = emptyList(),
@@ -83,7 +83,7 @@ class DiaryItemTest {
         composeTestRule.setContent {
             PpoPpiTheme {
                 DiaryItem(
-                    pet = 강아지,
+                    pet = dog,
                     diagnosis = null,
                     memo = null,
                     healthChecklist = emptyList(),
@@ -99,7 +99,7 @@ class DiaryItemTest {
         composeTestRule.setContent {
             PpoPpiTheme {
                 DiaryItem(
-                    pet = 강아지,
+                    pet = dog,
                     diagnosis = null,
                     memo = "",
                     healthChecklist = emptyList(),
@@ -115,7 +115,7 @@ class DiaryItemTest {
         composeTestRule.setContent {
             PpoPpiTheme {
                 DiaryItem(
-                    pet = 강아지,
+                    pet = dog,
                     diagnosis = null,
                     memo = null,
                     healthChecklist =
@@ -135,7 +135,7 @@ class DiaryItemTest {
         composeTestRule.setContent {
             PpoPpiTheme {
                 DiaryItem(
-                    pet = 강아지,
+                    pet = dog,
                     diagnosis = null,
                     memo = null,
                     healthChecklist = emptyList(),

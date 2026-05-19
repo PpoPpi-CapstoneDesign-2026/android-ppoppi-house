@@ -16,10 +16,10 @@ class VetHospitalBottomSheetTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private val 병원 =
+    private val hospital =
         HospitalInfo(
             id = 1L,
-            name = "뽀삐동물병원",
+            name = "뽀삐동물hospital",
             address = "서울시 강남구 테헤란로 123",
             callNumber = "02-1234-5678",
             businessHours = "09:00 - 18:00",
@@ -29,50 +29,50 @@ class VetHospitalBottomSheetTest {
         )
 
     @Test
-    fun `병원명이_표시된다`() {
+    fun `hospital명이_표시된다`() {
         composeTestRule.setContent {
             PpoPpiTheme {
-                VetHospitalBottomSheet(hospital = 병원)
+                VetHospitalBottomSheet(hospital = hospital)
             }
         }
-        composeTestRule.onNodeWithText("뽀삐동물병원").assertIsDisplayed()
+        composeTestRule.onNodeWithText("뽀삐동물hospital").assertIsDisplayed()
     }
 
     @Test
-    fun `병원_주소가_표시된다`() {
+    fun `hospital_주소가_표시된다`() {
         composeTestRule.setContent {
             PpoPpiTheme {
-                VetHospitalBottomSheet(hospital = 병원)
+                VetHospitalBottomSheet(hospital = hospital)
             }
         }
         composeTestRule.onNodeWithText("서울시 강남구 테헤란로 123").assertIsDisplayed()
     }
 
     @Test
-    fun `병원_전화번호가_표시된다`() {
+    fun `hospital_전화번호가_표시된다`() {
         composeTestRule.setContent {
             PpoPpiTheme {
-                VetHospitalBottomSheet(hospital = 병원)
+                VetHospitalBottomSheet(hospital = hospital)
             }
         }
         composeTestRule.onNodeWithText("02-1234-5678").assertIsDisplayed()
     }
 
     @Test
-    fun `병원_영업시간이_표시된다`() {
+    fun `hospital_영업시간이_표시된다`() {
         composeTestRule.setContent {
             PpoPpiTheme {
-                VetHospitalBottomSheet(hospital = 병원)
+                VetHospitalBottomSheet(hospital = hospital)
             }
         }
         composeTestRule.onNodeWithText("09:00 - 18:00").assertIsDisplayed()
     }
 
     @Test
-    fun `병원까지의_거리가_표시된다`() {
+    fun `hospital까지의_거리가_표시된다`() {
         composeTestRule.setContent {
             PpoPpiTheme {
-                VetHospitalBottomSheet(hospital = 병원)
+                VetHospitalBottomSheet(hospital = hospital)
             }
         }
         composeTestRule.onNodeWithText("350m").assertIsDisplayed()
@@ -82,7 +82,7 @@ class VetHospitalBottomSheetTest {
     fun `영업_상태_라벨이_표시된다`() {
         composeTestRule.setContent {
             PpoPpiTheme {
-                VetHospitalBottomSheet(hospital = 병원)
+                VetHospitalBottomSheet(hospital = hospital)
             }
         }
         composeTestRule.onNodeWithText("영업 중").assertIsDisplayed()
@@ -92,7 +92,7 @@ class VetHospitalBottomSheetTest {
     fun `바로_전화하기_버튼이_표시된다`() {
         composeTestRule.setContent {
             PpoPpiTheme {
-                VetHospitalBottomSheet(hospital = 병원)
+                VetHospitalBottomSheet(hospital = hospital)
             }
         }
         composeTestRule.onNodeWithText("바로 전화하기").assertIsDisplayed()

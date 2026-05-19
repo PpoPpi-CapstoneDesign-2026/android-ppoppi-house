@@ -22,7 +22,7 @@ class PetButtonTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private val 강아지 =
+    private val dog =
         Pet(
             id = 1L,
             name = "뽀삐",
@@ -33,7 +33,7 @@ class PetButtonTest {
             color = COLOR.PRIMARY100,
         )
 
-    private val 고양이 =
+    private val cat =
         Pet(
             id = 2L,
             name = "나비",
@@ -50,7 +50,7 @@ class PetButtonTest {
     fun `반려동물_이름이_버튼에_표시된다`() {
         composeTestRule.setContent {
             PpoPpiTheme {
-                PetButton(onClick = {}, pet = 강아지, isSelected = false)
+                PetButton(onClick = {}, pet = dog, isSelected = false)
             }
         }
         composeTestRule.onNodeWithText("뽀삐").assertIsDisplayed()
@@ -61,7 +61,7 @@ class PetButtonTest {
         var clicked = false
         composeTestRule.setContent {
             PpoPpiTheme {
-                PetButton(onClick = { clicked = true }, pet = 강아지, isSelected = false)
+                PetButton(onClick = { clicked = true }, pet = dog, isSelected = false)
             }
         }
         composeTestRule.onNodeWithText("뽀삐").performClick()
@@ -69,20 +69,20 @@ class PetButtonTest {
     }
 
     @Test
-    fun `강아지_종인_반려동물은_강아지_이모지가_표시된다`() {
+    fun `dog_종인_반려동물은_dog_이모지가_표시된다`() {
         composeTestRule.setContent {
             PpoPpiTheme {
-                PetButton(onClick = {}, pet = 강아지, isSelected = false)
+                PetButton(onClick = {}, pet = dog, isSelected = false)
             }
         }
         composeTestRule.onNodeWithText("🐶").assertIsDisplayed()
     }
 
     @Test
-    fun `고양이_종인_반려동물은_고양이_이모지가_표시된다`() {
+    fun `cat_종인_반려동물은_cat_이모지가_표시된다`() {
         composeTestRule.setContent {
             PpoPpiTheme {
-                PetButton(onClick = {}, pet = 고양이, isSelected = false)
+                PetButton(onClick = {}, pet = cat, isSelected = false)
             }
         }
         composeTestRule.onNodeWithText("🐱").assertIsDisplayed()

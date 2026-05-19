@@ -22,7 +22,7 @@ class PetSelectScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private val 강아지 =
+    private val dog =
         Pet(
             id = 1L,
             name = "뽀삐",
@@ -33,7 +33,7 @@ class PetSelectScreenTest {
             color = COLOR.PRIMARY100,
         )
 
-    private val 고양이 =
+    private val cat =
         Pet(
             id = 2L,
             name = "나비",
@@ -48,7 +48,7 @@ class PetSelectScreenTest {
     fun `반려동물_선택_힌트_텍스트가_표시된다`() {
         composeTestRule.setContent {
             PpoPpiTheme {
-                PetSelectScreen(onBackClick = {}, onSelect = {}, pets = listOf(강아지))
+                PetSelectScreen(onBackClick = {}, onSelect = {}, pets = listOf(dog))
             }
         }
         composeTestRule.onNodeWithText("어떤 반려동물의 안구를 진단할지 선택해 주세요").assertIsDisplayed()
@@ -58,7 +58,7 @@ class PetSelectScreenTest {
     fun `반려동물_목록에_이름이_표시된다`() {
         composeTestRule.setContent {
             PpoPpiTheme {
-                PetSelectScreen(onBackClick = {}, onSelect = {}, pets = listOf(강아지))
+                PetSelectScreen(onBackClick = {}, onSelect = {}, pets = listOf(dog))
             }
         }
         composeTestRule.onNodeWithText("뽀삐").assertIsDisplayed()
@@ -68,7 +68,7 @@ class PetSelectScreenTest {
     fun `여러_반려동물의_이름이_모두_표시된다`() {
         composeTestRule.setContent {
             PpoPpiTheme {
-                PetSelectScreen(onBackClick = {}, onSelect = {}, pets = listOf(강아지, 고양이))
+                PetSelectScreen(onBackClick = {}, onSelect = {}, pets = listOf(dog, cat))
             }
         }
         composeTestRule.onNodeWithText("뽀삐").assertIsDisplayed()
@@ -83,12 +83,12 @@ class PetSelectScreenTest {
                 PetSelectScreen(
                     onBackClick = {},
                     onSelect = { selectedPet = it },
-                    pets = listOf(강아지),
+                    pets = listOf(dog),
                 )
             }
         }
         composeTestRule.onNodeWithText("뽀삐").performClick()
-        composeTestRule.runOnIdle { assertEquals(강아지, selectedPet) }
+        composeTestRule.runOnIdle { assertEquals(dog, selectedPet) }
     }
 
     @Test

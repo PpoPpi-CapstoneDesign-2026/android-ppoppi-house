@@ -19,7 +19,7 @@ class DiagnosisCardTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private val 진단결과 =
+    private val diagnosisData =
         Diagnosis(
             hasDiagnosis = true,
             imageUrl = null,
@@ -36,7 +36,7 @@ class DiagnosisCardTest {
     fun `질병명과_부위가_표시된다`() {
         composeTestRule.setContent {
             PpoPpiTheme {
-                DiagnosisCard(navigateToDiagnosis = {}, diagnosis = 진단결과)
+                DiagnosisCard(navigateToDiagnosis = {}, diagnosis = diagnosisData)
             }
         }
         composeTestRule.onNodeWithText("결막염 | 각막").assertIsDisplayed()
@@ -46,7 +46,7 @@ class DiagnosisCardTest {
     fun `안내_메시지가_표시된다`() {
         composeTestRule.setContent {
             PpoPpiTheme {
-                DiagnosisCard(navigateToDiagnosis = {}, diagnosis = 진단결과)
+                DiagnosisCard(navigateToDiagnosis = {}, diagnosis = diagnosisData)
             }
         }
         composeTestRule.onNodeWithText("조기 치료가 중요합니다").assertIsDisplayed()
@@ -56,7 +56,7 @@ class DiagnosisCardTest {
     fun `신뢰도_퍼센트가_표시된다`() {
         composeTestRule.setContent {
             PpoPpiTheme {
-                DiagnosisCard(navigateToDiagnosis = {}, diagnosis = 진단결과)
+                DiagnosisCard(navigateToDiagnosis = {}, diagnosis = diagnosisData)
             }
         }
         composeTestRule.onNodeWithText("85%").assertIsDisplayed()
@@ -66,7 +66,7 @@ class DiagnosisCardTest {
     fun `다시_진단하기_버튼이_표시된다`() {
         composeTestRule.setContent {
             PpoPpiTheme {
-                DiagnosisCard(navigateToDiagnosis = {}, diagnosis = 진단결과)
+                DiagnosisCard(navigateToDiagnosis = {}, diagnosis = diagnosisData)
             }
         }
         composeTestRule.onNodeWithText("다시 진단하기").assertIsDisplayed()
@@ -77,7 +77,7 @@ class DiagnosisCardTest {
         var called = false
         composeTestRule.setContent {
             PpoPpiTheme {
-                DiagnosisCard(navigateToDiagnosis = { called = true }, diagnosis = 진단결과)
+                DiagnosisCard(navigateToDiagnosis = { called = true }, diagnosis = diagnosisData)
             }
         }
         composeTestRule.onNodeWithText("다시 진단하기").performClick()

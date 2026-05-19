@@ -18,7 +18,7 @@ class DiaryDetailBottomSheetTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private val 체크리스트 =
+    private val checklist =
         listOf(
             HealthChecklist(id = 1L, description = "식욕 없음"),
             HealthChecklist(id = 2L, description = "활동량 적음"),
@@ -62,9 +62,9 @@ class DiaryDetailBottomSheetTest {
     }
 
     @Test
-    fun `건강_체크리스트_섹션_레이블이_표시된다`() {
+    fun `건강_checklist_섹션_레이블이_표시된다`() {
         render()
-        composeTestRule.onNodeWithText("건강 체크리스트").assertIsDisplayed()
+        composeTestRule.onNodeWithText("건강 checklist").assertIsDisplayed()
     }
 
     @Test
@@ -80,8 +80,8 @@ class DiaryDetailBottomSheetTest {
     }
 
     @Test
-    fun `체크리스트_아이템이_표시된다`() {
-        render(healthChecklist = 체크리스트)
+    fun `checklist_아이템이_표시된다`() {
+        render(healthChecklist = checklist)
         composeTestRule.onNodeWithText("식욕 없음").assertIsDisplayed()
         composeTestRule.onNodeWithText("활동량 적음").assertIsDisplayed()
     }

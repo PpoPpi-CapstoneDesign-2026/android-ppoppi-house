@@ -16,7 +16,7 @@ class DiseaseCardTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private val 질병 =
+    private val disease =
         Disease(
             diseaseId = 1L,
             name = "결막염",
@@ -25,10 +25,10 @@ class DiseaseCardTest {
         )
 
     @Test
-    fun `질병명이_표시된다`() {
+    fun `disease명이_표시된다`() {
         composeTestRule.setContent {
             PpoPpiTheme {
-                DiseaseCard(disease = 질병)
+                DiseaseCard(disease = disease)
             }
         }
         composeTestRule.onNodeWithText("🏥   결막염").assertIsDisplayed()
@@ -38,17 +38,17 @@ class DiseaseCardTest {
     fun `품종_라벨이_표시된다`() {
         composeTestRule.setContent {
             PpoPpiTheme {
-                DiseaseCard(disease = 질병)
+                DiseaseCard(disease = disease)
             }
         }
         composeTestRule.onNodeWithText("말티즈").assertIsDisplayed()
     }
 
     @Test
-    fun `질병_설명이_표시된다`() {
+    fun `disease_설명이_표시된다`() {
         composeTestRule.setContent {
             PpoPpiTheme {
-                DiseaseCard(disease = 질병)
+                DiseaseCard(disease = disease)
             }
         }
         composeTestRule.onNodeWithText("눈의 결막에 염증이 생기는 질환입니다").assertIsDisplayed()

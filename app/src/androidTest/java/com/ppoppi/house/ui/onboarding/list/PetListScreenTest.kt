@@ -22,7 +22,7 @@ class PetListScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private val 강아지 =
+    private val dog =
         Pet(
             id = 1L,
             name = "뽀삐",
@@ -33,7 +33,7 @@ class PetListScreenTest {
             color = COLOR.PRIMARY100,
         )
 
-    private val 고양이 =
+    private val cat =
         Pet(
             id = 2L,
             name = "나비",
@@ -44,7 +44,7 @@ class PetListScreenTest {
             color = COLOR.PRIMARY200,
         )
 
-    private val 강아지2 =
+    private val dog2 =
         Pet(
             id = 3L,
             name = "초코",
@@ -107,7 +107,7 @@ class PetListScreenTest {
                     onStart = {},
                     onEdit = {},
                     onRegister = {},
-                    pets = listOf(강아지, 고양이),
+                    pets = listOf(dog, cat),
                 )
             }
         }
@@ -122,7 +122,7 @@ class PetListScreenTest {
                     onStart = {},
                     onEdit = {},
                     onRegister = {},
-                    pets = listOf(강아지, 고양이, 강아지2),
+                    pets = listOf(dog, cat, dog2),
                 )
             }
         }
@@ -140,7 +140,7 @@ class PetListScreenTest {
                     onStart = {},
                     onEdit = {},
                     onRegister = {},
-                    pets = listOf(강아지),
+                    pets = listOf(dog),
                 )
             }
         }
@@ -155,7 +155,7 @@ class PetListScreenTest {
                     onStart = {},
                     onEdit = {},
                     onRegister = {},
-                    pets = listOf(강아지, 고양이),
+                    pets = listOf(dog, cat),
                 )
             }
         }
@@ -171,11 +171,11 @@ class PetListScreenTest {
                     onStart = {},
                     onEdit = {},
                     onRegister = {},
-                    pets = listOf(강아지),
+                    pets = listOf(dog),
                 )
             }
         }
-        composeTestRule.onNodeWithText("강아지 · 2살 · 남").assertIsDisplayed()
+        composeTestRule.onNodeWithText("dog · 2살 · 남").assertIsDisplayed()
     }
 
     // 사용자 인터랙션
@@ -223,11 +223,11 @@ class PetListScreenTest {
                     onStart = {},
                     onEdit = { editedPet = it },
                     onRegister = {},
-                    pets = listOf(강아지),
+                    pets = listOf(dog),
                 )
             }
         }
         composeTestRule.onNodeWithText("뽀삐").performClick()
-        composeTestRule.runOnIdle { assertEquals(강아지, editedPet) }
+        composeTestRule.runOnIdle { assertEquals(dog, editedPet) }
     }
 }
