@@ -12,7 +12,6 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class DiaryAddTopBarTest {
-
     @get:Rule
     val composeTestRule = createComposeRule()
 

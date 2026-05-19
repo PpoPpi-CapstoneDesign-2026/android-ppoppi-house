@@ -13,16 +13,16 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class DiseaseCardTest {
-
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private val 질병 = Disease(
-        diseaseId = 1L,
-        name = "결막염",
-        breed = "말티즈",
-        description = "눈의 결막에 염증이 생기는 질환입니다",
-    )
+    private val 질병 =
+        Disease(
+            diseaseId = 1L,
+            name = "결막염",
+            breed = "말티즈",
+            description = "눈의 결막에 염증이 생기는 질환입니다",
+        )
 
     @Test
     fun `질병명이_표시된다`() {

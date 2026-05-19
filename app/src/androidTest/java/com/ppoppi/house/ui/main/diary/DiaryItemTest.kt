@@ -19,19 +19,19 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class DiaryItemTest {
-
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private val 강아지 = Pet(
-        id = 1L,
-        name = "뽀삐",
-        species = SPECIES.DOG,
-        breed = "말티즈",
-        age = 2,
-        sex = SEX.MALE,
-        color = COLOR.PRIMARY100,
-    )
+    private val 강아지 =
+        Pet(
+            id = 1L,
+            name = "뽀삐",
+            species = SPECIES.DOG,
+            breed = "말티즈",
+            age = 2,
+            sex = SEX.MALE,
+            color = COLOR.PRIMARY100,
+        )
 
     @Test
     fun `반려동물_이름이_표시된다`() {
@@ -118,10 +118,11 @@ class DiaryItemTest {
                     pet = 강아지,
                     diagnosis = null,
                     memo = null,
-                    healthChecklist = listOf(
-                        HealthChecklist(id = 1L, description = "식욕 없음"),
-                        HealthChecklist(id = 2L, description = "활동량 적음"),
-                    ),
+                    healthChecklist =
+                        listOf(
+                            HealthChecklist(id = 1L, description = "식욕 없음"),
+                            HealthChecklist(id = 2L, description = "활동량 적음"),
+                        ),
                 )
             }
         }

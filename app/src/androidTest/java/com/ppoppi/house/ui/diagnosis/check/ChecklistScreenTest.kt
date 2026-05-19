@@ -19,7 +19,6 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class ChecklistScreenTest {
-
     @get:Rule
     val composeTestRule = createComposeRule()
 
@@ -61,9 +60,10 @@ class ChecklistScreenTest {
                 ChecklistItem(
                     description = "눈이 충혈됐어요",
                     isChecked = false,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .noRippleClickable(onClick = { clicked = true }),
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .noRippleClickable(onClick = { clicked = true }),
                 )
             }
         }
@@ -79,9 +79,10 @@ class ChecklistScreenTest {
                 ChecklistItem(
                     description = "눈이 뿌옇게 보여요",
                     isChecked = isChecked,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .noRippleClickable(onClick = { isChecked = !isChecked }),
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .noRippleClickable(onClick = { isChecked = !isChecked }),
                 )
             }
         }

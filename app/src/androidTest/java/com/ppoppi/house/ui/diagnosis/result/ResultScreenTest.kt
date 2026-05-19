@@ -17,20 +17,20 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class ResultScreenTest {
-
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private fun createDiagnosis(triage: Triage = Triage.NORMAL) = Diagnosis(
-        imageUrl = null,
-        triage = triage,
-        diseaseName = "백내장",
-        affectedArea = "왼쪽 눈",
-        triageConfidence = 85,
-        guideAction = "빠른 내원 권장",
-        guideMessage = "즉시 동물병원에 방문해 주세요",
-        guideWarning = "방치하면 악화될 수 있어요",
-    )
+    private fun createDiagnosis(triage: Triage = Triage.NORMAL) =
+        Diagnosis(
+            imageUrl = null,
+            triage = triage,
+            diseaseName = "백내장",
+            affectedArea = "왼쪽 눈",
+            triageConfidence = 85,
+            guideAction = "빠른 내원 권장",
+            guideMessage = "즉시 동물병원에 방문해 주세요",
+            guideWarning = "방치하면 악화될 수 있어요",
+        )
 
     // 로딩 상태
 
@@ -228,9 +228,11 @@ class ResultScreenTest {
                 )
             }
         }
-        composeTestRule.onNodeWithText(
-            "AI 선별 결과이며 확진이 아닙니다\n최종 판단은 수의사에게 있습니다",
-        ).performScrollTo().assertIsDisplayed()
+        composeTestRule
+            .onNodeWithText(
+                "AI 선별 결과이며 확진이 아닙니다\n최종 판단은 수의사에게 있습니다",
+            ).performScrollTo()
+            .assertIsDisplayed()
     }
 
     // 성공 상태 - 정상 (NORMAL)

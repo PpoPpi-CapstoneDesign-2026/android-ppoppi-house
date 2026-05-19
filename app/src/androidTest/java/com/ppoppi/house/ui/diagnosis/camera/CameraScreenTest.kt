@@ -11,7 +11,6 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class CameraScreenTest {
-
     @get:Rule
     val composeTestRule = createComposeRule()
 
@@ -32,9 +31,10 @@ class CameraScreenTest {
                 CameraScreen(onBackClick = {}, onCaptured = {}, name = "뽀삐")
             }
         }
-        composeTestRule.onNodeWithText(
-            "1. 밝은 곳으로 이동해 주세요\n2. 카메라를 눈에서 10~15cm 거리에 두세요\n3. 초록 박스 안에 눈이 들어오면 촬영 버튼을 누르세요",
-        ).assertIsDisplayed()
+        composeTestRule
+            .onNodeWithText(
+                "1. 밝은 곳으로 이동해 주세요\n2. 카메라를 눈에서 10~15cm 거리에 두세요\n3. 초록 박스 안에 눈이 들어오면 촬영 버튼을 누르세요",
+            ).assertIsDisplayed()
     }
 
     @Test

@@ -15,14 +15,14 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class DiaryDetailBottomSheetTest {
-
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private val 체크리스트 = listOf(
-        HealthChecklist(id = 1L, description = "식욕 없음"),
-        HealthChecklist(id = 2L, description = "활동량 적음"),
-    )
+    private val 체크리스트 =
+        listOf(
+            HealthChecklist(id = 1L, description = "식욕 없음"),
+            HealthChecklist(id = 2L, description = "활동량 적음"),
+        )
 
     private fun render(
         petName: String = "뽀삐",

@@ -13,20 +13,20 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class VetHospitalBottomSheetTest {
-
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private val 병원 = HospitalInfo(
-        id = 1L,
-        name = "뽀삐동물병원",
-        address = "서울시 강남구 테헤란로 123",
-        callNumber = "02-1234-5678",
-        businessHours = "09:00 - 18:00",
-        operationLabel = "영업 중",
-        distanceMeter = 350L,
-        is24Hour = false,
-    )
+    private val 병원 =
+        HospitalInfo(
+            id = 1L,
+            name = "뽀삐동물병원",
+            address = "서울시 강남구 테헤란로 123",
+            callNumber = "02-1234-5678",
+            businessHours = "09:00 - 18:00",
+            operationLabel = "영업 중",
+            distanceMeter = 350L,
+            is24Hour = false,
+        )
 
     @Test
     fun `병원명이_표시된다`() {

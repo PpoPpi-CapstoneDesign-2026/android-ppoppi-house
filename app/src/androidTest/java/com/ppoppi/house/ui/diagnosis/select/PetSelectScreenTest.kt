@@ -19,29 +19,30 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class PetSelectScreenTest {
-
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private val 강아지 = Pet(
-        id = 1L,
-        name = "뽀삐",
-        species = SPECIES.DOG,
-        breed = "말티즈",
-        age = 2,
-        sex = SEX.MALE,
-        color = COLOR.PRIMARY100,
-    )
+    private val 강아지 =
+        Pet(
+            id = 1L,
+            name = "뽀삐",
+            species = SPECIES.DOG,
+            breed = "말티즈",
+            age = 2,
+            sex = SEX.MALE,
+            color = COLOR.PRIMARY100,
+        )
 
-    private val 고양이 = Pet(
-        id = 2L,
-        name = "나비",
-        species = SPECIES.CAT,
-        breed = "페르시안",
-        age = 3,
-        sex = SEX.FEMALE,
-        color = COLOR.PRIMARY200,
-    )
+    private val 고양이 =
+        Pet(
+            id = 2L,
+            name = "나비",
+            species = SPECIES.CAT,
+            breed = "페르시안",
+            age = 3,
+            sex = SEX.FEMALE,
+            color = COLOR.PRIMARY200,
+        )
 
     @Test
     fun `반려동물_선택_힌트_텍스트가_표시된다`() {

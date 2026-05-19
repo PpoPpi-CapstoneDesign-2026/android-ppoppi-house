@@ -16,21 +16,21 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class DiagnosisCardTest {
-
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private val 진단결과 = Diagnosis(
-        hasDiagnosis = true,
-        imageUrl = null,
-        triage = Triage.SOON,
-        diseaseName = "결막염",
-        affectedArea = "각막",
-        triageConfidence = 85,
-        guideAction = "동물병원 방문 권장",
-        guideMessage = "조기 치료가 중요합니다",
-        guideWarning = "방치 시 악화될 수 있어요",
-    )
+    private val 진단결과 =
+        Diagnosis(
+            hasDiagnosis = true,
+            imageUrl = null,
+            triage = Triage.SOON,
+            diseaseName = "결막염",
+            affectedArea = "각막",
+            triageConfidence = 85,
+            guideAction = "동물병원 방문 권장",
+            guideMessage = "조기 치료가 중요합니다",
+            guideWarning = "방치 시 악화될 수 있어요",
+        )
 
     @Test
     fun `질병명과_부위가_표시된다`() {

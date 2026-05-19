@@ -19,39 +19,41 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class PetListScreenTest {
-
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private val 강아지 = Pet(
-        id = 1L,
-        name = "뽀삐",
-        species = SPECIES.DOG,
-        breed = "말티즈",
-        age = 2,
-        sex = SEX.MALE,
-        color = COLOR.PRIMARY100,
-    )
+    private val 강아지 =
+        Pet(
+            id = 1L,
+            name = "뽀삐",
+            species = SPECIES.DOG,
+            breed = "말티즈",
+            age = 2,
+            sex = SEX.MALE,
+            color = COLOR.PRIMARY100,
+        )
 
-    private val 고양이 = Pet(
-        id = 2L,
-        name = "나비",
-        species = SPECIES.CAT,
-        breed = "페르시안",
-        age = 3,
-        sex = SEX.FEMALE,
-        color = COLOR.PRIMARY200,
-    )
+    private val 고양이 =
+        Pet(
+            id = 2L,
+            name = "나비",
+            species = SPECIES.CAT,
+            breed = "페르시안",
+            age = 3,
+            sex = SEX.FEMALE,
+            color = COLOR.PRIMARY200,
+        )
 
-    private val 강아지2 = Pet(
-        id = 3L,
-        name = "초코",
-        species = SPECIES.DOG,
-        breed = "푸들",
-        age = 1,
-        sex = SEX.MALE,
-        color = COLOR.PRIMARY600,
-    )
+    private val 강아지2 =
+        Pet(
+            id = 3L,
+            name = "초코",
+            species = SPECIES.DOG,
+            breed = "푸들",
+            age = 1,
+            sex = SEX.MALE,
+            color = COLOR.PRIMARY600,
+        )
 
     // 화면 기본 요소
 
