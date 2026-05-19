@@ -1,5 +1,6 @@
 package com.ppoppi.house.ui.main.diary
 
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
@@ -40,7 +41,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import kotlinx.coroutines.delay
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -56,7 +56,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.ppoppi.house.domain.model.Diary
 import com.ppoppi.house.domain.model.HealthChecklist
 import com.ppoppi.house.domain.model.SPECIES
-import com.ppoppi.house.ui.component.CustomToast
 import com.ppoppi.house.ui.component.shimmerBrush
 import com.ppoppi.house.ui.main.diary.component.Calendar
 import com.ppoppi.house.ui.main.diary.component.DiaryDetailBottomSheet
@@ -86,19 +85,6 @@ fun DiaryScreen(
     val context = LocalContext.current
     val listState = rememberLazyListState()
     val density = LocalDensity.current
-    var toastMessage by remember { mutableStateOf<String?>(null) }
-    var isToastVisible by remember { mutableStateOf(false) }
-
-    LaunchedEffect(toastMessage) {
-        if (toastMessage != null) {
-            isToastVisible = true
-            delay(2000L)
-            isToastVisible = false
-            delay(300L)
-            toastMessage = null
-        }
-    }
-
     val diaryAddLauncher =
         rememberLauncherForActivityResult(
             contract = ActivityResultContracts.StartActivityForResult(),
@@ -120,7 +106,7 @@ fun DiaryScreen(
                         healthChecklist = checkIds.zip(checkNames).map { (id, name) -> HealthChecklist(id, name) },
                     ),
                 )
-                toastMessage = "다이어리가 저장됐어요"
+                Toast.makeText(context, "다이어리가 저장됐어요", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -392,14 +378,6 @@ fun DiaryScreen(
                 )
             }
         }
-
-        toastMessage?.let { message ->
-            CustomToast(
-                message = message,
-                visible = isToastVisible,
-                modifier = Modifier.align(Alignment.BottomCenter),
-            )
-        }
     }
 
     selectedDiary?.let { diary ->
@@ -417,12 +395,12 @@ fun DiaryScreen(
                 onUpdate = { memo, checkIds ->
                     viewModel.updateDiary(diary.id, memo, checkIds)
                     selectedDiary = null
-                    toastMessage = "다이어리가 수정됐어요"
+                    Toast.makeText(context, "다이어리가 수정됐어요", Toast.LENGTH_SHORT).show()
                 },
                 onDelete = {
                     viewModel.deleteDiary(diary.id)
                     selectedDiary = null
-                    toastMessage = "다이어리가 삭제됐어요"
+                    Toast.makeText(context, "다이어리가 삭제됐어요", Toast.LENGTH_SHORT).show()
                 },
                 checkedChecklist = diary.healthChecklist,
             )

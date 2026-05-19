@@ -3,6 +3,7 @@ package com.ppoppi.house.ui.main.setting
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.border
@@ -59,7 +60,8 @@ fun SettingScreen(
     val pets by viewModel.pets.collectAsState()
 
     LaunchedEffect(viewModel) {
-        viewModel.navigateToLogin.collect {
+        viewModel.toastMessage.collect { message ->
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
             context.startActivity(
                 Intent(context, LoginActivity::class.java).apply {
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

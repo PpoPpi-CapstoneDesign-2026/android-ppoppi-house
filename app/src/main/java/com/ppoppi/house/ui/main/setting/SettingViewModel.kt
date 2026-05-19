@@ -23,8 +23,8 @@ class SettingViewModel
         private val _pets = MutableStateFlow<List<Pet>>(emptyList())
         val pets: StateFlow<List<Pet>> = _pets
 
-        private val _navigateToLogin = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
-        val navigateToLogin: SharedFlow<Unit> = _navigateToLogin
+        private val _toastMessage = MutableSharedFlow<String>(extraBufferCapacity = 1)
+        val toastMessage: SharedFlow<String> = _toastMessage
 
         init {
             loadPets()
@@ -41,7 +41,7 @@ class SettingViewModel
             viewModelScope.launch {
                 authRepository
                     .authLogout()
-                    .onSuccess { _navigateToLogin.emit(Unit) }
+                    .onSuccess { _toastMessage.emit("로그아웃 됐어요") }
             }
         }
 
@@ -49,7 +49,7 @@ class SettingViewModel
             viewModelScope.launch {
                 authRepository
                     .authWithdrawal()
-                    .onSuccess { _navigateToLogin.emit(Unit) }
+                    .onSuccess { _toastMessage.emit("탈퇴가 완료됐어요") }
             }
         }
     }
