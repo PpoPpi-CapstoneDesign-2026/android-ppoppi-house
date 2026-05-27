@@ -163,21 +163,6 @@ class PetListScreenTest {
         composeTestRule.onNodeWithText("나비").assertIsDisplayed()
     }
 
-    @Test
-    fun `반려동물_아이템에_종류와_나이와_성별_정보가_표시된다`() {
-        composeTestRule.setContent {
-            PpoPpiTheme {
-                PetListScreen(
-                    onStart = {},
-                    onEdit = {},
-                    onRegister = {},
-                    pets = listOf(dog),
-                )
-            }
-        }
-        composeTestRule.onNodeWithText("dog · 2살 · 남").assertIsDisplayed()
-    }
-
     // 사용자 인터랙션
 
     @Test

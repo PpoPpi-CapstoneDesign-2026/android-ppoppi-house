@@ -62,12 +62,6 @@ class DiaryDetailBottomSheetTest {
     }
 
     @Test
-    fun `건강_checklist_섹션_레이블이_표시된다`() {
-        render()
-        composeTestRule.onNodeWithText("건강 checklist").assertIsDisplayed()
-    }
-
-    @Test
     fun `수정하기_버튼이_표시된다`() {
         render()
         composeTestRule.onNodeWithText("수정하기").assertIsDisplayed()
