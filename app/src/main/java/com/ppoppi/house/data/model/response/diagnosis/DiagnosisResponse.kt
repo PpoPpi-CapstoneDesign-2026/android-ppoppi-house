@@ -28,7 +28,7 @@ data class DiagnosisResponse(
     @SerialName("guidanceWarning")
     val guidanceWarning: String,
     @SerialName("symptoms")
-    val symptoms: List<Symptom>,
+    val symptoms: List<Symptom>? = emptyList(),
 ) {
     @Serializable
     data class Symptom(
@@ -56,5 +56,5 @@ fun DiagnosisResponse.toDomain(): Diagnosis =
         guideAction = this.guidanceAction,
         guideMessage = this.guidanceMessage,
         guideWarning = this.guidanceWarning,
-        symptoms = this.symptoms.map { it.toDomain() },
+        symptoms = this.symptoms?.map { it.toDomain() } ?: emptyList(),
     )

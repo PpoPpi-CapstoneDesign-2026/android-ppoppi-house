@@ -82,7 +82,8 @@ fun DiaryItem(
                             paint = paint,
                         )
                     }
-                }.clip(RoundedCornerShape(8.dp))
+                }
+                .clip(RoundedCornerShape(8.dp))
                 .background(White)
                 .drawBehind {
                     drawRect(
@@ -90,7 +91,8 @@ fun DiaryItem(
                         topLeft = Offset(0f, 0f),
                         size = Size(4.dp.toPx(), size.height),
                     )
-                }.padding(16.dp),
+                }
+                .padding(16.dp),
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -197,12 +199,14 @@ fun DiaryItem(
                 }
             }
 
-            Text(
-                text = diagnosis.guideWarning,
-                style = PpoPpiTheme.typography.body5,
-                color = Gray400,
-                modifier = Modifier.padding(top = 10.dp),
-            )
+            if (diagnosis.guideWarning.isNotEmpty()) {
+                Text(
+                    text = diagnosis.guideWarning,
+                    style = PpoPpiTheme.typography.body5,
+                    color = Gray400,
+                    modifier = Modifier.padding(top = 10.dp),
+                )
+            }
 
             if (memo?.isNotEmpty() == true || healthChecklist.isNotEmpty()) {
                 HorizontalDivider(

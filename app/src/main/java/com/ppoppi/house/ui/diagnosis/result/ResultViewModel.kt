@@ -2,6 +2,7 @@ package com.ppoppi.house.ui.diagnosis.result
 
 import android.app.Application
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.ppoppi.house.domain.repository.DiagnosisRepository
@@ -45,8 +46,17 @@ class ResultViewModel
                         .toRequestBody("image/*".toMediaType())
                         .let { MultipartBody.Part.createFormData("image", "image.jpg", it) }
                 runCatching { diagnosisRepository.postDiagnosis(petId, symptomIds, imagePart) }
-                    .onSuccess { _uiState.value = ResultUiState.Success(it) }
-                    .onFailure { _uiState.value = ResultUiState.Error }
+                    .onSuccess {
+                        if (it.triageConfidence < 70) {
+                            _uiState.value = ResultUiState.Error
+                        } else {
+                            _uiState.value = ResultUiState.Success(it)
+                        }
+                    }
+                    .onFailure {
+                        Log.d("hwannow_log", "why failed?")
+                        Log.d("hwannow_log", "$it")
+                        _uiState.value = ResultUiState.Error }
             }
         }
     }
