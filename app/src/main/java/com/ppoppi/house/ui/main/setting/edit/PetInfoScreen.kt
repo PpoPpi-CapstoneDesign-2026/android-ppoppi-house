@@ -31,6 +31,7 @@ import com.ppoppi.house.domain.model.Pet
 import com.ppoppi.house.domain.model.SEX
 import com.ppoppi.house.domain.model.SPECIES
 import com.ppoppi.house.ui.component.BottomBarButton
+import com.ppoppi.house.ui.main.setting.component.DeletePetDialog
 import com.ppoppi.house.ui.onboarding.register.component.AgeInputSection
 import com.ppoppi.house.ui.onboarding.register.component.BreedInputSection
 import com.ppoppi.house.ui.onboarding.register.component.ColorInputSection
@@ -52,6 +53,7 @@ fun PetInfoScreen(
     pet: Pet? = null,
     viewModel: PetInfoViewModel = hiltViewModel(),
 ) {
+    var showDeletePetDialog by rememberSaveable { mutableStateOf(false) }
     var name by rememberSaveable { mutableStateOf(pet?.name ?: "") }
     var species by rememberSaveable { mutableStateOf(pet?.species ?: SPECIES.DOG) }
     var breed: String? by rememberSaveable { mutableStateOf(pet?.breed) }
@@ -119,7 +121,7 @@ fun PetInfoScreen(
                             text = "삭제하기",
                             style = PpoPpiTheme.typography.label1,
                             color = Gray300,
-                            modifier = Modifier.noRippleClickable(onClick = { pet.id?.let { viewModel.deletePet(it) } }),
+                            modifier = Modifier.noRippleClickable(onClick = { showDeletePetDialog = true }),
                         )
                     }
                 },
@@ -188,6 +190,16 @@ fun PetInfoScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
         }
+    }
+
+    if (showDeletePetDialog) {
+        DeletePetDialog(
+            onConfirm = {
+                showDeletePetDialog = false
+                pet?.id?.let { viewModel.deletePet(it) }
+            },
+            onDismiss = { showDeletePetDialog = false },
+        )
     }
 }
 

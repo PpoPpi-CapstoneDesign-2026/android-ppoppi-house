@@ -47,15 +47,13 @@ class ResultViewModel
                         .let { MultipartBody.Part.createFormData("image", "image.jpg", it) }
                 runCatching { diagnosisRepository.postDiagnosis(petId, symptomIds, imagePart) }
                     .onSuccess {
-                        if (it.triageConfidence < 70) {
+                        if (it.triageConfidence < 40) {
                             _uiState.value = ResultUiState.Error
                         } else {
                             _uiState.value = ResultUiState.Success(it)
                         }
                     }
                     .onFailure {
-                        Log.d("hwannow_log", "why failed?")
-                        Log.d("hwannow_log", "$it")
                         _uiState.value = ResultUiState.Error }
             }
         }

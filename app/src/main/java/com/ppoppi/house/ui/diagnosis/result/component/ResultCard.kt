@@ -1,5 +1,6 @@
 package com.ppoppi.house.ui.diagnosis.result.component
 
+import android.R.attr.top
 import android.graphics.BlurMaskFilter
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -56,7 +57,10 @@ fun ResultCard(
     val action =
         when (diagnosis.triage) {
             Triage.URGENT, Triage.SOON ->
-                "${diagnosis.guideAction} 내원 권장".getColoredText(highlightColor, diagnosis.guideAction)
+                "${diagnosis.guideAction} 내원 권장".getColoredText(
+                    highlightColor,
+                    diagnosis.guideAction
+                )
 
             else ->
                 diagnosis.guideAction.getColoredText(highlightColor, diagnosis.guideAction)
@@ -87,7 +91,8 @@ fun ResultCard(
                             paint = paint,
                         )
                     }
-                }.clip(RoundedCornerShape(8.dp))
+                }
+                .clip(RoundedCornerShape(8.dp))
                 .background(White)
                 .drawBehind {
                     drawRect(
@@ -95,7 +100,8 @@ fun ResultCard(
                         topLeft = Offset.Zero,
                         size = Size(4.dp.toPx(), size.height),
                     )
-                }.padding(20.dp),
+                }
+                .padding(20.dp),
     ) {
         Text(
             text = title,
@@ -106,6 +112,7 @@ fun ResultCard(
             text = diagnosis.guideMessage,
             style = PpoPpiTheme.typography.body1,
             color = Gray400,
+            modifier = Modifier.padding(top = 6.dp)
         )
 
         if (diagnosis.triage != Triage.NORMAL) {
@@ -127,6 +134,7 @@ fun ResultCard(
                 text = diagnosis.guideWarning,
                 style = PpoPpiTheme.typography.body1,
                 color = Gray400,
+                modifier = Modifier.padding(top = 6.dp)
             )
         }
     }
