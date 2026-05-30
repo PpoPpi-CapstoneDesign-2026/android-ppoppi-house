@@ -77,6 +77,7 @@ fun PetRegisterScreen(
                 onClick = {
                     viewModel.registerPet(
                         Pet(
+                            id = pet?.id,
                             name = name,
                             species = species,
                             breed = breed ?: "말티즈",
@@ -86,7 +87,11 @@ fun PetRegisterScreen(
                         ),
                     )
                 },
-                text = stringResource(R.string.pet_register_bottom_bar_button),
+                text = if (pet == null) {
+                    stringResource(R.string.pet_register_bottom_bar_button)
+                } else {
+                    stringResource(R.string.pet_edit_bottom_bar_button)
+                },
             )
         },
     ) { innerPadding ->

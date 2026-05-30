@@ -35,9 +35,13 @@ class PetRegisterViewModel
 
         fun registerPet(pet: Pet) {
             viewModelScope.launch {
-                petsRepository
-                    .postPet(pet)
-                    .onSuccess { _isRegistered.emit(Unit) }
+                val result =
+                    if (pet.id != null) {
+                        petsRepository.putPet(pet.id, pet)
+                    } else {
+                        petsRepository.postPet(pet)
+                    }
+                result.onSuccess { _isRegistered.emit(Unit) }
             }
         }
     }
