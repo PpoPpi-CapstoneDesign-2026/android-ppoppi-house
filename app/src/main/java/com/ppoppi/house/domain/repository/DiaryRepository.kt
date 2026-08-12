@@ -1,0 +1,34 @@
+package com.ppoppi.house.domain.repository
+
+import com.ppoppi.house.domain.model.Diary
+import com.ppoppi.house.domain.model.HealthChecklist
+import com.ppoppi.house.domain.model.MonthDiary
+
+interface DiaryRepository {
+    suspend fun getDiariesMonth(
+        year: Int,
+        month: Int,
+    ): List<MonthDiary>
+
+    suspend fun getDiariesDaily(
+        year: Int,
+        month: Int,
+        day: Int,
+    ): List<Diary>
+
+    suspend fun getHealthChecklist(): List<HealthChecklist>
+
+    suspend fun updateDairy(
+        diaryId: Long,
+        memo: String,
+        checkIds: List<Int>,
+    ): Result<Unit>
+
+    suspend fun postDiary(
+        petId: Long,
+        memo: String,
+        checkIds: List<Long>,
+    ): Result<Unit>
+
+    suspend fun deleteDiary(diaryId: Long): Result<Unit>
+}
