@@ -18,7 +18,7 @@ data class DiagnosisResponse(
     @SerialName("diseaseName")
     val diseaseName: String,
     @SerialName("affectedArea")
-    val affectedArea: String,
+    val affectedArea: String?,
     @SerialName("confidence")
     val confidence: Int,
     @SerialName("guidanceAction")
@@ -51,7 +51,7 @@ fun DiagnosisResponse.toDomain(): Diagnosis =
         imageUrl = this.imageUrl,
         triage = Triage.from(this.triage),
         diseaseName = this.diseaseName,
-        affectedArea = this.affectedArea,
+        affectedArea = this.affectedArea ?: "",
         triageConfidence = this.confidence,
         guideAction = this.guidanceAction,
         guideMessage = this.guidanceMessage,

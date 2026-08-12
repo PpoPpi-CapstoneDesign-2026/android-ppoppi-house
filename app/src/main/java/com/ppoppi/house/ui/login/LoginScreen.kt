@@ -54,29 +54,6 @@ fun LoginScreen(
             text = stringResource(R.string.login_with_kakao),
             textColor = Black,
         )
-        LoginButton(
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 44.dp)
-                    .padding(bottom = 18.dp)
-                    .noRippleClickable(toOnboarding),
-            backgroundColor = Black,
-            imageResource = painterResource(R.drawable.ic_google_login),
-            text = stringResource(R.string.login_with_google),
-            textColor = White,
-        )
-        LoginButton(
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 44.dp)
-                    .noRippleClickable(toMain),
-            backgroundColor = Color(0xFF03A94D),
-            imageResource = painterResource(R.drawable.ic_naver_login),
-            text = stringResource(R.string.login_with_naver),
-            textColor = White,
-        )
     }
 }
 
