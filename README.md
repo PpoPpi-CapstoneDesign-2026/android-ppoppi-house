@@ -17,10 +17,16 @@
 ### 1. 카카오 소셜 로그인
 카카오 계정으로 간편하게 로그인할 수 있습니다.
 
+<img width="200" height="450" alt="p_로그인 화면" src="https://github.com/user-attachments/assets/68c6addf-7d8b-4097-9739-68af44ccf56d" />
+
 ### 2. 반려동물 프로필 관리
 - 강아지·고양이를 최대 3마리까지 등록
 - 이름, 종, 품종, 나이, 성별, 색상 정보 입력 및 수정
 - 홈 화면 상단에서 반려동물을 탭으로 전환
+
+<img width="200" height="450" alt="p_반려동물 등록 화면" src="https://github.com/user-attachments/assets/91f1f4d3-7aea-4ef3-bc48-d3a53567104e" />
+<img width="200" height="450" alt="p_등록된 반려동물 화면" src="https://github.com/user-attachments/assets/cef4ae26-7748-469f-b4d1-8f9163efb251" />
+
 
 ### 3. AI 건강 진단
 1. 이상 부위를 카메라로 촬영하거나 갤러리에서 선택 (1:1 자동 크롭)
@@ -34,6 +40,11 @@
 | MONITOR | 상태 모니터링 |
 | NORMAL | 정상 범주 |
 
+<img width="200" height="450" alt="진단 화면 - 안구 촬영" src="https://github.com/user-attachments/assets/49c3737d-51ea-4e93-a9f1-5eea4e3cd16e" />
+<img width="200" height="450" alt="진단 화면 - 증상 체크" src="https://github.com/user-attachments/assets/8a2d32f9-b6b9-4988-9a07-dec562e4af31" />
+<img width="200" height="500" alt="진단 화면 - 진단 결과" src="https://github.com/user-attachments/assets/eb0ad62c-0fdf-4475-9461-a4f209d27fe5" />
+
+
 ### 4. 홈 화면 질병 검색
 키워드로 궁금한 질병 정보를 검색하고, 페이저로 여러 결과를 탐색합니다.
 
@@ -43,11 +54,16 @@
 - 기존 다이어리 수정 및 삭제
 - 당일 진단 결과가 있으면 다이어리에 자동으로 연동
 
+<img width="200" height="450" alt="image 4" src="https://github.com/user-attachments/assets/1d2554d1-8540-4cbf-a48f-ef69e060be96" />
+
+
 ### 6. 동물병원 지도
 - 현재 위치 기반으로 주변 동물병원을 Google Maps에 표시
 - 지도를 이동하면 해당 영역 병원 자동 검색
 - 24시 응급 필터로 야간 병원 빠르게 찾기
 - 마커 탭 시 병원명, 주소, 전화번호, 영업시간 확인
+
+<img width="200" height="450" alt="image 3" src="https://github.com/user-attachments/assets/2ac378a3-4204-4cfe-a9fe-b7dae0e31f41" />
 
 ### 7. 설정
 - 반려동물 정보 수정 및 추가
